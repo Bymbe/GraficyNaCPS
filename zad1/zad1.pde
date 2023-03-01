@@ -1,7 +1,7 @@
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 
-S2 gauss = new S2(0.0,10.0,0,1);
+Gauss S2 = new Gauss(0.0,10.0,0,1);
 
 float x1[] = {1,2,3,4,5};
 float y1[] = {5, 7, 3, 4, 1};
@@ -15,7 +15,7 @@ void setup()
 
 void draw()
 {
-  gauss.calculate();
+  S2.calculate();
   wykres();
   background(255);
   textSize(16);
@@ -25,7 +25,7 @@ void draw()
 
 void wykres() {
   lineChart = new XYChart(this);
-  lineChart.setData(gauss.czas, gauss.amplituda);
+  lineChart.setData(S2.czas, S2.amplituda);
 
 
   lineChart.showXAxis(true);
