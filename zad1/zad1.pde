@@ -3,8 +3,6 @@ XYChart lineChart;
 
 Gauss S2 = new Gauss(0.0,10.0,0,1);
 
-float x1[] = {1,2,3,4,5};
-float y1[] = {5, 7, 3, 4, 1};
 
 void setup()
 {
