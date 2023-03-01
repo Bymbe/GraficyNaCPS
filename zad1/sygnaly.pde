@@ -20,11 +20,13 @@ class Gauss extends Signal { //szum gaussa
   }
   public void calculate() {
     int j = 0;
-    for (float i = signalS; i<=signalE; i+= (signalE-signalS)*0.01) {
+    for (float i = signalS; i<=signalE; i+= (signalE-signalS)*0.001) {
+      float rand = random(-500, 500);
       float first = 1/(dev*sqrt(TWO_PI));
       float third = (-1*pow((i-avg), 2))/(2*pow(dev, 2));
       float second = pow(exp(1.0), third);
-      amp[j] = first*second;
+      amp[j] = first * second;
+      amp[j] += rand;
       time[j] = i;
       j++;
     }

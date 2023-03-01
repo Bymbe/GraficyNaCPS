@@ -7,11 +7,11 @@ void setup()
 {
   size(1000, 500);
   textFont(createFont("Arial", 10), 10);
+  S2.calculate();
 }
 
 void draw()
 {
-  S2.calculate();
   chart();
   background(255);
   textSize(16);
