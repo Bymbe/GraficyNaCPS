@@ -1,8 +1,12 @@
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 
-ContinuosSignal S1 = new ContinuosSignal(0, 10, 1000);
+float[] zeroTen = {0, 10, 1000};
+
+ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
+Sinusoidal S3 = new Sinusoidal(zeroTen);
+StraightSinusoidal S4 = new StraightSinusoidal(zeroTen);
 
 void setup()
 {
@@ -27,6 +31,14 @@ void draw()
           chart(S2.time, S2.amp.array());
           lineChart.draw(0, 0, width-30, height-30);
           break;
+        case 2:
+          chart(S3.time, S3.amp.array());
+          lineChart.draw(0, 0, width-30, height-30);
+          break;
+        case 3:
+          chart(S4.time, S4.amp.array());
+          lineChart.draw(0, 0, width-30, height-30);
+          break;
   }
 }
  
@@ -37,6 +49,12 @@ int Console()
   }
   else if(key == '1') {
     return 1;
+  }
+  else if(key == '2') {
+    return 2; 
+  }
+  else if(key == '3') {
+    return 3; 
   }
   return -1;
 }
