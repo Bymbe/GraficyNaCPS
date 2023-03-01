@@ -1,26 +1,49 @@
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 
-Gauss S2 = new Gauss(0.0,10.0,0,1);
+ContinuosSignal S1 = new ContinuosSignal(0, 10, 1000);
+Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
 
 void setup()
 {
   size(1000, 500);
   textFont(createFont("Arial", 10), 10);
+  S1.calculate();
   S2.calculate();
+  background(255);
+  textSize(16);
 }
 
 void draw()
 {
-  chart();
-  background(255);
-  textSize(16);
-  lineChart.draw(15, 15, width-30, height-30);
+  text("Choose signalse using numbers from 0 to 9", 50, 50);
+  int number = Console();
+      switch(number) {
+        case 0:
+          chart(S1.time, S1.amp.array());
+          lineChart.draw(0, 0, width-30, height-30);
+          break;
+        case 1:
+          chart(S2.time, S2.amp.array());
+          lineChart.draw(0, 0, width-30, height-30);
+          break;
+  }
+}
+ 
+int Console()
+{
+  if(key == '0'){
+    return 0;
+  }
+  else if(key == '1') {
+    return 1;
+  }
+  return -1;
 }
 
-void chart() {
+void chart(float[] x, float[] y) {
   lineChart = new XYChart(this);
-  lineChart.setData(S2.time, S2.amp);
+  lineChart.setData(x, y);
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
   lineChart.setPointColour(color(180, 50, 50, 100));
