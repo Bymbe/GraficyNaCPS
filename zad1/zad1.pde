@@ -12,15 +12,15 @@ void setup()
 void draw()
 {
   S2.calculate();
-  wykres();
+  chart();
   background(255);
   textSize(16);
   lineChart.draw(15, 15, width-30, height-30);
 }
 
-void wykres() {
+void chart() {
   lineChart = new XYChart(this);
-  lineChart.setData(S2.czas, S2.amplituda);
+  lineChart.setData(S2.time, S2.amp);
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
   lineChart.setPointColour(color(180, 50, 50, 100));
