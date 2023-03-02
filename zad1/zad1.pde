@@ -8,6 +8,8 @@ Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen);
 StraightSinusoidal S4 = new StraightSinusoidal(zeroTen);
 
+int wyborWykresu = 0;
+
 void setup()
 {
   size(1000, 500);
@@ -20,43 +22,40 @@ void setup()
 
 void draw()
 {
-  text("Choose signalse using numbers from 0 to 9", 50, 50);
-  int number = Console();
-      switch(number) {
-        case 0:
-          chart(S1.time, S1.amp.array());
-          lineChart.draw(0, 0, width-30, height-30);
-          break;
-        case 1:
-          chart(S2.time, S2.amp.array());
-          lineChart.draw(0, 0, width-30, height-30);
-          break;
-        case 2:
-          chart(S3.time, S3.amp.array());
-          lineChart.draw(0, 0, width-30, height-30);
-          break;
-        case 3:
-          chart(S4.time, S4.amp.array());
-          lineChart.draw(0, 0, width-30, height-30);
-          break;
+  background(255);
+  
+  switch(wyborWykresu) {
+  case 1:
+    chart(S1.time, S1.amp.array());
+    lineChart.draw(0, 0, width-30, height-30);
+    break;
+  case 2:
+    chart(S2.time, S2.amp.array());
+    lineChart.draw(0, 0, width-30, height-30);
+    break;
+  case 3:
+    chart(S3.time, S3.amp.array());
+    lineChart.draw(0, 0, width-30, height-30);
+    break;
+  case 4:
+    chart(S4.time, S4.amp.array());
+    lineChart.draw(0, 0, width-30, height-30);
+    break;
   }
+  fill(0);
+  text("Choose signalse using numbers from 1 to 9", 50, 50);
 }
- 
-int Console()
-{
-  if(key == '0'){
-    return 0;
+
+void keyPressed() {
+  if (key == '0') {
+    wyborWykresu = 0;
+  } else if (key == '1') {
+    wyborWykresu = 1;
+  } else if (key == '2') {
+    wyborWykresu = 2;
+  } else if (key == '3') {
+    wyborWykresu = 3;
   }
-  else if(key == '1') {
-    return 1;
-  }
-  else if(key == '2') {
-    return 2; 
-  }
-  else if(key == '3') {
-    return 3; 
-  }
-  return -1;
 }
 
 void chart(float[] x, float[] y) {
