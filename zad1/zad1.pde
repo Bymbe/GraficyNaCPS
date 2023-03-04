@@ -9,10 +9,11 @@ Sinusoidal S3 = new Sinusoidal(zeroTen);
 StraightSinusoidal S4 = new StraightSinusoidal(zeroTen);
 
 int wyborWykresu = 0;
+String signalType;
 
 void setup()
 {
-  size(1000, 500);
+  size(1280, 720);
   textFont(createFont("Arial", 10), 10);
   S1.calculate();
   S2.calculate();
@@ -23,38 +24,47 @@ void setup()
 void draw()
 {
   background(255);
-  
+
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
-    lineChart.draw(0, 0, width-30, height-30);
+    signalType = "Szum o rozkładzie jednostajnym";
     break;
   case 2:
     chart(S2.time, S2.amp.array());
-    lineChart.draw(0, 0, width-30, height-30);
+    signalType = "Szum gaussowski";
     break;
   case 3:
     chart(S3.time, S3.amp.array());
-    lineChart.draw(0, 0, width-30, height-30);
+    signalType = "Sygnał sinusoidalny";
     break;
   case 4:
     chart(S4.time, S4.amp.array());
-    lineChart.draw(0, 0, width-30, height-30);
+    signalType = "Sygnał sinosuidalny wyprostowany jednopołówkowo";
+    break;
+  default:
+    chart(S1.time, S1.amp.array());
+    signalType = "Szum o rozkładzie jednostajnym";
     break;
   }
+  
+  lineChart.draw(0, 0, width, height*0.8);
+  
+  
   fill(0);
-  text("Choose signalse using numbers from 1 to 9", 50, 50);
+  text("Wybierz rodzaj sygnału klawiszami 1-9", width*0.01, height*0.85);
+  text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
 }
 
 void keyPressed() {
-  if (key == '0') {
-    wyborWykresu = 0;
-  } else if (key == '1') {
+  if (key == '1') {
     wyborWykresu = 1;
   } else if (key == '2') {
     wyborWykresu = 2;
   } else if (key == '3') {
     wyborWykresu = 3;
+  } else if (key == '4') {
+    wyborWykresu = 4;
   }
 }
 
