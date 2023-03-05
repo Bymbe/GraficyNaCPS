@@ -8,12 +8,13 @@ Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
+Rectangular S6 = new Rectangular(zeroTen, 10, 1);
+SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
 
 int wyborWykresu = 0;
 String signalType;
 
-void setup()
-{
+void setup() {
   size(1280, 720);
   textFont(createFont("Arial", 10), 10);
   S1.calculate();
@@ -21,12 +22,13 @@ void setup()
   S3.calculate();
   S4.calculate();
   S5.calculate();
+  S6.calculate();
+  S7.calculate();
   background(255);
   textSize(16);
 }
 
-void draw()
-{
+void draw() {
   background(255);
 
   switch(wyborWykresu) {
@@ -49,6 +51,14 @@ void draw()
   case 5:
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
+    break;
+  case 6:
+    chart(S6.time, S6.amp.array());
+    signalType = "Sygnał prostokątny";
+    break;
+  case 7:
+    chart(S7.time, S7.amp.array());
+    signalType = "Sygnał prostokątny symetryczny";
     break;
   default:
     chart(S1.time, S1.amp.array());
@@ -73,8 +83,12 @@ void keyPressed() {
     wyborWykresu = 3;
   } else if (key == '4') {
     wyborWykresu = 4;
-  } else if (key== '5') {
+  } else if (key == '5') {
     wyborWykresu = 5;
+  } else if (key == '6') {
+    wyborWykresu = 6;
+  } else if (key == '7') {
+    wyborWykresu = 7; 
   }
 }
 

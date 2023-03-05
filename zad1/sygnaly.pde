@@ -121,3 +121,57 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
     }
   }
 }
+
+class Rectangular extends Sinusoidal {
+  float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
+  public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
+        super(signalStart, signalEnd, amplitude, t);
+        fillFactor = fF;
+  }
+    public Rectangular(float[] zT, float t, float fF) {
+        super(zT, t);
+        fillFactor = fF;
+  }
+    public void calculate() {
+    int j = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      time[j] = i;
+      //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
+        if (j < fillFactor * period + period + signalS && j < period + signalS) {
+        amp.set(j, amp.size());
+      } else {
+        amp.set(j, 0.0); 
+      }
+      j++;
+    }
+  }
+}
+
+class SymmetricalRectangular extends Sinusoidal {
+  float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
+  public SymmetricalRectangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
+        super(signalStart, signalEnd, amplitude, t);
+        fillFactor = fF;
+  }
+    public SymmetricalRectangular(float[] zT, float t, float fF) {
+        super(zT, t);
+        fillFactor = fF;
+  }
+    public void calculate() {
+    int j = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      time[j] = i;
+      //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
+        if (j < fillFactor * period + period + signalS && j < period + signalS) {
+        amp.set(j, amp.size());
+      } else {
+        amp.set(j, -amp.size()); 
+      }
+      j++;
+    }
+  }
+}
