@@ -98,6 +98,7 @@ class RectifiedOneSinusoidal extends Sinusoidal {
       float period = i * step + signalS;
       time[j] = i;
       amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)) + abs(sin(TWO_PI / (term)) * (period - signalS)));
+      if(amp.get(j) <0) amp.set(j, 0); //czy o to chodzi?
       j++;
     }
   }
