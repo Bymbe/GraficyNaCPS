@@ -62,43 +62,61 @@ class Gauss extends Signal { //szum gaussa
 }
 
 class Sinusoidal extends Signal {
-  public Sinusoidal(float signalStart, float signalEnd, int amplitude) {
+  float term;
+  public Sinusoidal(float signalStart, float signalEnd, int amplitude, float t) {
         super(signalStart, signalEnd, amplitude);
+        term = t;
   }
-  public Sinusoidal(float[] zT) {
+  public Sinusoidal(float[] zT, float t) {
         super(zT);
+        term = t;
   }
     public void calculate() {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)
-      float period = amp.get(j)*((signalE-signalS)); // yyyy
-      if( period < amp.get(j)*(signalE-signalS)) {
-        period = amp.get(j)*(signalE-signalS);
-      }      
+      //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)    
       time[j] = i;
-      amp.set(j, amp.size()*sin((TWO_PI / (period)) * (time[j]-signalS)));
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      amp.set(j, amp.size()*sin((TWO_PI / (term)) * (period-signalS)));
       j++;
     }
   }
 }
 
-class StraightSinusoidal extends Signal {
-  public StraightSinusoidal(float signalStart, float signalEnd, int amplitude) {
-        super(signalStart, signalEnd, amplitude);
+class RectifiedOneSinusoidal extends Sinusoidal {
+  public RectifiedOneSinusoidal(float signalStart, float signalEnd, int amplitude, float t) {
+        super(signalStart, signalEnd, amplitude, t);
   }
-    public StraightSinusoidal(float[] zT) {
-        super(zT);
+    public RectifiedOneSinusoidal(float[] zT, float t) {
+        super(zT, t);
   }
     public void calculate() {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float period = amp.get(j)*((signalE-signalS));
-      if( period < amp.get(j)*(signalE-signalS)) {
-        period = amp.get(j)*(signalE-signalS);
-      }
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
       time[j] = i;
-      amp.set(j, amp.size()*(sin((TWO_PI / (period)) * (time[j]-signalS))+abs(TWO_PI / (period)) * (time[j]-signalS)));
+      amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)) + abs(sin(TWO_PI / (term)) * (period - signalS)));
+      j++;
+    }
+  }
+}
+
+class RectifiedTwoSinusoidal extends Sinusoidal {
+  public RectifiedTwoSinusoidal(float signalStart, float signalEnd, int amplitude, float t) {
+        super(signalStart, signalEnd, amplitude, t);
+  }
+    public RectifiedTwoSinusoidal(float[] zT, float t) {
+        super(zT, t);
+  }
+    public void calculate() {
+    int j = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      time[j] = i;
+      amp.set(j, amp.size() * abs(sin((TWO_PI / (term)) * (period-signalS))));
       j++;
     }
   }

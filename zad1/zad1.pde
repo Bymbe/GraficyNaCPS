@@ -5,8 +5,9 @@ float[] zeroTen = {0, 10, 1000};
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
-Sinusoidal S3 = new Sinusoidal(zeroTen);
-StraightSinusoidal S4 = new StraightSinusoidal(zeroTen);
+Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
 
 int wyborWykresu = 0;
 String signalType;
@@ -17,6 +18,9 @@ void setup()
   textFont(createFont("Arial", 10), 10);
   S1.calculate();
   S2.calculate();
+  S3.calculate();
+  S4.calculate();
+  S5.calculate();
   background(255);
   textSize(16);
 }
@@ -42,6 +46,10 @@ void draw()
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinosuidalny wyprostowany jednopołówkowo";
     break;
+  case 5:
+    chart(S5.time, S5.amp.array());
+    signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
+    break;
   default:
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
@@ -65,6 +73,8 @@ void keyPressed() {
     wyborWykresu = 3;
   } else if (key == '4') {
     wyborWykresu = 4;
+  } else if (key== '5') {
+    wyborWykresu = 5;
   }
 }
 
