@@ -166,11 +166,63 @@ class SymmetricalRectangular extends Sinusoidal {
       float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;
-      //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
-        if (j < fillFactor * period + period + signalS && j < period + signalS) {
+      if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
+      //if (j < fillFactor * period + period + signalS && j < period + signalS) {
         amp.set(j, amp.size());
       } else {
         amp.set(j, -amp.size()); 
+      }
+      j++;
+    }
+  }
+}
+
+class Triangular extends Sinusoidal {
+    float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
+  public Triangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
+        super(signalStart, signalEnd, amplitude, t);
+        fillFactor = fF;
+  }
+    public Triangular(float[] zT, float t, float fF) {
+        super(zT, t);
+        fillFactor = fF;
+  }
+    public void calculate() {
+    int j = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      float term = ((signalE - signalS) / period) - floor((signalE - signalS) / period);
+      time[j] = i;
+      if (term < fillFactor) {
+          amp.set(j, term / fillFactor * amp.size());
+      } else {
+          amp.set(j, (1 - (term - fillFactor) / (1 - fillFactor)) * amp.size());
+      }
+      j++;
+    }
+  }
+}
+
+class UnitStroke extends Sinusoidal {
+  public UnitStroke(float signalStart, float signalEnd, int amplitude, float t) {
+        super(signalStart, signalEnd, amplitude, t);
+  }
+    public UnitStroke(float[] zT, float t) {
+        super(zT, t);
+  }
+    public void calculate() {
+    int j = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+      float step = signalE - signalS / (amp.size() - 1);
+      float period = i * step + signalS;
+      time[j] = i;
+      if (period > signalS) {
+        amp.set(j, amp.size());
+      } else if (period == signalS) {
+        amp.set(j, amp.size() * 0.5);
+      } else {
+        amp.set(j, 0.0);
       }
       j++;
     }

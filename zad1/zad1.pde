@@ -8,8 +8,10 @@ Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
-Rectangular S6 = new Rectangular(zeroTen, 10, 1);
+Rectangular S6 = new Rectangular(zeroTen, 10, 5);
 SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
+Triangular S8 = new Triangular(zeroTen, 10, 5);
+UnitStroke S9 = new UnitStroke(zeroTen, 10);
 
 int wyborWykresu = 0;
 String signalType;
@@ -24,6 +26,8 @@ void setup() {
   S5.calculate();
   S6.calculate();
   S7.calculate();
+  S8.calculate();
+  S9.calculate();
   background(255);
   textSize(16);
 }
@@ -60,6 +64,14 @@ void draw() {
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     break;
+  case 8:
+    chart(S8.time, S8.amp.array());
+    signalType = "Sygnał trójkątny";
+    break;
+  case 9:
+    chart(S9.time, S9.amp.array());
+    signalType = "Skok jednostkowy";
+    break;
   default:
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
@@ -67,7 +79,6 @@ void draw() {
   }
   
   lineChart.draw(0, 0, width, height*0.8);
-  
   
   fill(0);
   text("Wybierz rodzaj sygnału klawiszami 1-9", width*0.01, height*0.85);
@@ -89,6 +100,10 @@ void keyPressed() {
     wyborWykresu = 6;
   } else if (key == '7') {
     wyborWykresu = 7; 
+  } else if (key == '8') {
+    wyborWykresu = 8; 
+  } else if (key == '9') {
+    wyborWykresu = 9; 
   }
 }
 
