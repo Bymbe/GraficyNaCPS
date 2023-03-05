@@ -44,7 +44,7 @@ void draw()
     break;
   case 4:
     chart(S4.time, S4.amp.array());
-    signalType = "Sygnał sinosuidalny wyprostowany jednopołówkowo";
+    signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     break;
   case 5:
     chart(S5.time, S5.amp.array());
