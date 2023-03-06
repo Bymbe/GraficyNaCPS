@@ -1,7 +1,12 @@
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
+XYChart scatterplot;
 
 float[] zeroTen = {0, 10, 1000};
+int wyborWykresu = 0;
+String signalType;
+String impulsType;
+boolean signalImpuls = true;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -13,8 +18,8 @@ SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
 Triangular S8 = new Triangular(zeroTen, 10, 5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
-int wyborWykresu = 0;
-String signalType;
+UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
+NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 50, 50);
 
 void setup() {
   size(1280, 720);
@@ -28,13 +33,14 @@ void setup() {
   S7.calculate();
   S8.calculate();
   S9.calculate();
+  //I1.calculate();
+  I2.calculate();
   background(255);
   textSize(16);
 }
 
 void draw() {
   background(255);
-
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
@@ -72,39 +78,79 @@ void draw() {
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     break;
+  case 10:
+    scatterplot(I1.time, I1.amp.array());
+    impulsType = "Impuls jednostkowy";
+    break;
+  case 11:
+    scatterplot(I2.time, I2.amp.array());
+    impulsType = "Szum impulsowy";
+    break;
   default:
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     break;
   }
-  
+
   lineChart.draw(0, 0, width, height*0.8);
-  
+
   fill(0);
-  text("Wybierz rodzaj sygnału klawiszami 1-9", width*0.01, height*0.85);
-  text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
+  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu 'n-m'", width*0.01, height*0.85);
+  if (signalImpuls) {
+    text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
+  } else {
+    text("Obecny impuls: " + impulsType, width*0.01, height*0.90);
+  }
 }
 
 void keyPressed() {
   if (key == '1') {
     wyborWykresu = 1;
+    signalImpuls = true;
   } else if (key == '2') {
     wyborWykresu = 2;
+    signalImpuls = true;
   } else if (key == '3') {
     wyborWykresu = 3;
+    signalImpuls = true;
   } else if (key == '4') {
     wyborWykresu = 4;
+    signalImpuls = true;
   } else if (key == '5') {
     wyborWykresu = 5;
+    signalImpuls = true;
   } else if (key == '6') {
     wyborWykresu = 6;
+    signalImpuls = true;
   } else if (key == '7') {
-    wyborWykresu = 7; 
+    wyborWykresu = 7;
+    signalImpuls = true;
   } else if (key == '8') {
-    wyborWykresu = 8; 
+    wyborWykresu = 8;
+    signalImpuls = true;
   } else if (key == '9') {
-    wyborWykresu = 9; 
+    wyborWykresu = 9;
+    signalImpuls = true;
+  } else if (key == 'n') {
+    wyborWykresu = 10;
+    signalImpuls = false;
+  } else if (key == 'm') {
+    wyborWykresu = 11;
+    signalImpuls = false;
   }
+}
+
+void scatterplot(float[] x, float[] y) {
+  scatterplot = new XYChart(this);
+  scatterplot.setData(x,y);
+  scatterplot.showXAxis(true); 
+  scatterplot.showYAxis(true); 
+  scatterplot.setXFormat("$###,###");
+  scatterplot.setXAxisLabel("\nAverage income per person "+  
+                            "(inflation adjusted $US)");
+  scatterplot.setYAxisLabel("Life expectancy at birth (years)\n");
+  scatterplot.setPointColour(color(180,50,50,100));
+  scatterplot.setPointSize(5);
 }
 
 void chart(float[] x, float[] y) {

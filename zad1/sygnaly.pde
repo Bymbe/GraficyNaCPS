@@ -3,7 +3,6 @@ class Signal { //szum
   float signalE; // end of signal
   FloatList amp;
   float[] time = new float[1000];
-
   public Signal(float signalStart, float signalEnd, int amplitude) { //konstruktor
     signalS = signalStart;
     signalE = signalEnd;
@@ -15,10 +14,9 @@ class Signal { //szum
     signalS = zT[0];
     signalE = zT[1];
     amp = new FloatList(zT[2]);
-    for (int i=0; i<zT[2]; i++)
+    for (int i = 0; i < zT[2]; i++)
       amp.set(i, 0);
   }
-
   public void calculate() {
   }
 }
