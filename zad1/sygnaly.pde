@@ -190,26 +190,24 @@ class Triangular extends Sinusoidal {
     public void calculate() {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
-      float period = i * step + signalS;
-      float term = ((signalE - signalS) / period) - floor((signalE - signalS) / period);
+      float tac = ((signalE - signalS) / term) - floor((signalE - signalS) / term);
       time[j] = i;
-      if (term < fillFactor) {
-          amp.set(j, term / fillFactor * amp.size());
+      if (tac < fillFactor) {
+          amp.set(j,  tac / fillFactor * amp.size());
       } else {
-          amp.set(j, (1 - (term - fillFactor) / (1 - fillFactor)) * amp.size());
+          amp.set(j, (1 - (tac - fillFactor) / (1 - fillFactor)) * amp.size());
       }
       j++;
     }
   }
 }
 
-class UnitStroke extends Sinusoidal {
-  public UnitStroke(float signalStart, float signalEnd, int amplitude, float t) {
-        super(signalStart, signalEnd, amplitude, t);
+class UnitStroke extends Signal {
+  public UnitStroke(float signalStart, float signalEnd, int amplitude) {
+        super(signalStart, signalEnd, amplitude);
   }
-    public UnitStroke(float[] zT, float t) {
-        super(zT, t);
+    public UnitStroke(float[] zT) {
+        super(zT);
   }
     public void calculate() {
     int j = 0;
@@ -217,9 +215,9 @@ class UnitStroke extends Sinusoidal {
       float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;
-      if (period > signalS) {
+      if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
         amp.set(j, amp.size());
-      } else if (period == signalS) {
+      } else if (period == (signalS+signalE) / 2) { // period = signalS+signalE / 2
         amp.set(j, amp.size() * 0.5);
       } else {
         amp.set(j, 0.0);

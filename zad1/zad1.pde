@@ -11,7 +11,7 @@ RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
 Rectangular S6 = new Rectangular(zeroTen, 10, 5);
 SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
 Triangular S8 = new Triangular(zeroTen, 10, 5);
-UnitStroke S9 = new UnitStroke(zeroTen, 10);
+UnitStroke S9 = new UnitStroke(zeroTen);
 
 int wyborWykresu = 0;
 String signalType;
