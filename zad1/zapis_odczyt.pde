@@ -1,11 +1,23 @@
 void saveToBinaryFile(String fileName, byte[] data) {
-  print("zapisuje binarnie " + fileName + "\n");
+  println("zapisuje binarnie " + fileName);
   saveBytes(fileName + ".dat", data);
 }
 
-void saveToTextFile(String fileName, String data) {
-  print("zapisuje tekstowo");
+void saveToTextFile(String fileName, String[] data) {
+  println("zapisuje tekstowo");
   saveStrings(fileName + ".txt", data);
+  saveStrings(fileName + ".txt", data);
+}
+
+void saveToFile(String fileName, String[] data) {
+  PrintWriter output;
+  output = createWriter(fileName + ".txt");
+  output.println(data.length);
+  for(int i=0; i<data.length; i++) {
+    output.println(data[i]);
+  }
+  output.flush();
+  output.close();
 }
 
 void loadFromBinaryFile(String fileName) {
@@ -16,8 +28,9 @@ void loadFromBinaryFile(String fileName) {
 }
 
 void inititateSaveToFile() {
-  String floatListAsString = createStringList(S1.time);
-  saveToTextFile(signalName);
+  String[] floatListAsString = createStringList(S1.time);
+  //saveToTextFile(signalName, floatListAsString);
+  saveToFile(signalName, floatListAsString);
 }
 
 void initiateLoadFromFile() {
@@ -25,12 +38,14 @@ void initiateLoadFromFile() {
   wyborWykresu = 99;
 }
 
-String createStringList(float[] data) {
-  String[data.length] result;
-  
-  for(int i=0; i<data.length; i++) {
-    result[i] = data[i];
+
+
+String[] createStringList(float[] data) {
+  String[] result = new String[data.length];
+
+  for (int i=0; i<data.length; i++) {
+    result[i] = str(data[i]);
   }
-  
+
   return result;
 }
