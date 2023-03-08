@@ -35,11 +35,11 @@ void keyPressed() {
     wyborWykresu = 9;
     signalImpuls = true;
   }
-  if (key == 'n') {
+  if (key == '0') {
     wyborWykresu = 10;
     signalImpuls = false;
   }
-  if (key == 'm') {
+  if (key == '-') {
     wyborWykresu = 11;
     signalImpuls = false;
   }

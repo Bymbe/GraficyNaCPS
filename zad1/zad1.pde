@@ -9,6 +9,8 @@ String impulsType;
 boolean signalImpuls = true;
 float[] toZeroX = {0, 0};
 float[] toZeroY = {0, 0};
+float[] loadedFloatList;
+String signalName;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -48,6 +50,7 @@ void draw() {
     scatterplot(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
+    signalName = "szumJednostajny";
     break;
   case 2:
     scatterplot(toZeroX, toZeroY);
