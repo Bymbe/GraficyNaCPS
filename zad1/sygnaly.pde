@@ -194,10 +194,10 @@ class Triangular extends Sinusoidal {
       float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
-      if (tac < fillFactor) {
+      if (i % 1 == 0) {
         amp.set(j, tac / fillFactor * amp.size());
       } else {
-        amp.set(j, tac / -fillFactor * amp.size());
+        amp.set(j, (tac / -fillFactor * amp.size()) + amp.size() / 5);
         //amp.set(j, (1 - (tac - fillFactor) / (1 - fillFactor)) * amp.size());
       }
       j++;

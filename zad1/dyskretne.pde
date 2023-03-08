@@ -22,7 +22,7 @@ class UnitImpulse extends Discreet {
   }
   public void calculate() {
     int j = 0;
-    for (float i = -firstSample; i < firstSample; i += 1) {
+    for (float i = -firstSample; i < firstSample; i++) {
       time[j] = i;
       if (i == jumpSample) {
         amp.set(j, 1.0);
@@ -44,10 +44,11 @@ class NoiseImpulse extends Discreet {
   }
   public void calculate() {
     int j = 0;
-    for (float i = 0; i < noiseTime; i += 1) {
+    for (float i = 0; i < noiseTime; i++) {
       time[j] = i;
       float chance = probability*100 / amp.size();
-      if (chance == 50.0) { // probability to szansa na wystapienie na wykresie 1.0, trzeba obliczyc wartosc procentowa a potem skonstruowac if ktory dobrze zbalansuje 1.0 i 0.0
+      float x = random(100);
+      if ( x < chance) { // probability to szansa na wystapienie na wykresie 1.0, trzeba obliczyc wartosc procentowa a potem skonstruowac if ktory dobrze zbalansuje 1.0 i 0.0
         amp.set(j, 1.0);
       } else {
         amp.set(j, 0.0);

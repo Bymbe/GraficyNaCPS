@@ -11,6 +11,7 @@ float[] toZeroX = {0, 0};
 float[] toZeroY = {0, 0};
 float[] loadedFloatList;
 String signalName;
+float[] a = {1, 2, 3, 4};
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -23,7 +24,7 @@ Triangular S8 = new Triangular(zeroTen, 10, 5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
-NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 50, 50);
+NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
 void setup() {
   size(1280, 720);
@@ -47,93 +48,94 @@ void draw() {
   background(255);
   switch(wyborWykresu) {
   case 1:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     break;
   case 2:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     signalName = "szumGaussowski";
     break;
   case 3:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     break;
   case 4:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     break;
   case 5:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     break;
   case 6:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     break;
   case 7:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     break;
   case 8:    
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     break;
   case 9:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     break;
   case 10:
     chart(toZeroX, toZeroY);
-    scatterplot(I1.time, I1.amp.array());
+    scatter(I1.time, I1.amp.array());
     impulsType = "Impuls jednostkowy";
     signalName = "impulsJednostkowy";
     break;
   case 11:
     chart(toZeroX, toZeroY);
-    scatterplot(I2.time, I2.amp.array());
+    scatter(I2.time, I2.amp.array());
     impulsType = "Szum impulsowy";
     signalName = "szumImpulsowy";
     break;
   default:
-    scatterplot(toZeroX, toZeroY);
+    scatter(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumRozkladJednostajny";
     break;
   }
-  lineChart.draw(0, 0, width, height*0.8);
   fill(0);
   text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.85);
   if (signalImpuls) {
     text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
+    lineChart.draw(0, 0, width, height*0.8);
   } else {
     text("Obecny impuls: " + impulsType, width*0.01, height*0.90);
+    scatterplot.draw(0, 0, width, height*0.8);
   }
 }
 
-void scatterplot(float[] x, float[] y) {
+void scatter(float[] x, float[] y) {
   scatterplot = new XYChart(this);
-  scatterplot.setData(x,y);
-  scatterplot.showXAxis(true); 
-  scatterplot.showYAxis(true); 
+  scatterplot.setData(x, y);
+  scatterplot.showXAxis(true);
+  scatterplot.showYAxis(true);
   scatterplot.setPointColour(color(20, 20, 120, 100));
   scatterplot.setPointSize(5);
 }
