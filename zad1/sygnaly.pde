@@ -133,9 +133,9 @@ class Rectangular extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
-      float period = i * step + signalS;
+      float period = j * step + signalS;
       time[j] = i;
       //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
       //(((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
@@ -188,20 +188,18 @@ class Triangular extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
-      float period = i * step + signalS;
+      float period = j * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
       if (tac < fillFactor) {
         amp.set(j, tac / fillFactor * amp.size());
       } else {
-        amp.set(j, (1 - (tac - fillFactor) / (1 - fillFactor)) * amp.size());
+        amp.set(j, tac / -fillFactor * amp.size());
+        //amp.set(j, (1 - (tac - fillFactor) / (1 - fillFactor)) * amp.size());
       }
       j++;
-      if ( (signalE - signalS) % fillFactor == 0) { // trzeba usprawnic ten warunek i chyba powinno smigac 
-        fillFactor = -1 * fillFactor;
-      }
     }
   }
 }

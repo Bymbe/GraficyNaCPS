@@ -7,6 +7,8 @@ int wyborWykresu = 0;
 String signalType;
 String impulsType;
 boolean signalImpuls = true;
+float[] toZeroX = {0, 0};
+float[] toZeroY = {0, 0};
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -34,7 +36,7 @@ void setup() {
   S8.calculate();
   S9.calculate();
   I1.calculate();
-  //I2.calculate();
+  I2.calculate();
   background(255);
   textSize(16);
 }
@@ -43,59 +45,69 @@ void draw() {
   background(255);
   switch(wyborWykresu) {
   case 1:
+    scatterplot(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     break;
   case 2:
+    scatterplot(toZeroX, toZeroY);
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     break;
   case 3:
+    scatterplot(toZeroX, toZeroY);
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     break;
   case 4:
+    scatterplot(toZeroX, toZeroY);
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     break;
   case 5:
+    scatterplot(toZeroX, toZeroY);
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     break;
   case 6:
+    scatterplot(toZeroX, toZeroY);
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     break;
   case 7:
+    scatterplot(toZeroX, toZeroY);
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     break;
-  case 8:
+  case 8:    
+    scatterplot(toZeroX, toZeroY);
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     break;
   case 9:
+    scatterplot(toZeroX, toZeroY);
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     break;
   case 10:
+    chart(toZeroX, toZeroY);
     scatterplot(I1.time, I1.amp.array());
     impulsType = "Impuls jednostkowy";
     break;
   case 11:
+    chart(toZeroX, toZeroY);
     scatterplot(I2.time, I2.amp.array());
     impulsType = "Szum impulsowy";
     break;
   default:
+    scatterplot(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     break;
   }
-
   lineChart.draw(0, 0, width, height*0.8);
-
   fill(0);
-  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu 'n-m'", width*0.01, height*0.85);
+  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.85);
   if (signalImpuls) {
     text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
   } else {
@@ -131,10 +143,10 @@ void keyPressed() {
   } else if (key == '9') {
     wyborWykresu = 9;
     signalImpuls = true;
-  } else if (key == 'n') {
+  } else if (key == '0') {
     wyborWykresu = 10;
     signalImpuls = false;
-  } else if (key == 'm') {
+  } else if (key == '-') {
     wyborWykresu = 11;
     signalImpuls = false;
   }
@@ -145,11 +157,7 @@ void scatterplot(float[] x, float[] y) {
   scatterplot.setData(x,y);
   scatterplot.showXAxis(true); 
   scatterplot.showYAxis(true); 
-  scatterplot.setXFormat("$###,###");
-  scatterplot.setXAxisLabel("\nAverage income per person "+  
-                            "(inflation adjusted $US)");
-  scatterplot.setYAxisLabel("Life expectancy at birth (years)\n");
-  scatterplot.setPointColour(color(180,50,50,100));
+  scatterplot.setPointColour(color(20, 20, 120, 100));
   scatterplot.setPointSize(5);
 }
 
