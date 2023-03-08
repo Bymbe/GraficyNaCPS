@@ -33,8 +33,8 @@ void setup() {
   S7.calculate();
   S8.calculate();
   S9.calculate();
-  //I1.calculate();
-  I2.calculate();
+  I1.calculate();
+  //I2.calculate();
   background(255);
   textSize(16);
 }
