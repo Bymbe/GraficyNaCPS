@@ -95,8 +95,10 @@ class RectifiedOneSinusoidal extends Sinusoidal {
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
       float period = i * step + signalS;
       time[j] = i;
-      amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)) + abs(sin(TWO_PI / (term)) * (period - signalS)));
-      if (amp.get(j) <0) amp.set(j, 0); //czy o to chodzi?
+      amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)));// + abs(sin(TWO_PI / (term)) * (period - signalS)));
+      if (amp.get(j) < 0) {
+        amp.set(j, 0.0);
+      }
       j++;
     }
   }
@@ -140,7 +142,8 @@ class Rectangular extends Sinusoidal {
       //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
       //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
       //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
-      if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
+      //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
+        if (j * fillFactor > period * fillFactor) {
         amp.set(j, amp.size());
       } else {
         amp.set(j, 0.0);
@@ -190,16 +193,24 @@ class Triangular extends Sinusoidal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
+    //boolean yes = true;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
       float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
-      if (i % 1 == 0) {
+      if (/*yes*/ tac > fillFactor) {
         amp.set(j, tac / fillFactor * amp.size());
       } else {
-        amp.set(j, (tac / -fillFactor * amp.size()) + amp.size() / 5);
-        //amp.set(j, (1 - (tac - fillFactor) / (1 - fillFactor)) * amp.size());
+        amp.set(j, -tac / fillFactor * amp.size());
       }
+      /*if (j == 0) {
+       } else {
+       if (amp.get(j) <= amp.size() && amp.get(j) > amp.get(j - 1)) {
+       yes = true;
+       } else {
+       yes = false;
+       }
+       }*/
       j++;
     }
   }
