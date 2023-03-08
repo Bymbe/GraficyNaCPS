@@ -71,10 +71,10 @@ class Sinusoidal extends Signal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
       //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)
       time[j] = i;
-      float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       amp.set(j, amp.size()*sin((TWO_PI / (term)) * (period-signalS)));
       j++;
@@ -91,8 +91,8 @@ class RectifiedOneSinusoidal extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;
       amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)) + abs(sin(TWO_PI / (term)) * (period - signalS)));
@@ -111,8 +111,8 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;
       amp.set(j, amp.size() * abs(sin((TWO_PI / (term)) * (period-signalS))));
@@ -135,11 +135,12 @@ class Rectangular extends Sinusoidal {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float period = j * step + signalS;
+      float period = i * step + signalS;
       time[j] = i;
       //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
-      //(((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
-      if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
+      //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
+      //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
+      if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
         amp.set(j, amp.size());
       } else {
         amp.set(j, 0.0);
@@ -161,8 +162,8 @@ class SymmetricalRectangular extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
+    float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;
       if (((period - (signalE + signalS) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) < fillFactor) {
@@ -190,7 +191,7 @@ class Triangular extends Sinusoidal {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
-      float period = j * step + signalS;
+      float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
       if (tac < fillFactor) {
