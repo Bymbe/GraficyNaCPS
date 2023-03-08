@@ -43,4 +43,12 @@ void keyPressed() {
     wyborWykresu = 11;
     signalImpuls = false;
   }
+
+
+  if (key == 's') {
+    inititateSaveToFile();
+  }
+  if(key == 'l') {
+    initiateLoadFromFile();
+  }
 }
