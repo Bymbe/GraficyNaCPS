@@ -11,6 +11,7 @@ void saveToBinaryFile(String fileName, byte[] data) {
 void loadFromBinaryFile(String fileName) {
   print("wczytuje binarnie " + fileName + "\n");
   byte[] loadedByteList = loadBytes(fileName + ".dat");
+  S1.time = float(loadedByteList);
   loadedFloatList = float(loadedByteList);
 }
 

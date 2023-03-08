@@ -56,56 +56,67 @@ void draw() {
     scatterplot(toZeroX, toZeroY);
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
+    signalName = "szumGaussowski";
     break;
   case 3:
     scatterplot(toZeroX, toZeroY);
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
+    signalName = "sygnalSin";
     break;
   case 4:
     scatterplot(toZeroX, toZeroY);
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
+    signalName = "sygnalSinWyprJedn";
     break;
   case 5:
     scatterplot(toZeroX, toZeroY);
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
+    signalName = "sygnalSinWyprDwu";
     break;
   case 6:
     scatterplot(toZeroX, toZeroY);
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
+    signalName = "sygnalProstokatny";
     break;
   case 7:
     scatterplot(toZeroX, toZeroY);
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
+    signalName = "sygnalProstokatnySym";
     break;
   case 8:    
     scatterplot(toZeroX, toZeroY);
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
+    signalName = "sygnalTrojkatny";
     break;
   case 9:
     scatterplot(toZeroX, toZeroY);
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
+    signalName = "sygnalJednostkowy";
     break;
   case 10:
     chart(toZeroX, toZeroY);
     scatterplot(I1.time, I1.amp.array());
     impulsType = "Impuls jednostkowy";
+    signalName = "impulsJednostkowy";
     break;
   case 11:
     chart(toZeroX, toZeroY);
     scatterplot(I2.time, I2.amp.array());
     impulsType = "Szum impulsowy";
+    signalName = "szumImpulsowy";
     break;
   default:
     scatterplot(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
+    signalName = "szumRozkladJednostajny";
     break;
   }
   lineChart.draw(0, 0, width, height*0.8);
