@@ -1,7 +1,7 @@
 class Discreet {
   float freq;
   FloatList amp;
-  float[] time = new float[1000];
+  float[] time = new float[LICZBA_PROBEK];
   public Discreet(float f, int amplitude) {
     freq = f;
     amp = new FloatList(amplitude);

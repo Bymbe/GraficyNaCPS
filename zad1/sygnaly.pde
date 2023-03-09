@@ -2,7 +2,7 @@ class Signal { //szum
   float signalS; // start of signal
   float signalE; // end of signal
   FloatList amp;
-  float[] time = new float[1000];
+  float[] time = new float[LICZBA_PROBEK];
   public Signal(float signalStart, float signalEnd, int amplitude) { //konstruktor
     signalS = signalStart;
     signalE = signalEnd;
@@ -30,7 +30,7 @@ class ContinuosSignal extends Signal {
   }
   public void calculate() {
     int j = 0;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       amp.set(j, random(-amp.size(), amp.size()));
       time[j] = i;
       j++;
@@ -48,7 +48,7 @@ class Gauss extends Signal { //szum gaussa
   }
   public void calculate() {
     int j = 0;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float first = 1/(dev*sqrt(TWO_PI));
       float third = (-1 * pow((i - avg), 2)) / (2*pow(dev, 2));
       float second = pow(exp(1.0), third);
@@ -72,7 +72,7 @@ class Sinusoidal extends Signal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)
       time[j] = i;
       float period = i * step + signalS;
@@ -92,7 +92,7 @@ class RectifiedOneSinusoidal extends Sinusoidal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float period = i * step + signalS;
       time[j] = i;
       amp.set(j, 0.5 * amp.size()*sin((TWO_PI / (term)) * (period-signalS)));// + abs(sin(TWO_PI / (term)) * (period - signalS)));
@@ -114,7 +114,7 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float period = i * step + signalS;
       time[j] = i;
       amp.set(j, amp.size() * abs(sin((TWO_PI / (term)) * (period-signalS))));
@@ -136,7 +136,7 @@ class Rectangular extends Sinusoidal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float period = i * step + signalS;
       time[j] = i;
       //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
@@ -166,7 +166,7 @@ class SymmetricalRectangular extends Sinusoidal {
   public void calculate() {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float period = i * step + signalS;
       time[j] = i;
       if (((period - (signalE + signalS) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) < fillFactor) {
@@ -194,7 +194,7 @@ class Triangular extends Sinusoidal {
     int j = 0;
     float step = signalE - signalS / (amp.size() - 1);
     //boolean yes = true;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
@@ -225,7 +225,7 @@ class UnitStroke extends Signal {
   }
   public void calculate() {
     int j = 0;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) * 0.001) {
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / LICZBA_PROBEK) {
       float step = signalE - signalS / (amp.size() - 1);
       float period = i * step + signalS;
       time[j] = i;

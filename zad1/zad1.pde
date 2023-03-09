@@ -2,6 +2,8 @@ import org.gicentre.utils.stat.*;
 XYChart lineChart;
 XYChart scatterplot;
 
+int LICZBA_PROBEK = 1000;
+
 float[] zeroTen = {0, 10, 1000};
 int wyborWykresu = 0;
 String signalType;
