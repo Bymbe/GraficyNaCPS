@@ -5,7 +5,7 @@ XYChart scatterplot;
 int LICZBA_PROBEK = 1000;
 
 float[] zeroTen = {0, 10, 1000};
-int wyborWykresu = 0;
+int wyborWykresu = 1;
 String signalType;
 String impulsType;
 boolean signalImpuls = true;
@@ -119,7 +119,7 @@ void draw() {
     scatter(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
-    signalName = "szumRozkladJednostajny";
+    signalName = "szumJednostajny";
     break;
   }
   fill(0);

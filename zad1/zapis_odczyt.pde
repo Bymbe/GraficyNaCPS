@@ -12,6 +12,7 @@ void saveToFile(String fileName, String[] data1, String[] data2) {
   }
   output.flush();
   output.close();
+  println("zapisano plik " + fileName);
 }
 
 void loadFromFile(String fileName) {
@@ -31,6 +32,7 @@ void loadFromFile(String fileName) {
   for(int i=0; i<data2.length; i++) {
     S2.amp.set(i, data2[i]);
   }
+  println("wczytano plik " + fileName);
 }
 
 void inititateSaveToFile() {
