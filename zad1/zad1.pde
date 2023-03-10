@@ -130,17 +130,17 @@ void draw() {
 
 
   fill(0);
-  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.90);
+  //text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width/2, height*0.90);
 
 
-  if (isItSignalOrImpulse) {
+  if (wyborWykresu < 10) {
     textSize(20);
-    text("Obecny sygnał: " + signalType, width/2, height*0.05);
+    text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
     lineChart.draw(0, height*0.1, width, height*0.7);
   } else {
     textSize(20);
-    text("Obecny impuls: " + impulsType, width/2, height*0.05);
+    text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
     scatterplot.draw(0, 0, width, height*0.8);
   }
