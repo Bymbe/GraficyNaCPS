@@ -29,6 +29,7 @@ UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
 void setup() {
+  rectMode(CORNERS);
   size(1280, 720);
   textFont(createFont("Arial", 10), 10);
   S1.calculate();
@@ -131,6 +132,8 @@ void draw() {
     text("Obecny impuls: " + impulsType, width*0.01, height*0.90);
     scatterplot.draw(0, 0, width, height*0.8);
   }
+  
+  drawButtons();
 }
 
 void scatter(float[] x, float[] y) {
