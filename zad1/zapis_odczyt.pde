@@ -11,7 +11,7 @@ void saveToFile(String fileName, String[] data1, String[] data2) {
   }
   output.flush();
   output.close();
-  println("zapisano plik" + fileName);
+  println("Zapisano plik " + fileName);
 }
 
 void loadFromFile(String fileName) {
@@ -95,6 +95,7 @@ void loadFromFile(String fileName) {
       }
       break;
     }
+    println("Wczytano plik " + fileName);
   }
   catch(Exception e) {
     println("Taki plik nie istnieje!");

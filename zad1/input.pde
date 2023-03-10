@@ -50,3 +50,7 @@ void keyPressed() {
     initiateLoadFromFile();
   }
 }
+
+void mouseReleased() {
+  wasMousePressedLastFrame = false;
+}

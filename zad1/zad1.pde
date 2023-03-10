@@ -16,6 +16,7 @@ String signalName;
 float[] a = {1, 2, 3, 4};
 String[] string1;
 String[] string2;
+boolean wasMousePressedLastFrame = false;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -130,15 +131,15 @@ void draw() {
 
 
   fill(0);
-  //text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width/2, height*0.90);
-
 
   if (wyborWykresu < 10) {
+    isItSignalOrImpulse = true;
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
     lineChart.draw(0, height*0.1, width, height*0.7);
   } else {
+    isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
