@@ -15,84 +15,89 @@ void saveToFile(String fileName, String[] data1, String[] data2) {
 }
 
 void loadFromFile(String fileName) {
-  String[] file = loadStrings(fileName + ".txt");
-  float[] data1 = new float[int(file[0])];
-  float[] data2 = new float[int(file[0])];
+  try {
+    String[] file = loadStrings(fileName + ".txt");
+    float[] data1 = new float[int(file[0])];
+    float[] data2 = new float[int(file[0])];
 
-  for (int i = 0; i < int(file[0]); i++) {
-    data1[i] = float(file[i+1]);
-  }
-  for (int i = 0; i < int(file[0]); i++) {
-    data2[i] = float(file[i+1+int(file[0])]);
-  }
+    for (int i = 0; i < int(file[0]); i++) {
+      data1[i] = float(file[i+1]);
+    }
+    for (int i = 0; i < int(file[0]); i++) {
+      data2[i] = float(file[i+1+int(file[0])]);
+    }
 
-  switch(wyborWykresu) {
-  case 1:
-    S1.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S1.amp.set(i, data2[i]);
+    switch(wyborWykresu) {
+    case 1:
+      S1.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S1.amp.set(i, data2[i]);
+      }
+      break;
+    case 2:
+      S2.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S2.amp.set(i, data2[i]);
+      }
+      break;
+    case 3:
+      S3.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S3.amp.set(i, data2[i]);
+      }
+      break;
+    case 4:
+      S4.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S4.amp.set(i, data2[i]);
+      }
+      break;
+    case 5:
+      S5.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S5.amp.set(i, data2[i]);
+      }
+      break;
+    case 6:
+      S6.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S6.amp.set(i, data2[i]);
+      }
+      break;
+    case 7:
+      S7.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S7.amp.set(i, data2[i]);
+      }
+      break;
+    case 8:
+      S8.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S8.amp.set(i, data2[i]);
+      }
+      break;
+    case 9:
+      S9.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S9.amp.set(i, data2[i]);
+      }
+      break;
+    case 10:
+      I1.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        I1.amp.set(i, data2[i]);
+      }
+      break;
+    case 11:
+      I2.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        I2.amp.set(i, data2[i]);
+      }
+      break;
     }
-    break;
-  case 2:
-    S2.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S2.amp.set(i, data2[i]);
-    }
-    break;
-  case 3:
-    S3.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S3.amp.set(i, data2[i]);
-    }
-    break;
-  case 4:
-    S4.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S4.amp.set(i, data2[i]);
-    }
-    break;
-  case 5:
-    S5.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S5.amp.set(i, data2[i]);
-    }
-    break;
-  case 6:
-    S6.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S6.amp.set(i, data2[i]);
-    }
-    break;
-  case 7:
-    S7.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S7.amp.set(i, data2[i]);
-    }
-    break;
-  case 8:
-    S8.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S8.amp.set(i, data2[i]);
-    }
-    break;
-  case 9:
-    S9.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      S9.amp.set(i, data2[i]);
-    }
-    break;
-  case 10:
-    I1.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      I1.amp.set(i, data2[i]);
-    }
-    break;
-  case 11:
-    I2.time = data1;
-    for (int i=0; i<data2.length; i++) {
-      I2.amp.set(i, data2[i]);
-    }
-    break;
+  }
+  catch(Exception e) {
+    println("Taki plik nie istnieje!");
   }
 }
 

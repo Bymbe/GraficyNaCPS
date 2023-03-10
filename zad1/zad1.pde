@@ -8,7 +8,7 @@ float[] zeroTen = {0, 10, 1000};
 int wyborWykresu = 1;
 String signalType;
 String impulsType;
-boolean signalImpuls = true;
+boolean isItSignalOrImpulse = true;
 float[] toZeroX = {0, 0};
 float[] toZeroY = {0, 0};
 float[] loadedFloatList;
@@ -32,6 +32,7 @@ NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
 void setup() {
   rectMode(CORNERS);
+  textAlign(CENTER, CENTER);
   size(1280, 720);
   textFont(createFont("Arial", 10), 10);
   S1.calculate();
@@ -130,13 +131,20 @@ void draw() {
 
   fill(0);
   text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.90);
-  if (signalImpuls) {
-    text("Obecny sygnał: " + signalType, width*0.01, height*0.95);
-    lineChart.draw(0, 0, width, height*0.8);
+
+
+  if (isItSignalOrImpulse) {
+    textSize(20);
+    text("Obecny sygnał: " + signalType, width/2, height*0.05);
+    textSize(16);
+    lineChart.draw(0, height*0.1, width, height*0.7);
   } else {
-    text("Obecny impuls: " + impulsType, width*0.01, height*0.95);
+    textSize(20);
+    text("Obecny impuls: " + impulsType, width/2, height*0.05);
+    textSize(16);
     scatterplot.draw(0, 0, width, height*0.8);
   }
+
 
   drawButtons();
 }

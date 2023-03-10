@@ -16,7 +16,6 @@ void saveButton() {
   fill(0);
   textAlign(CENTER, CENTER);
   text("ZAPISZ", width*0.80, height*0.85, width*0.88, height*0.98);
-  textAlign(LEFT);
 }
 
 void loadButton() {
