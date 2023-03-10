@@ -14,6 +14,8 @@ float[] toZeroY = {0, 0};
 float[] loadedFloatList;
 String signalName;
 float[] a = {1, 2, 3, 4};
+String[] string1;
+String[] string2;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -49,6 +51,7 @@ void setup() {
 
 void draw() {
   background(255);
+
   switch(wyborWykresu) {
   case 1:
     scatter(toZeroX, toZeroY);
@@ -92,7 +95,7 @@ void draw() {
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     break;
-  case 8:    
+  case 8:
     scatter(toZeroX, toZeroY);
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
@@ -123,16 +126,18 @@ void draw() {
     signalName = "szumJednostajny";
     break;
   }
+
+
   fill(0);
-  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.85);
+  text("Wybierz rodzaj sygnału klawiszami '1-9', lub impulsu '0', lub '-'", width*0.01, height*0.90);
   if (signalImpuls) {
-    text("Obecny sygnał: " + signalType, width*0.01, height*0.90);
+    text("Obecny sygnał: " + signalType, width*0.01, height*0.95);
     lineChart.draw(0, 0, width, height*0.8);
   } else {
-    text("Obecny impuls: " + impulsType, width*0.01, height*0.90);
+    text("Obecny impuls: " + impulsType, width*0.01, height*0.95);
     scatterplot.draw(0, 0, width, height*0.8);
   }
-  
+
   drawButtons();
 }
 

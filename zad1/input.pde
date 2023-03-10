@@ -44,7 +44,7 @@ void keyPressed() {
     signalImpuls = false;
   }
   if (key == 's') {
-    inititateSaveToFile();
+    initiateSaveToFile();
   }
   if(key == 'l') {
     initiateLoadFromFile();
