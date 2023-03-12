@@ -15,6 +15,30 @@ void controlEvent(ControlEvent theEvent) {
     w2 = int(wykres2String);
     println(w2);
   }
+  if (theEvent.isTab()) {
+    switch(operacjaString) {
+    case "+":
+      switch(w1) {
+        
+      }
+      break;
+    case "-":
+      switch(w1) {
+        
+      }
+      break;
+    case ":":
+      switch(w1) {
+        
+      }
+      break;
+    case "*":
+      switch(w1) {
+        
+      }
+      break;
+    }
+  }
 }
 
 void operationTextFields() {
