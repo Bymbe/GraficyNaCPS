@@ -1,10 +1,13 @@
+import controlP5.*;
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 XYChart scatterplot;
+ControlP5 cp5;
 
-int LICZBA_PROBEK = 1000;
+int SAMPLE_NUMBER = 1000;
+int USER_AMPLITUDE = 1000;
 
-float[] zeroTen = {0, 10, 1000};
+float[] zeroTen = {0, 10, USER_AMPLITUDE};
 int wyborWykresu = 1;
 String signalType;
 String impulsType;
@@ -32,10 +35,8 @@ UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
 void setup() {
-  rectMode(CORNERS);
-  textAlign(CENTER, CENTER);
-  size(1280, 720);
-  textFont(createFont("Arial", 10), 10);
+  cp5 = new ControlP5(this);
+  drawSliders();
   S1.calculate();
   S2.calculate();
   S3.calculate();
@@ -47,6 +48,10 @@ void setup() {
   S9.calculate();
   I1.calculate();
   I2.calculate();
+  rectMode(CORNERS);
+  textAlign(CENTER, CENTER);
+  size(1280, 720);
+  textFont(createFont("Arial", 10), 10);
   background(255);
   textSize(16);
 }
@@ -129,7 +134,6 @@ void draw() {
     break;
   }
 
-
   fill(0);
 
   if (wyborWykresu < 10) {
@@ -146,8 +150,31 @@ void draw() {
     scatterplot.draw(0, 0, width, height*0.8);
   }
 
-
   drawButtons();
+
+  USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
+  S1.setAmplitude(USER_AMPLITUDE);
+  S2.setAmplitude(USER_AMPLITUDE);
+  S3.setAmplitude(USER_AMPLITUDE);
+  S4.setAmplitude(USER_AMPLITUDE);
+  S5.setAmplitude(USER_AMPLITUDE);
+  S6.setAmplitude(USER_AMPLITUDE);
+  S7.setAmplitude(USER_AMPLITUDE);
+  S8.setAmplitude(USER_AMPLITUDE);
+  S9.setAmplitude(USER_AMPLITUDE);
+  if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
+    S1.calculate();
+    S2.calculate();
+    S3.calculate();
+    S4.calculate();
+    S5.calculate();
+    S6.calculate();
+    S7.calculate();
+    S8.calculate();
+    S9.calculate();
+    I1.calculate();
+    I2.calculate();
+  }
 }
 
 void scatter(float[] x, float[] y) {

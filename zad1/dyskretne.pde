@@ -1,11 +1,13 @@
 class Discreet {
   float freq;
   FloatList amp;
-  float[] time = new float[LICZBA_PROBEK];
+  float[] time = new float[SAMPLE_NUMBER];
+  int ampl;
   public Discreet(float f, int amplitude) {
     freq = f;
-    amp = new FloatList(amplitude);
-    for (int i = 0; i < amplitude; i++)
+    amp = new FloatList(SAMPLE_NUMBER);
+    ampl = amplitude;
+    for (int i = 0; i < SAMPLE_NUMBER; i++)
       amp.set(i, 0);
   }
   public void calculate() {
@@ -46,7 +48,7 @@ class NoiseImpulse extends Discreet {
     int j = 0;
     for (float i = 0; i < noiseTime; i++) {
       time[j] = i;
-      float chance = probability*100 / amp.size();
+      float chance = probability*100 / ampl;
       float x = random(100);
       if ( x < chance) { // probability to szansa na wystapienie na wykresie 1.0, trzeba obliczyc wartosc procentowa a potem skonstruowac if ktory dobrze zbalansuje 1.0 i 0.0
         amp.set(j, 1.0);

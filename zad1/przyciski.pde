@@ -67,6 +67,24 @@ void arrowButtons() {
   text("NASTĘPNY SYGNAŁ", width*0.70, height*0.85, width*0.78, height*0.98);
 }
 
+void amplitudeButton() {
+  String slid1 = "amplitude";
+  cp5.addSlider(slid1)
+        .setBroadcast(false)
+        .setPosition(20, 650)
+        .setValue(USER_AMPLITUDE)
+        .setRange(10, 10000)
+        .setSize(200, 50)
+        .setSliderMode(Slider.FLEXIBLE)
+        .setBroadcast(true)
+        .setColorCaptionLabel(#0bfc00)
+        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+        .setPaddingX(0);
+}
+
+void drawSliders() {
+  amplitudeButton();
+}
 
 void drawButtons() {
   loadButton();

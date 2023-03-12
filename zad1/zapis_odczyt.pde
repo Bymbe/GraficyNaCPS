@@ -106,7 +106,6 @@ void initiateSaveToFile() {
   string1 = createStringList(S1.time);
   string2 = createStringList(S1.amp.array());
 
-
   switch(wyborWykresu) {
   case 1:
     string1 = createStringList(S1.time);
@@ -160,8 +159,6 @@ void initiateSaveToFile() {
 void initiateLoadFromFile() {
   loadFromFile(signalName);
 }
-
-
 
 String[] createStringList(float[] data) {
   String[] result = new String[data.length];
