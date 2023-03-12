@@ -24,7 +24,7 @@ String wykres1String, operacjaString, wykres2String; // zmienne do operacji na s
 int w1, op, w2; // ^^ w formie intow
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
-Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
+Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
