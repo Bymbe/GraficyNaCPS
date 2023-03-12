@@ -68,6 +68,20 @@ void arrowButtons() {
 }
 
 void addButton() {
+    if (mouseX >= width*0.70 && mouseX <= width*0.78  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU DODAJ
+      switch(wyborWykres) {
+        case 1:
+        // wybor wykresu - aktualnie ogladane
+        // i sume zrobie
+        // zmienna jakas nowa - poprzednio ogladane
+      }
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
   fill(buttonColor);
   rect(width*0.50, height*0.85, width*0.58, height*0.98, 10, 10, 10, 10);
   fill(0);
