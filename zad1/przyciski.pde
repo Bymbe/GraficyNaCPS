@@ -67,6 +67,14 @@ void arrowButtons() {
   text("NASTĘPNY SYGNAŁ", width*0.70, height*0.85, width*0.78, height*0.98);
 }
 
+void addButton() {
+  fill(buttonColor);
+  rect(width*0.50, height*0.85, width*0.58, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("DODAJ SYGNAŁ", width*0.50, height*0.85, width*0.58, height*0.98);
+}
+
 void amplitudeButton() {
   String slid1 = "amplitude";
   cp5.addSlider(slid1)
@@ -77,7 +85,7 @@ void amplitudeButton() {
         .setSize(200, 50)
         .setSliderMode(Slider.FLEXIBLE)
         .setBroadcast(true)
-        .setColorCaptionLabel(#0bfc00)
+        .setColorCaptionLabel(#12FA61)
         .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
         .setPaddingX(0);
 }
@@ -87,6 +95,7 @@ void drawSliders() {
 }
 
 void drawButtons() {
+  addButton();
   loadButton();
   saveButton();
   arrowButtons();

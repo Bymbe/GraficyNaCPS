@@ -136,7 +136,7 @@ void draw() {
 
   fill(0);
 
-  if (wyborWykresu < 10) {
+  if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
@@ -149,7 +149,14 @@ void draw() {
     textSize(16);
     scatterplot.draw(0, 0, width, height*0.8);
   }
-
+  textSize(16);
+  fill(#12FA61);
+  textAlign(LEFT);
+  text("Alternatywny wybor grafu (od '1' do '-')", 20, 600);
+  textAlign(LEFT);
+  textSize(12);
+  text("Operacje na amplitudach sygnałów uwzgledniaja poprzednio i aktualnie oglądany sygnał", 20, 630);
+  textSize(16);
   drawButtons();
 
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
