@@ -39,7 +39,7 @@ Signal subSignals(Signal A, Signal B, String signalForm) {
   return S;
 }
 
-Signal multiSignals(Signal A, Signal B, String signalForm) {
+Signal mulSignals(Signal A, Signal B, String signalForm) {
   int a = A.getAmplitude();
   int b = B.getAmplitude();
   int amplitude = a * b;

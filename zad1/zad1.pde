@@ -153,10 +153,10 @@ void draw() {
   textSize(16);
   fill(#12FA61);
   textAlign(LEFT);
-  text("Alternatywny wybor grafu (od '1' do '-')", 20, 600);
+  text("Alternatywny wybór grafu (od '1' do '-')", 20, 600);
   textAlign(LEFT);
   textSize(12);
-  text("Operacje na amplitudach sygnałów -----", 20, 630);
+  text("Możliwość wyboru dezaktywuje się po najechaniu kursorem na okienka operacji: ", 20, 630);
   text(">", 230, 631);
   textSize(16);
   fill(0);
