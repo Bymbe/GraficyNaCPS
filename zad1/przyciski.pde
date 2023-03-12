@@ -1,21 +1,44 @@
 int buttonColor = 200;
 
 void controlEvent(ControlEvent theEvent) {
-    if(theEvent.getName() == "wykres1") {
-      wykres1String = theEvent.getStringValue();
-      w1 = int(wykres1String);
-       println(w1);
-    }
-    if(theEvent.getName() == "operacja") {
-      operacjaString = theEvent.getStringValue();
-      println(operacjaString);
-    }
-    if(theEvent.getName() == "wykres2") {
-      wykres2String = theEvent.getStringValue();
-      w2 = int(wykres2String);
-      println(w2);
-    }
+  if (theEvent.getName() == "wykres1") {
+    wykres1String = theEvent.getStringValue();
+    w1 = int(wykres1String);
+    println(w1);
   }
+  if (theEvent.getName() == "operacja") {
+    operacjaString = theEvent.getStringValue();
+    println(operacjaString);
+  }
+  if (theEvent.getName() == "wykres2") {
+    wykres2String = theEvent.getStringValue();
+    w2 = int(wykres2String);
+    println(w2);
+  }
+}
+
+void operationTextFields() {
+  PFont font;
+  font = createFont("Arial", 50);
+  cp6.addTextfield("wykres2")
+    .setPosition(int(width*0.54), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0));
+  cp6.addTextfield("operacja")
+    .setPosition(int(width*0.48), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0));
+  cp6.addTextfield("wykres1")
+    .setPosition(int(width*0.42), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0));
+}
 
 void saveButton() {
   if (mouseX >= width*0.80 && mouseX <= width*0.88  && mouseY >= height*0.85 && mouseY <= height*0.98) {
@@ -109,23 +132,24 @@ void arrowButtons() {
 void amplitudeButton() {
   String slid1 = "amplitude";
   cp5.addSlider(slid1)
-        .setBroadcast(false)
-        .setPosition(20, 650)
-        .setValue(USER_AMPLITUDE)
-        .setRange(10, 10000)
-        .setSize(200, 50)
-        .setSliderMode(Slider.FLEXIBLE)
-        .setBroadcast(true)
-        .setColorCaptionLabel(#12FA61)
-        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
-        .setPaddingX(0);
+    .setBroadcast(false)
+    .setPosition(20, 650)
+    .setValue(USER_AMPLITUDE)
+    .setRange(10, 10000)
+    .setSize(200, 50)
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#12FA61)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
 }
 
-void drawSliders() {
+void StaticDraw() {
+  operationTextFields();
   amplitudeButton();
 }
 
-void drawButtons() {
+void ActiveDraw() {
   //addButton();
   loadButton();
   saveButton();

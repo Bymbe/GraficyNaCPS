@@ -20,8 +20,8 @@ float[] a = {1, 2, 3, 4};
 String[] string1;
 String[] string2;
 boolean wasMousePressedLastFrame = false;
-String wykres1String, operacjaString, wykres2String;
-int w1, op, w2;
+String wykres1String, operacjaString, wykres2String; // zmienne do operacji na sygnalach
+int w1, op, w2; // ^^ w formie intow
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -39,7 +39,7 @@ NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 void setup() {
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
-  drawSliders();
+  StaticDraw();
   S1.calculate();
   S2.calculate();
   S3.calculate();
@@ -54,38 +54,12 @@ void setup() {
   rectMode(CORNERS);
   textAlign(CENTER, CENTER);
   size(1280, 720);
-  PFont font;
-  font = createFont("Arial", 50);
-  textFont(font);
   background(255);
   textSize(16);
-
-  cp6.addTextfield("wykres2")
-    .setPosition(int(width*0.54), int(height*0.85))
-    .setSize(int(width*0.04), int(height*0.13))
-    .setFont(font)
-    .setFocus(true)
-    .setColor(color(255, 0, 0))
-    ;
-  cp6.addTextfield("operacja")
-    .setPosition(int(width*0.48), int(height*0.85))
-    .setSize(int(width*0.04), int(height*0.13))
-    .setFont(font)
-    .setFocus(true)
-    .setColor(color(255, 0, 0))
-    ;
-  cp6.addTextfield("wykres1")
-    .setPosition(int(width*0.42), int(height*0.85))
-    .setSize(int(width*0.04), int(height*0.13))
-    .setFont(font)
-    .setFocus(true)
-    .setColor(color(255, 0, 0))
-    ;
 }
 
 void draw() {
   background(255);
-
   switch(wyborWykresu) {
   case 1:
     scatter(toZeroX, toZeroY);
@@ -182,7 +156,8 @@ void draw() {
   text("Alternatywny wybor grafu (od '1' do '-')", 20, 600);
   textAlign(LEFT);
   textSize(12);
-  text("Operacje na amplitudach sygnałów uwzgledniaja poprzednio i aktualnie oglądany sygnał", 20, 630);
+  text("Operacje na amplitudach sygnałów -----", 20, 630);
+  text(">", 230, 631);
   textSize(16);
   fill(0);
   text("wykres 1", width*0.42, height*0.83);
@@ -191,7 +166,8 @@ void draw() {
   textAlign(CENTER);
   textSize(12);
   text("(Wciśnij ENTER po wpisaniu każdej z wartości)", width*0.50, height*0.80);
-  drawButtons();
+  textSize(20);
+  ActiveDraw();
 
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
   S1.setAmplitude(USER_AMPLITUDE);
