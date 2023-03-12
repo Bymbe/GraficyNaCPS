@@ -2,7 +2,7 @@ import controlP5.*;
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 XYChart scatterplot;
-ControlP5 cp5;
+ControlP5 cp5, cp6;
 
 int SAMPLE_NUMBER = 1000;
 int USER_AMPLITUDE = 1000;
@@ -20,6 +20,8 @@ float[] a = {1, 2, 3, 4};
 String[] string1;
 String[] string2;
 boolean wasMousePressedLastFrame = false;
+String wykres1String, operacjaString, wykres2String;
+int w1, op, w2;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, 1000, 0, 1);
@@ -36,6 +38,7 @@ NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
 void setup() {
   cp5 = new ControlP5(this);
+  cp6 = new ControlP5(this);
   drawSliders();
   S1.calculate();
   S2.calculate();
@@ -51,9 +54,33 @@ void setup() {
   rectMode(CORNERS);
   textAlign(CENTER, CENTER);
   size(1280, 720);
-  textFont(createFont("Arial", 10), 10);
+  PFont font;
+  font = createFont("Arial", 50);
+  textFont(font);
   background(255);
   textSize(16);
+
+  cp6.addTextfield("wykres2")
+    .setPosition(int(width*0.54), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0))
+    ;
+  cp6.addTextfield("operacja")
+    .setPosition(int(width*0.48), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0))
+    ;
+  cp6.addTextfield("wykres1")
+    .setPosition(int(width*0.42), int(height*0.85))
+    .setSize(int(width*0.04), int(height*0.13))
+    .setFont(font)
+    .setFocus(true)
+    .setColor(color(255, 0, 0))
+    ;
 }
 
 void draw() {
@@ -141,13 +168,13 @@ void draw() {
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
-    lineChart.draw(0, height*0.1, width, height*0.7);
+    lineChart.draw(0, height*0.1, width, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
-    scatterplot.draw(0, 0, width, height*0.8);
+    scatterplot.draw(0, 0, width, height*0.65);
   }
   textSize(16);
   fill(#12FA61);
@@ -157,6 +184,13 @@ void draw() {
   textSize(12);
   text("Operacje na amplitudach sygnałów uwzgledniaja poprzednio i aktualnie oglądany sygnał", 20, 630);
   textSize(16);
+  fill(0);
+  text("wykres 1", width*0.42, height*0.83);
+  text("operacja", width*0.48, height*0.83);
+  text("wykres 2", width*0.54, height*0.83);
+  textAlign(CENTER);
+  textSize(12);
+  text("(Wciśnij ENTER po wpisaniu każdej z wartości)", width*0.50, height*0.80);
   drawButtons();
 
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
