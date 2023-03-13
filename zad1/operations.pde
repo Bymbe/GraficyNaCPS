@@ -1,4 +1,5 @@
 void calculate() {
+  calcResult = new float[SAMPLE_NUMBER];
   switch(w1) {
   case 1:
     calc1 = S1.amp.array();
@@ -69,6 +70,7 @@ void calculate() {
     calc2 = I2.amp.array();
     break;
   }
+  try{
   switch(operacjaString) {
     case "+":
     for(int i=0; i < calc1.length; i++) {
@@ -91,6 +93,9 @@ void calculate() {
       else calcResult[i] = USER_AMPLITUDE * 5;
     }
     break;
+  }
+  } catch (Exception e) {
+    println("tutaj sie zesralo");
   }
 }
 

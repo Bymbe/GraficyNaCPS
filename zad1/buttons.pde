@@ -46,6 +46,7 @@ void calculateButton() {
       wasMousePressedLastFrame = true;
       buttonColor = 100;
       calculate();
+      println("wykonano operacje");
     } else {
       buttonColor = 150;
     }

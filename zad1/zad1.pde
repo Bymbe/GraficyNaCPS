@@ -22,7 +22,8 @@ String[] string2;
 boolean wasMousePressedLastFrame = false;
 String wykres1String, operacjaString, wykres2String; // zmienne do operacji na sygnalach
 int w1, op, w2; // ^^ w formie intow
-float[] calc1, calc2, calcResult;
+float[] calc1, calc2;
+float[] calcResult = new float[SAMPLE_NUMBER];
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
@@ -120,9 +121,14 @@ void draw() {
     signalName = "szumImpulsowy";
     break;
     case 12:
-    chart(S1.time, calcResult); //X DO PODMIANY
-    impulsType = "Szum impulsowy";
-    signalName = "szumImpulsowy";
+    try{ 
+      scatter(toZeroX, toZeroY);
+      chart(S1.time, calcResult); //X DO PODMIANY
+    } catch (Exception e) {
+      print("sraka");
+    }
+    impulsType = "Wynik operacji";
+    signalName = "wynikOperacji";
     break;
   default:
     chart(S1.time, S1.amp.array());
