@@ -95,7 +95,7 @@ void arrowButtons() {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU NASTEPNY
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      if (wyborWykresu < 11) wyborWykresu++;
+      if (wyborWykresu < 12) wyborWykresu++;
     } else {
       buttonColor = 150;
     }

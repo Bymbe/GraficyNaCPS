@@ -36,6 +36,9 @@ UnitStroke S9 = new UnitStroke(zeroTen);
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
 
+Signal S12 = new Signal(0, 0, 0);
+
+
 void setup() {
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
@@ -51,6 +54,7 @@ void setup() {
   S9.calculate();
   I1.calculate();
   I2.calculate();
+  S12.calculate();
   rectMode(CORNERS);
   textAlign(CENTER, CENTER);
   size(1280, 720);
@@ -62,73 +66,66 @@ void draw() {
   background(255);
   switch(wyborWykresu) {
   case 1:
-    scatter(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     break;
   case 2:
-    scatter(toZeroX, toZeroY);
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     signalName = "szumGaussowski";
     break;
   case 3:
-    scatter(toZeroX, toZeroY);
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     break;
   case 4:
-    scatter(toZeroX, toZeroY);
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     break;
   case 5:
-    scatter(toZeroX, toZeroY);
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     break;
   case 6:
-    scatter(toZeroX, toZeroY);
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     break;
   case 7:
-    scatter(toZeroX, toZeroY);
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     break;
   case 8:
-    scatter(toZeroX, toZeroY);
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     break;
   case 9:
-    scatter(toZeroX, toZeroY);
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     break;
   case 10:
-    chart(toZeroX, toZeroY);
     scatter(I1.time, I1.amp.array());
     impulsType = "Impuls jednostkowy";
     signalName = "impulsJednostkowy";
     break;
   case 11:
-    chart(toZeroX, toZeroY);
     scatter(I2.time, I2.amp.array());
     impulsType = "Szum impulsowy";
     signalName = "szumImpulsowy";
     break;
+    case 12:
+    chart(S12.time, S12.amp.array());
+    impulsType = "Szum impulsowy";
+    signalName = "szumImpulsowy";
+    break;
   default:
-    scatter(toZeroX, toZeroY);
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
