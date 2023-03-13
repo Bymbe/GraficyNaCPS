@@ -21,6 +21,7 @@ class Signal { //szum
       amp.set(i, 0);
   }
   public Signal(float signalStart, float signalEnd, float[] X, float[] Y, int amplitude) {
+    amp = new FloatList(SAMPLE_NUMBER);
     for (int i = 0; i < Y.length; i++) {
       amp.set(i, Y[i]);
       time[i] = X[i];

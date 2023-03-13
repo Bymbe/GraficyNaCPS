@@ -26,6 +26,8 @@ float[] calc1, calc2;
 float[] calcResult = new float[SAMPLE_NUMBER];
 float[] calcTime = new float[SAMPLE_NUMBER];
 
+Signal S0;
+
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
@@ -38,9 +40,6 @@ UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
-
-Signal S12;
-
 
 void setup() {
   cp5 = new ControlP5(this);
@@ -125,7 +124,9 @@ void draw() {
     break;
   case 0:
     try {
-      chart(S12.time, S12.amp.array()); //X DO PODMIANY
+      impulsType = "Sygnal poddany operacji";
+      signalName = "Sygnal poddany operacja";
+      chart(S0.time, S0.amp.array()); //X DO PODMIANY
     }
     catch (Exception e) {
       print("Wykres nie dziala");

@@ -101,7 +101,7 @@ void calculate() {
   catch (Exception e) {
     println("tutaj sie zesralo");
   }
-  S12 = new Signal(0, 10, calcResult, calcTime, S1.ampl);
+  S0 = new Signal(0, 10, calcTime, calcResult, S1.ampl);
 }
 
 //FloatList addSignals(Signal A, Signal B) {
