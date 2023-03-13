@@ -5,20 +5,15 @@ void controlEvent(ControlEvent theEvent) {
     wykres1String = theEvent.getStringValue();
     w1 = int(wykres1String);
     println(w1);
-    e1 = true;
   }
   if (theEvent.getName() == "operacja") {
     operacjaString = theEvent.getStringValue();
     println(operacjaString);
-    e2 = true;
   }
   if (theEvent.getName() == "wykres2") {
     wykres2String = theEvent.getStringValue();
     w2 = int(wykres2String);
     println(w2);
-    e3 = true;
-  }
-  if (e1 && e2 && e3) {
   }
 }
 
