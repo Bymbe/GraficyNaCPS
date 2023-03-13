@@ -20,6 +20,15 @@ class Signal { //szum
     for (int i = 0; i < SAMPLE_NUMBER; i++)
       amp.set(i, 0);
   }
+  public Signal(float signalStart, float signalEnd, float[] X, float[] Y, int amplitude) {
+    for (int i = 0; i < Y.length; i++) {
+      amp.set(i, Y[i]);
+      time[i] = X[i];
+    }
+    signalS = signalStart;
+    signalE = signalEnd;
+    ampl = amplitude;
+  }
   public void calculate() {
   }
   public void setAmplitude(int a) {

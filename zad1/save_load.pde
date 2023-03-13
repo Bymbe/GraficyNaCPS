@@ -28,6 +28,8 @@ void loadFromFile(String fileName) {
     }
 
     switch(wyborWykresu) {
+    case 0:
+      
     case 1:
       S1.time = data1;
       for (int i=0; i<data2.length; i++) {

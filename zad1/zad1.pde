@@ -24,6 +24,7 @@ String wykres1String, operacjaString, wykres2String; // zmienne do operacji na s
 int w1, op, w2; // ^^ w formie intow
 float[] calc1, calc2;
 float[] calcResult = new float[SAMPLE_NUMBER];
+float[] calcTime = new float[SAMPLE_NUMBER];
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
@@ -37,6 +38,8 @@ UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
+
+Signal S12;
 
 
 void setup() {
@@ -122,7 +125,7 @@ void draw() {
     break;
   case 0:
     try {
-      chart(S1.time, calcResult); //X DO PODMIANY
+      chart(S12.time, S12.amp.array()); //X DO PODMIANY
     }
     catch (Exception e) {
       print("Wykres nie dziala");
