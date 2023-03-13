@@ -99,7 +99,7 @@ void arrowButtons() {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU POPRZEDNI
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      if (wyborWykresu > 1) wyborWykresu--;
+      if (wyborWykresu > 0) wyborWykresu--;
     } else {
       buttonColor = 150;
     }
@@ -114,7 +114,7 @@ void arrowButtons() {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU NASTEPNY
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      if (wyborWykresu < 12) wyborWykresu++;
+      if (wyborWykresu < 11) wyborWykresu++;
     } else {
       buttonColor = 150;
     }

@@ -54,7 +54,7 @@ void setup() {
   S9.calculate();
   I1.calculate();
   I2.calculate();
-  
+
   rectMode(CORNERS);
   textAlign(CENTER, CENTER);
   size(1280, 720);
@@ -120,12 +120,12 @@ void draw() {
     impulsType = "Szum impulsowy";
     signalName = "szumImpulsowy";
     break;
-    case 12:
-    try{ 
-      scatter(toZeroX, toZeroY);
+  case 0:
+    try {
       chart(S1.time, calcResult); //X DO PODMIANY
-    } catch (Exception e) {
-      print("sraka");
+    }
+    catch (Exception e) {
+      print("Wykres nie dziala");
     }
     impulsType = "Wynik operacji";
     signalName = "wynikOperacji";
