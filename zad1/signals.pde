@@ -154,15 +154,15 @@ class Rectangular extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
-    float step = signalE - signalS / (ampl - 1);
+    float step = (signalE - signalS) / (ampl - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
       float period = i * step + signalS;
       time[j] = i;
-      //if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
+      if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
       //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
       //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
       //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
-        if (j * fillFactor > period * fillFactor) {
+      //if (j * fillFactor > period * fillFactor) {
         amp.set(j, ampl);
       } else {
         amp.set(j, 0.0);

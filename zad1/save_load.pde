@@ -29,7 +29,11 @@ void loadFromFile(String fileName) {
 
     switch(wyborWykresu) {
     case 0:
-      
+      S0.time = data1;
+      for (int i=0; i<data2.length; i++) {
+        S0.amp.set(i, data2[i]);
+      }
+      break;
     case 1:
       S1.time = data1;
       for (int i=0; i<data2.length; i++) {
@@ -109,6 +113,10 @@ void initiateSaveToFile() {
   string2 = createStringList(S1.amp.array());
 
   switch(wyborWykresu) {
+  case 0:
+    string1 = createStringList(S0.time);
+    string2 = createStringList(S0.amp.array());
+    break;
   case 1:
     string1 = createStringList(S1.time);
     string2 = createStringList(S1.amp.array());
