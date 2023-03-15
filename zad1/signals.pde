@@ -105,6 +105,12 @@ class Sinusoidal extends Signal {
       j++;
     }
   }
+  public void setPeriod(float period) {
+   per = period; 
+  }
+  public float getPeriod() {
+   return per; 
+  }
 }
 
 class RectifiedOneSinusoidal extends Sinusoidal {
@@ -240,7 +246,7 @@ class UnitStroke extends Signal {
       float step = signalE - signalS / (ampl - 1);
       float period = i * step + signalS;
       time[j] = i;
-      if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
+if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
         amp.set(j, ampl);
       } else if (period == (signalS+signalE) / 2) { // period = signalS+signalE / 2
         amp.set(j, ampl * 0.5);

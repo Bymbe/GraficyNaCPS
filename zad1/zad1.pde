@@ -12,7 +12,6 @@ float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 
 float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i koniec sygnalu oraz amplituda
 
-
 int wyborWykresu = 1;
 String signalType;
 String impulsType;
@@ -61,7 +60,6 @@ void setup() {
   S9.calculate();
   I1.calculate();
   I2.calculate();
-
   rectMode(CORNERS);
   textAlign(CENTER, CENTER);
   size(1280, 720);
@@ -181,6 +179,7 @@ void draw() {
   ActiveDraw();
 
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
+  USER_PERIOD = (cp5.getController("period").getValue());
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
   S3.setAmplitude(USER_AMPLITUDE);
@@ -190,7 +189,13 @@ void draw() {
   S7.setAmplitude(USER_AMPLITUDE);
   S8.setAmplitude(USER_AMPLITUDE);
   S9.setAmplitude(USER_AMPLITUDE);
-  if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
+  S3.setPeriod(USER_PERIOD);
+  S4.setPeriod(USER_PERIOD);
+  S5.setPeriod(USER_PERIOD);
+  S6.setPeriod(USER_PERIOD);
+  S7.setPeriod(USER_PERIOD);
+  S8.setPeriod(USER_PERIOD);
+  if (cp5.getController("amplitude").isMousePressed() || cp5.getController("period").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
     S3.calculate();
