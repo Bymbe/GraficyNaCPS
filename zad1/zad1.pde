@@ -15,9 +15,9 @@ float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i k
 int wyborWykresu = 1;
 String signalType;
 String impulsType;
-boolean isItSignalOrImpulse = true;
-float[] toZeroX = {0, 0};
-float[] toZeroY = {0, 0};
+boolean isItSignalOrImpulse = true; // flaga okreslajaca czy wyswietalmy signaly czy impuls aby podmienic tekst w ui
+float[] toZeroX = {0, 0}; // pomocniczna tablica do wyzerowania wykresu, aby poprzedni nie chodzil na naastepny // tablica osi X
+float[] toZeroY = {0, 0}; // -||- tablica osi Y
 float[] loadedFloatList;
 String signalName;
 float[] a = {1, 2, 3, 4};
