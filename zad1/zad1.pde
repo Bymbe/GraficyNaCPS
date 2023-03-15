@@ -4,11 +4,15 @@ XYChart lineChart;
 XYChart scatterplot;
 ControlP5 cp5, cp6;
 
-int SAMPLE_NUMBER = 1000;
-int USER_AMPLITUDE = 10;
-float USER_PERIOD = 1;
+int SAMPLE_NUMBER = 1000; //liczba probek
+float USER_AMPLITUDE = 10; //amplituda
+float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
+float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
+float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 
-float[] zeroTen = {0, 10, USER_AMPLITUDE};
+float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i koniec sygnalu oraz amplituda
+
+
 int wyborWykresu = 1;
 String signalType;
 String impulsType;
@@ -29,15 +33,15 @@ float[] calcTime = new float[SAMPLE_NUMBER];
 
 Signal S0;
 
-ContinuosSignal S1 = new ContinuosSignal(zeroTen);
-Gauss S2 = new Gauss(zeroTen, 0, 1);
-Sinusoidal S3 = new Sinusoidal(zeroTen, USER_PERIOD, 10);
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, USER_PERIOD, 10);
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, USER_PERIOD, 10);
-Rectangular S6 = new Rectangular(zeroTen, USER_PERIOD, 10, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, USER_PERIOD, 10, 0.5);
-Triangular S8 = new Triangular(zeroTen, USER_PERIOD, 10, 0.5);
-UnitStroke S9 = new UnitStroke(zeroTen);
+ContinuosSignal S1 = new ContinuosSignal(startEndAmp);
+Gauss S2 = new Gauss(startEndAmp, 0, 1); //startEndAmp, srednia, odchylenie
+Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD, 10); //startEndAmp, okres, term
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD, 10);
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD, 10);
+Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, 10, 0.5);
+SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, 10, 0.5);
+Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, 10, 0.5);
+UnitStroke S9 = new UnitStroke(startEndAmp);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
 NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);

@@ -3,8 +3,8 @@ class Signal { //szum
   float signalE; // end of signal
   FloatList amp; // tablica przechowujaca X
   float[] time = new float[SAMPLE_NUMBER]; // tablica przechowujaca Y
-  int ampl; // amplitude
-  public Signal(float signalStart, float signalEnd, int amplitude) { //konstruktor
+  float ampl; // amplitude
+  public Signal(float signalStart, float signalEnd, float amplitude) { //konstruktor
     signalS = signalStart;
     signalE = signalEnd;
     amp = new FloatList(SAMPLE_NUMBER);
@@ -16,11 +16,11 @@ class Signal { //szum
     signalS = zT[0];
     signalE = zT[1];
     amp = new FloatList(SAMPLE_NUMBER);
-    ampl = int(zT[2]);
+    ampl = zT[2];
     for (int i = 0; i < SAMPLE_NUMBER; i++)
       amp.set(i, 0);
   }
-  public Signal(float signalStart, float signalEnd, float[] X, float[] Y, int amplitude) {
+  public Signal(float signalStart, float signalEnd, float[] X, float[] Y, float amplitude) {
     amp = new FloatList(SAMPLE_NUMBER);
     for (int i = 0; i < Y.length; i++) {
       amp.set(i, Y[i]);
@@ -32,16 +32,16 @@ class Signal { //szum
   }
   public void calculate() {
   }
-  public void setAmplitude(int a) {
+  public void setAmplitude(float a) {
     ampl = a;
   }
-  public int getAmplitude() {
+  public float getAmplitude() {
     return ampl;
   }
 }
 
 class ContinuosSignal extends Signal {
-  public ContinuosSignal(float signalStart, float signalEnd, int amplitude) {
+  public ContinuosSignal(float signalStart, float signalEnd, float amplitude) {
     super(signalStart, signalEnd, amplitude);
   }
   public ContinuosSignal(float[] zT) {
@@ -60,7 +60,7 @@ class ContinuosSignal extends Signal {
 class Gauss extends Signal { //szum gaussa
   float avg;
   float dev;
-  public Gauss(float signalStart, float signalEnd, int amplitude, float average0, float devation1) {
+  public Gauss(float signalStart, float signalEnd, float amplitude, float average0, float devation1) {
     super(signalStart, signalEnd, amplitude);
     avg = average0;
     dev = devation1;
@@ -86,7 +86,7 @@ class Gauss extends Signal { //szum gaussa
 class Sinusoidal extends Signal {
   float term;
   float per;
-  public Sinusoidal(float signalStart, float signalEnd, int amplitude, float period, float t) {
+  public Sinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
     super(signalStart, signalEnd, amplitude);
     term = t;
     per = period;
@@ -98,19 +98,17 @@ class Sinusoidal extends Signal {
   }
   public void calculate() {
     int j = 0;
-    float step = signalE - signalS / (ampl - 1);
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
       //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)
       time[j] = i;
-      float period = i * step + signalS;
-      amp.set(j, ampl*sin((TWO_PI / (term)) * (period-signalS)));
+      amp.set(j, ampl*sin((TWO_PI / (per)) * (per*i-signalS)));
       j++;
     }
   }
 }
 
 class RectifiedOneSinusoidal extends Sinusoidal {
-  public RectifiedOneSinusoidal(float signalStart, float signalEnd, int amplitude, float period, float t) {
+  public RectifiedOneSinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
     super(signalStart, signalEnd, amplitude, period, t);
   }
   public RectifiedOneSinusoidal(float[] zT, float period, float t) {
@@ -132,7 +130,7 @@ class RectifiedOneSinusoidal extends Sinusoidal {
 }
 
 class RectifiedTwoSinusoidal extends Sinusoidal {
-  public RectifiedTwoSinusoidal(float signalStart, float signalEnd, int amplitude, float period, float t) {
+  public RectifiedTwoSinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
     super(signalStart, signalEnd, amplitude, period, t);
   }
   public RectifiedTwoSinusoidal(float[] zT, float period, float t) {
@@ -153,11 +151,11 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
 class Rectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
 
-  public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float period, float fF) {
+  public Rectangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
     super(signalStart, signalEnd, amplitude, period, t);
     fillFactor = fF;
   }
-  public Rectangular(float[] zT, float t, float period, float fF) {
+  public Rectangular(float[] zT, float period, float t, float fF) {
     super(zT, period, t);
     fillFactor = fF;
   }
@@ -180,7 +178,7 @@ class SymmetricalRectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
   float period; //okres podstawowy - czas trwania w sekundach
 
-  public SymmetricalRectangular(float signalStart, float signalEnd, int amplitude, float period, float t, float fF) {
+  public SymmetricalRectangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
     super(signalStart, signalEnd, amplitude, period, t);
     fillFactor = fF;
   }
@@ -205,7 +203,7 @@ class SymmetricalRectangular extends Sinusoidal {
 
 class Triangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
-  public Triangular(float signalStart, float signalEnd, int amplitude, float period, float t, float fF) {
+  public Triangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
     super(signalStart, signalEnd, amplitude, period, t);
     fillFactor = fF;
   }
@@ -240,7 +238,7 @@ class Triangular extends Sinusoidal {
 }
 
 class UnitStroke extends Signal {
-  public UnitStroke(float signalStart, float signalEnd, int amplitude) {
+  public UnitStroke(float signalStart, float signalEnd, float amplitude) {
     super(signalStart, signalEnd, amplitude);
   }
   public UnitStroke(float[] zT) {
