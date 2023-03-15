@@ -144,6 +144,7 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
 
 class Rectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
+  
   public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
     super(signalStart, signalEnd, amplitude, t);
     fillFactor = fF;
@@ -152,22 +153,36 @@ class Rectangular extends Sinusoidal {
     super(zT, t);
     fillFactor = fF;
   }
+  //public void calculate() {
+  //  int j = 0;
+  //  float step = (signalE - signalS) / (ampl - 1);
+  //  for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
+  //    float period = i * step + signalS;
+  //    time[j] = i;
+  //    if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
+  //    //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
+  //    //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
+  //    //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
+  //    //if (j * fillFactor > period * fillFactor) {
+  //      amp.set(j, ampl);
+  //    } else {
+  //      amp.set(j, 0.0);
+  //    }
+  //    j++;
+  //  }
+  //}
   public void calculate() {
-    int j = 0;
-    float step = (signalE - signalS) / (ampl - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      float period = i * step + signalS;
+    float okres = 2.0;
+    int j=0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
-      if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
-      //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
-      //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
-      //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
-      //if (j * fillFactor > period * fillFactor) {
-        amp.set(j, ampl);
-      } else {
+
+      //if (i>okres*wsp_wyp && i<okres) {
+        if(i%(okres) >= okres*fillFactor){
         amp.set(j, 0.0);
+      } else {
+        amp.set(j, ampl);
       }
-      j++;
     }
   }
 }

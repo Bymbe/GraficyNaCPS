@@ -154,7 +154,7 @@ void amplitudeButton() {
     .setBroadcast(false)
     .setPosition(20, 650)
     .setValue(USER_AMPLITUDE)
-    .setRange(10, 10000)
+    .setRange(1, 100)
     .setSize(200, 50)
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)

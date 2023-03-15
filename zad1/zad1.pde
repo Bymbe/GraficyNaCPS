@@ -5,7 +5,7 @@ XYChart scatterplot;
 ControlP5 cp5, cp6;
 
 int SAMPLE_NUMBER = 1000;
-int USER_AMPLITUDE = 1000;
+int USER_AMPLITUDE = 10;
 
 float[] zeroTen = {0, 10, USER_AMPLITUDE};
 int wyborWykresu = 1;
@@ -33,7 +33,7 @@ Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
-Rectangular S6 = new Rectangular(zeroTen, 10, 5);
+Rectangular S6 = new Rectangular(zeroTen, 10, 0.5);
 SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
 Triangular S8 = new Triangular(zeroTen, 10, 5);
 UnitStroke S9 = new UnitStroke(zeroTen);
