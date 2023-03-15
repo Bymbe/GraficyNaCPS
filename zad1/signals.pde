@@ -65,6 +65,11 @@ class Gauss extends Signal { //szum gaussa
     avg = average0;
     dev = devation1;
   }
+  public Gauss(float zT[], float average0, float devation1) {
+    super(zT);
+    avg = average0;
+    dev = devation1;
+  }
   public void calculate() {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
@@ -147,7 +152,7 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
 
 class Rectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
- 
+
   public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float period, float fF) {
     super(signalStart, signalEnd, amplitude, period, t);
     fillFactor = fF;
@@ -162,7 +167,7 @@ class Rectangular extends Sinusoidal {
       time[j] = i;
 
       //if (i>okres*wsp_wyp && i<okres) {
-        if(i%(period) >= period*fillFactor){
+      if (i % (per) >= per * fillFactor) {
         amp.set(j, 0.0);
       } else {
         amp.set(j, ampl);
@@ -174,7 +179,7 @@ class Rectangular extends Sinusoidal {
 class SymmetricalRectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
   float period; //okres podstawowy - czas trwania w sekundach
-  
+
   public SymmetricalRectangular(float signalStart, float signalEnd, int amplitude, float period, float t, float fF) {
     super(signalStart, signalEnd, amplitude, period, t);
     fillFactor = fF;
@@ -189,7 +194,7 @@ class SymmetricalRectangular extends Sinusoidal {
       time[j] = i;
 
       //if (i>okres*wsp_wyp && i<okres) {
-        if(i%(period) >= period*fillFactor){
+      if (i % (per) >= per * fillFactor) {
         amp.set(j, -ampl);
       } else {
         amp.set(j, ampl);
@@ -247,13 +252,7 @@ class UnitStroke extends Signal {
       float step = signalE - signalS / (ampl - 1);
       float period = i * step + signalS;
       time[j] = i;
-      if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
-        amp.set(j, ampl);
-      } else if (period == (signalS+signalE) / 2) { // period = signalS+signalE / 2
-        amp.set(j, ampl * 0.5);
-      } else {
-        amp.set(j, 0.0);
-      }
+
       j++;
     }
   }

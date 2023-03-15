@@ -32,11 +32,11 @@ Signal S0;
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
 Gauss S2 = new Gauss(zeroTen, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, USER_PERIOD, 10);
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, USER_PERIOD, 1 10);
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, USER_PERIOD, 1 10);
-Rectangular S6 = new Rectangular(zeroTen, USER_PERIOD, 1 10, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, USER_PERIOD, 1 10, 0.5);
-Triangular S8 = new Triangular(zeroTen, USER_PERIOD, 1 10, 0.5);
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, USER_PERIOD, 10);
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, USER_PERIOD, 10);
+Rectangular S6 = new Rectangular(zeroTen, USER_PERIOD, 10, 0.5);
+SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, USER_PERIOD, 10, 0.5);
+Triangular S8 = new Triangular(zeroTen, USER_PERIOD, 10, 0.5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
