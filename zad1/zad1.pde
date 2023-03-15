@@ -195,7 +195,7 @@ void draw() {
   S6.setPeriod(USER_PERIOD);
   S7.setPeriod(USER_PERIOD);
   S8.setPeriod(USER_PERIOD);
-  if (cp5.getController("amplitude").isMousePressed() || cp5.getController("period").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
+  if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
     S3.calculate();
@@ -207,6 +207,14 @@ void draw() {
     S9.calculate();
     I1.calculate();
     I2.calculate();
+  }
+  if (cp5.getController("period").isMousePressed()) {
+    S3.calculate();
+    S4.calculate();
+    S5.calculate();
+    S6.calculate();
+    S7.calculate();
+    S8.calculate();
   }
 }
 
