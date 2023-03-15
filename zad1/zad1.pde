@@ -9,6 +9,14 @@ float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
+float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
+
+float IMPULSE_FREQUENCY = 1000;
+int IMPULSE_AMPLITUDE = 10;
+int IMPULSE_FIRSTSAMPLE = 25;
+int IMPULSE_JUMPSAMPLE = 0;
+float IMPULSE_PROBABILITY = 0.25;
+int IMPULSE_NOISETIME = 50;
 
 float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i koniec sygnalu oraz amplituda
 
@@ -35,15 +43,15 @@ Signal S0;
 ContinuosSignal S1 = new ContinuosSignal(startEndAmp);
 Gauss S2 = new Gauss(startEndAmp, 0, 1); //startEndAmp, srednia, odchylenie
 Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres, term
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD);
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD);
-Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, 0.5);
-Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, 0.5);
-UnitStroke S9 = new UnitStroke(startEndAmp);
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
+Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
+SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD,FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
+Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
+UnitStroke S9 = new UnitStroke(startEndAmp); //startEndAmp
 
-UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
-NoiseImpulse I2 = new NoiseImpulse(1000, 1000, 500, 50);
+UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
+NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_PROBABILITY, IMPULSE_NOISETIME);
 
 void setup() {
   cp5 = new ControlP5(this);
@@ -195,6 +203,8 @@ void draw() {
   S6.setPeriod(USER_PERIOD);
   S7.setPeriod(USER_PERIOD);
   S8.setPeriod(USER_PERIOD);
+  I1.setAmplitude(USER_AMPLITUDE);
+  I2.setAmplitude(USER_AMPLITUDE);
   if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
