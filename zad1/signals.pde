@@ -86,14 +86,14 @@ class Gauss extends Signal { //szum gaussa
 class Sinusoidal extends Signal {
   float term;
   float per;
-  public Sinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
+  public Sinusoidal(float signalStart, float signalEnd, float amplitude, float period) {
     super(signalStart, signalEnd, amplitude);
-    term = t;
+    term = signalE-signalS;
     per = period;
   }
-  public Sinusoidal(float[] zT, float period, float t) {
+  public Sinusoidal(float[] zT, float period) {
     super(zT);
-    term = t;
+    term = signalE-signalS;
     per = period;
   }
   public void calculate() {
@@ -114,11 +114,11 @@ class Sinusoidal extends Signal {
 }
 
 class RectifiedOneSinusoidal extends Sinusoidal {
-  public RectifiedOneSinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
-    super(signalStart, signalEnd, amplitude, period, t);
+  public RectifiedOneSinusoidal(float signalStart, float signalEnd, float amplitude, float period) {
+    super(signalStart, signalEnd, amplitude, period);
   }
-  public RectifiedOneSinusoidal(float[] zT, float period, float t) {
-    super(zT, period, t);
+  public RectifiedOneSinusoidal(float[] zT, float period) {
+    super(zT, period);
   }
   public void calculate() {
     int j = 0;
@@ -136,11 +136,11 @@ class RectifiedOneSinusoidal extends Sinusoidal {
 }
 
 class RectifiedTwoSinusoidal extends Sinusoidal {
-  public RectifiedTwoSinusoidal(float signalStart, float signalEnd, float amplitude, float period, float t) {
-    super(signalStart, signalEnd, amplitude, period, t);
+  public RectifiedTwoSinusoidal(float signalStart, float signalEnd, float amplitude, float period) {
+    super(signalStart, signalEnd, amplitude, period);
   }
-  public RectifiedTwoSinusoidal(float[] zT, float period, float t) {
-    super(zT, period, t);
+  public RectifiedTwoSinusoidal(float[] zT, float period) {
+    super(zT, period);
   }
   public void calculate() {
     int j = 0;
@@ -157,12 +157,12 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
 class Rectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
 
-  public Rectangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
-    super(signalStart, signalEnd, amplitude, period, t);
+  public Rectangular(float signalStart, float signalEnd, float amplitude, float period, float fF) {
+    super(signalStart, signalEnd, amplitude, period);
     fillFactor = fF;
   }
-  public Rectangular(float[] zT, float period, float t, float fF) {
-    super(zT, period, t);
+  public Rectangular(float[] zT, float period, float fF) {
+    super(zT, period);
     fillFactor = fF;
   }
   public void calculate() {
@@ -184,12 +184,12 @@ class SymmetricalRectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
   float period; //okres podstawowy - czas trwania w sekundach
 
-  public SymmetricalRectangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
-    super(signalStart, signalEnd, amplitude, period, t);
+  public SymmetricalRectangular(float signalStart, float signalEnd, float amplitude, float period, float fF) {
+    super(signalStart, signalEnd, amplitude, period);
     fillFactor = fF;
   }
-  public SymmetricalRectangular(float[] zT, float period, float t, float fF) {
-    super(zT, period, t);
+  public SymmetricalRectangular(float[] zT, float period, float fF) {
+    super(zT, period);
     fillFactor = fF;
   }
   public void calculate() {
@@ -207,12 +207,12 @@ class SymmetricalRectangular extends Sinusoidal {
 
 class Triangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
-  public Triangular(float signalStart, float signalEnd, float amplitude, float period, float t, float fF) {
-    super(signalStart, signalEnd, amplitude, period, t);
+  public Triangular(float signalStart, float signalEnd, float amplitude, float period, float fF) {
+    super(signalStart, signalEnd, amplitude, period);
     fillFactor = fF;
   }
-  public Triangular(float[] zT, float period, float t, float fF) {
-    super(zT, period, t);
+  public Triangular(float[] zT, float period, float fF) {
+    super(zT, period);
     fillFactor = fF;
   }
   public void calculate() {

@@ -34,12 +34,12 @@ Signal S0;
 
 ContinuosSignal S1 = new ContinuosSignal(startEndAmp);
 Gauss S2 = new Gauss(startEndAmp, 0, 1); //startEndAmp, srednia, odchylenie
-Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD, 10); //startEndAmp, okres, term
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD, 10);
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD, 10);
-Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, 10, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, 10, 0.5);
-Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, 10, 0.5);
+Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres, term
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD);
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD);
+Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, 0.5);
+SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, 0.5);
+Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, 0.5);
 UnitStroke S9 = new UnitStroke(startEndAmp);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
