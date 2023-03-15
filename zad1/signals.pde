@@ -144,41 +144,25 @@ class RectifiedTwoSinusoidal extends Sinusoidal {
 
 class Rectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
+  float period; //okres podstawowy - czas trwania w sekundach
   
-  public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
+  public Rectangular(float signalStart, float signalEnd, int amplitude, float t, float per, float fF) {
     super(signalStart, signalEnd, amplitude, t);
+    period = per;
     fillFactor = fF;
   }
-  public Rectangular(float[] zT, float t, float fF) {
+  public Rectangular(float[] zT, float t, float per, float fF) {
     super(zT, t);
+    period = per;
     fillFactor = fF;
   }
-  //public void calculate() {
-  //  int j = 0;
-  //  float step = (signalE - signalS) / (ampl - 1);
-  //  for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-  //    float period = i * step + signalS;
-  //    time[j] = i;
-  //    if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
-  //    //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
-  //    //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
-  //    //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
-  //    //if (j * fillFactor > period * fillFactor) {
-  //      amp.set(j, ampl);
-  //    } else {
-  //      amp.set(j, 0.0);
-  //    }
-  //    j++;
-  //  }
-  //}
   public void calculate() {
-    float okres = 2.0;
     int j=0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
 
       //if (i>okres*wsp_wyp && i<okres) {
-        if(i%(okres) >= okres*fillFactor){
+        if(i%(period) >= period*fillFactor){
         amp.set(j, 0.0);
       } else {
         amp.set(j, ampl);
@@ -189,27 +173,29 @@ class Rectangular extends Sinusoidal {
 
 class SymmetricalRectangular extends Sinusoidal {
   float fillFactor; // wspolczynnik wypelnienia - stosunek czasu trwania wartości maksymalnej do okresu
-  public SymmetricalRectangular(float signalStart, float signalEnd, int amplitude, float t, float fF) {
+  float period; //okres podstawowy - czas trwania w sekundach
+  
+  public SymmetricalRectangular(float signalStart, float signalEnd, int amplitude, float t, float per, float fF) {
     super(signalStart, signalEnd, amplitude, t);
+    period = per;
     fillFactor = fF;
   }
-  public SymmetricalRectangular(float[] zT, float t, float fF) {
+  public SymmetricalRectangular(float[] zT, float t, float per, float fF) {
     super(zT, t);
+    period = per;
     fillFactor = fF;
   }
   public void calculate() {
-    int j = 0;
-    float step = signalE - signalS / (ampl - 1);
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      float period = i * step + signalS;
+    int j=0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
-      if (((period - (signalE + signalS) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) < fillFactor) {
-        //if (j < fillFactor * period + period + signalS && j < period + signalS) {
-        amp.set(j, ampl);
-      } else {
+
+      //if (i>okres*wsp_wyp && i<okres) {
+        if(i%(period) >= period*fillFactor){
         amp.set(j, -ampl);
+      } else {
+        amp.set(j, ampl);
       }
-      j++;
     }
   }
 }

@@ -33,8 +33,8 @@ Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
 Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
-Rectangular S6 = new Rectangular(zeroTen, 10, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
+Rectangular S6 = new Rectangular(zeroTen, 10,2, 0.5); //czas startu, czas konca, amplituda, 10?, okres, wspolczynnik wypelnienia
+SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 2, 0.5);
 Triangular S8 = new Triangular(zeroTen, 10, 0.5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
