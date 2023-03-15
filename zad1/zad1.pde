@@ -35,7 +35,7 @@ RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
 Rectangular S6 = new Rectangular(zeroTen, 10, 0.5);
 SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
-Triangular S8 = new Triangular(zeroTen, 10, 5);
+Triangular S8 = new Triangular(zeroTen, 10, 0.5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
