@@ -159,10 +159,10 @@ class Rectangular extends Sinusoidal {
       float period = i * step + signalS;
       time[j] = i;
       if (((period - signalS) / term) - floor((period - signalS) / term) <= fillFactor) {
-      //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
-      //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
-      //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
-      //if (j * fillFactor > period * fillFactor) {
+        //if (((period - (signalS + signalE) / 2) / term) - floor((period - (signalE + signalS) / 2) / term) <= fillFactor) {
+        //if (j < fillFactor * period + period + (signalE + signalS) / 2 && j < period + (signalE + signalS) / 2) {
+        //if (((period - signalS) / term) - floor((period - signalS) / term) < fillFactor) {
+        //if (j * fillFactor > period * fillFactor) {
         amp.set(j, ampl);
       } else {
         amp.set(j, 0.0);
@@ -211,17 +211,30 @@ class Triangular extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
-    float step = signalE - signalS / (ampl - 1);
+    float step = (signalE - signalS) / (ampl - 1);
     //boolean yes = true;
+    int g = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
       float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
-      if (/*yes*/ tac > fillFactor) {
+      //if (/*yes*/ tac > fillFactor) {
+      //  amp.set(j, tac / fillFactor * ampl);
+      //} else {
+      //  amp.set(j, -tac / fillFactor * ampl);
+      //}
+      
+      if (i <= fillFactor) {
         amp.set(j, tac / fillFactor * ampl);
+        g = 0;
       } else {
-        amp.set(j, -tac / fillFactor * ampl);
+        amp.set(j, -1 * (tac / fillFactor * ampl) + 1);
+        //g++;
       }
+      if (g == fillFactor) {
+        fillFactor += i;
+      } 
+      
       /*if (j == 0) {
        } else {
        if (amp.get(j) <= ampl && amp.get(j) > amp.get(j - 1)) {
