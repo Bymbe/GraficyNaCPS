@@ -163,9 +163,25 @@ void amplitudeButton() {
     .setPaddingX(0);
 }
 
+void periodButton() {
+  String slid2 = "period";
+  cp5.addSlider(slid2)
+    .setBroadcast(false)
+    .setPosition(260, 650)
+    .setValue(USER_PERIOD)
+    .setRange(0.1, 10)
+    .setSize(200, 50)
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#12FA61)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void StaticDraw() {
   operationTextFields();
   amplitudeButton();
+  periodButton();
 }
 
 void ActiveDraw() {

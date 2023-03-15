@@ -6,6 +6,7 @@ ControlP5 cp5, cp6;
 
 int SAMPLE_NUMBER = 1000;
 int USER_AMPLITUDE = 10;
+float USER_PERIOD = 1;
 
 float[] zeroTen = {0, 10, USER_AMPLITUDE};
 int wyborWykresu = 1;
@@ -29,13 +30,13 @@ float[] calcTime = new float[SAMPLE_NUMBER];
 Signal S0;
 
 ContinuosSignal S1 = new ContinuosSignal(zeroTen);
-Gauss S2 = new Gauss(0, 10, USER_AMPLITUDE, 0, 1);
-Sinusoidal S3 = new Sinusoidal(zeroTen, 10);
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, 10);
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, 10);
-Rectangular S6 = new Rectangular(zeroTen, 10, 0.5);
-SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, 10, 5);
-Triangular S8 = new Triangular(zeroTen, 10, 0.5);
+Gauss S2 = new Gauss(zeroTen, 0, 1);
+Sinusoidal S3 = new Sinusoidal(zeroTen, USER_PERIOD, 10);
+RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(zeroTen, USER_PERIOD, 1 10);
+RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(zeroTen, USER_PERIOD, 1 10);
+Rectangular S6 = new Rectangular(zeroTen, USER_PERIOD, 1 10, 0.5);
+SymmetricalRectangular S7 = new SymmetricalRectangular(zeroTen, USER_PERIOD, 1 10, 0.5);
+Triangular S8 = new Triangular(zeroTen, USER_PERIOD, 1 10, 0.5);
 UnitStroke S9 = new UnitStroke(zeroTen);
 
 UnitImpulse I1 = new UnitImpulse(1000, 1000, 25, 0);
