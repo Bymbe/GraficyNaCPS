@@ -218,9 +218,9 @@ class Triangular extends Sinusoidal {
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
       if (i % (per) >= per * fillFactor) {
-        amp.set(j, (tac / fillFactor * ampl) - (signalE - signalS) * 2 );
-      } else {
         amp.set(j, (-tac / fillFactor * ampl));
+      } else {
+        amp.set(j, (tac / fillFactor * ampl) - (signalE - signalS) * 2 );
       }
       j++;
     }
@@ -240,7 +240,13 @@ class UnitStroke extends Signal {
       float step = signalE - signalS / (ampl - 1);
       float period = i * step + signalS;
       time[j] = i;
-
+      if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
+        amp.set(j, ampl);
+      } else if (period == (signalS+signalE) / 2) { // period = signalS+signalE / 2
+        amp.set(j, ampl * 0.5);
+      } else {
+        amp.set(j, 0.0);
+      }
       j++;
     }
   }
