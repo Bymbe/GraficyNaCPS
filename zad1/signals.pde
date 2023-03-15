@@ -190,8 +190,6 @@ class SymmetricalRectangular extends Sinusoidal {
     int j=0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
-
-      //if (i>okres*wsp_wyp && i<okres) {
       if (i % (per) >= per * fillFactor) {
         amp.set(j, -ampl);
       } else {
@@ -219,19 +217,11 @@ class Triangular extends Sinusoidal {
       float period = i * step + signalS;
       float tac = ((period - signalS) / term) - floor((period - signalS) / term);
       time[j] = i;
-      if (/*yes*/ tac > fillFactor) {
-        amp.set(j, tac / fillFactor * ampl);
+      if (i % (per) >= per * fillFactor) {
+        amp.set(j, (tac / fillFactor * ampl) - (signalE - signalS) * 2 );
       } else {
-        amp.set(j, -tac / fillFactor * ampl);
+        amp.set(j, (-tac / fillFactor * ampl));
       }
-      /*if (j == 0) {
-       } else {
-       if (amp.get(j) <= ampl && amp.get(j) > amp.get(j - 1)) {
-       yes = true;
-       } else {
-       yes = false;
-       }
-       }*/
       j++;
     }
   }
