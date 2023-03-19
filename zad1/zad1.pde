@@ -51,7 +51,7 @@ Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEn
 UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
 
 UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
-NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_PROBABILITY, IMPULSE_NOISETIME);
+NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, FILL_FACTOR, IMPULSE_NOISETIME);
 
 void setup() {
   cp5 = new ControlP5(this);
@@ -209,6 +209,7 @@ void draw() {
   S6.setFillFactor(FILL_FACTOR);
   S7.setFillFactor(FILL_FACTOR);
   S8.setFillFactor(FILL_FACTOR);
+  I2.setProbability(FILL_FACTOR);
   if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
@@ -235,6 +236,7 @@ void draw() {
     S6.calculate();
     S7.calculate();
     S8.calculate();
+    I2.calculate();
   }
 }
 
