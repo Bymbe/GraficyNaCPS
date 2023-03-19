@@ -48,7 +48,7 @@ RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD)
 Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
 SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD,FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
 Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
-UnitStroke S9 = new UnitStroke(startEndAmp); //startEndAmp
+UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
 
 UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
 NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_PROBABILITY, IMPULSE_NOISETIME);
@@ -203,6 +203,7 @@ void draw() {
   S6.setPeriod(USER_PERIOD);
   S7.setPeriod(USER_PERIOD);
   S8.setPeriod(USER_PERIOD);
+  S9.setPeriod(USER_PERIOD);
   I1.setAmplitude(USER_AMPLITUDE);
   I2.setAmplitude(USER_AMPLITUDE);
   S6.setFillFactor(FILL_FACTOR);
@@ -228,6 +229,7 @@ void draw() {
     S6.calculate();
     S7.calculate();
     S8.calculate();
+    S9.calculate();
   }
   if(cp5.getController("fill factor").isMousePressed()) {
     S6.calculate();
