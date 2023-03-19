@@ -178,10 +178,26 @@ void periodButton() {
     .setPaddingX(0);
 }
 
+void fillFactorButton() {
+  String slid3 = "fill factor";
+  cp5.addSlider(slid3)
+    .setBroadcast(false)
+    .setPosition(width*0.21, height*0.92)
+    .setValue(FILL_FACTOR)
+    .setRange(0.0, 1.0)
+    .setSize(int(width*0.09), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void StaticDraw() {
   operationTextFields();
   amplitudeButton();
   periodButton();
+  fillFactorButton();
 }
 
 void ActiveDraw() {

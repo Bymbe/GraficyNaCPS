@@ -9,7 +9,7 @@ float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
-float FILL_FACTOR = 0.25; //wspolczynnik wypelnienia
+float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
@@ -187,6 +187,7 @@ void draw() {
 
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
   USER_PERIOD = (cp5.getController("period").getValue());
+  FILL_FACTOR = (cp5.getController("fill factor").getValue());
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
   S3.setAmplitude(USER_AMPLITUDE);
@@ -204,6 +205,9 @@ void draw() {
   S8.setPeriod(USER_PERIOD);
   I1.setAmplitude(USER_AMPLITUDE);
   I2.setAmplitude(USER_AMPLITUDE);
+  S6.setFillFactor(FILL_FACTOR);
+  S7.setFillFactor(FILL_FACTOR);
+  S8.setFillFactor(FILL_FACTOR);
   if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
@@ -221,6 +225,11 @@ void draw() {
     S3.calculate();
     S4.calculate();
     S5.calculate();
+    S6.calculate();
+    S7.calculate();
+    S8.calculate();
+  }
+  if(cp5.getController("fill factor").isMousePressed()) {
     S6.calculate();
     S7.calculate();
     S8.calculate();

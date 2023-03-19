@@ -165,6 +165,9 @@ class Rectangular extends Sinusoidal {
     super(zT, period);
     fillFactor = fF;
   }
+  public void setFillFactor(float f) {
+    fillFactor = f;
+  }
   public void calculate() {
     int j=0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
@@ -191,6 +194,9 @@ class SymmetricalRectangular extends Sinusoidal {
   public SymmetricalRectangular(float[] zT, float period, float fF) {
     super(zT, period);
     fillFactor = fF;
+  }
+  public void setFillFactor(float f) {
+    fillFactor = f;
   }
   public void calculate() {
     int j=0;
@@ -230,6 +236,9 @@ class Triangular extends Sinusoidal {
   //    }
   //    j++;
   //  }
+  public void setFillFactor(float f) {
+    fillFactor = f;
+  }
   public void calculate() {
     int j=0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
