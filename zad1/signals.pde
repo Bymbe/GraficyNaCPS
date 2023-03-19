@@ -106,10 +106,10 @@ class Sinusoidal extends Signal {
     }
   }
   public void setPeriod(float period) {
-   per = period; 
+    per = period;
   }
   public float getPeriod() {
-   return per; 
+    return per;
   }
 }
 
@@ -215,20 +215,32 @@ class Triangular extends Sinusoidal {
     super(zT, period);
     fillFactor = fF;
   }
+  //public void calculate() {
+  //  int j = 0;
+  //  float step = signalE - signalS / (ampl - 1);
+  //  //boolean yes = true;
+  //  for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
+  //    float period = i * step + signalS;
+  //    float tac = ((period - signalS) / term) - floor((period - signalS) / term);
+  //    time[j] = i;
+  //    if (i % (per) >= per * fillFactor) {
+  //      amp.set(j, (-tac / fillFactor * ampl));
+  //    } else {
+  //      amp.set(j, (tac / fillFactor * ampl) - (signalE - signalS) * 2 );
+  //    }
+  //    j++;
+  //  }
   public void calculate() {
-    int j = 0;
-    float step = signalE - signalS / (ampl - 1);
-    //boolean yes = true;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      float period = i * step + signalS;
-      float tac = ((period - signalS) / term) - floor((period - signalS) / term);
+    int j=0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
+
+
       if (i % (per) >= per * fillFactor) {
-        amp.set(j, (-tac / fillFactor * ampl));
+        amp.set(j, map(i%per, per * fillFactor, per, ampl, 0));
       } else {
-        amp.set(j, (tac / fillFactor * ampl) - (signalE - signalS) * 2 );
+        amp.set(j, map(i%per, 0, per * fillFactor, 0, ampl));
       }
-      j++;
     }
   }
 }
@@ -246,7 +258,7 @@ class UnitStroke extends Signal {
       float step = signalE - signalS / (ampl - 1);
       float period = i * step + signalS;
       time[j] = i;
-if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
+      if (period > (signalS+signalE) / 2) { // od signalS do momentu kiedy period = signalS
         amp.set(j, ampl);
       } else if (period == (signalS+signalE) / 2) { // period = signalS+signalE / 2
         amp.set(j, ampl * 0.5);

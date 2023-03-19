@@ -152,13 +152,13 @@ void amplitudeButton() {
   String slid1 = "amplitude";
   cp5.addSlider(slid1)
     .setBroadcast(false)
-    .setPosition(20, 650)
+    .setPosition(width*0.01, height*0.92)
     .setValue(USER_AMPLITUDE)
     .setRange(1, 100)
-    .setSize(200, 50)
+    .setSize(int(width*0.09), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
-    .setColorCaptionLabel(#12FA61)
+    .setColorCaptionLabel(#000000)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
     .setPaddingX(0);
 }
@@ -167,13 +167,13 @@ void periodButton() {
   String slid2 = "period";
   cp5.addSlider(slid2)
     .setBroadcast(false)
-    .setPosition(260, 650)
+    .setPosition(width*0.11, height*0.92)
     .setValue(USER_PERIOD)
     .setRange(0.1, 10)
-    .setSize(200, 50)
+    .setSize(int(width*0.09), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
-    .setColorCaptionLabel(#12FA61)
+    .setColorCaptionLabel(#000000)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
     .setPaddingX(0);
 }

@@ -9,7 +9,7 @@ float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
-float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
+float FILL_FACTOR = 0.25; //wspolczynnik wypelnienia
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
@@ -168,7 +168,6 @@ void draw() {
     scatterplot.draw(0, 0, width, height*0.65);
   }
   textSize(16);
-  fill(#12FA61);
   textAlign(LEFT);
   text("Alternatywny wybór grafu (od '1' do '-')", 20, 600);
   textAlign(LEFT);
