@@ -170,13 +170,13 @@ void draw() {
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
-    lineChart.draw(0, height*0.1, width*0.9, height*0.65);
+    lineChart.draw(0, height*0.1, width*0.85, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
-    scatterplot.draw(0, 0, width*0.9, height*0.65);
+    scatterplot.draw(0, 0, width*0.85, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);

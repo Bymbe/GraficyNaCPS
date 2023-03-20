@@ -40,10 +40,10 @@ float rmsValue(Signal S) {
 
 void calculateData(Signal S) {
   textAlign(LEFT, CENTER);
-  textSize(10);
-  text("Średnia: " + meanValue(S), width*0.90, height*0.15);
-  text("Średnia bezwzględna: " + absMeanValue(S), width*0.90, height*0.18);
-  text("Wariancja: " + varianceValue(S), width*0.90, height*0.21);
-  text("Odchylenie: " + rmsValue(S), width*0.90, height*0.24);
-  text("Moc średnia: " + meanPowerValue(S), width*0.90, height*0.27);
+  textSize(16);
+  text("Średnia: " + nf(meanValue(S),0,3), width*0.85, height*0.2);
+  text("Średnia bezwzględna: " + nf(absMeanValue(S),0,3), width*0.85, height*0.25);
+  text("Wariancja: " + nf(varianceValue(S),0,3), width*0.85, height*0.3);
+  text("Odchylenie: " + nf(rmsValue(S),0,3), width*0.85, height*0.35);
+  text("Moc średnia: " + nf(meanPowerValue(S),0,3), width*0.85, height*0.4);
 }

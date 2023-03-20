@@ -48,7 +48,7 @@ class NoiseImpulse extends Discreet {
     noiseTime = nT;
   }
   public void setProbability(float p) {
-    probability = p;
+    probability = 100*p;
   }
   public void calculate() {
     int j = 0;
