@@ -77,51 +77,61 @@ void setup() {
 
 void draw() {
   background(255);
+  fill(0);
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
+    calculateData(S1);
     break;
   case 2:
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     signalName = "szumGaussowski";
+    calculateData(S2);
     break;
   case 3:
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
+    calculateData(S3);
     break;
   case 4:
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
+    calculateData(S4);
     break;
   case 5:
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
+    calculateData(S5);
     break;
   case 6:
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
+    calculateData(S6);
     break;
   case 7:
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
+    calculateData(S7);
     break;
   case 8:
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
+    calculateData(S8);
     break;
   case 9:
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
+    calculateData(S9);
     break;
   case 10:
     scatter(I1.time, I1.amp.array());
@@ -156,16 +166,17 @@ void draw() {
 
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
+    textAlign(CENTER, CENTER);
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
-    lineChart.draw(0, height*0.1, width, height*0.65);
+    lineChart.draw(0, height*0.1, width*0.9, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
-    scatterplot.draw(0, 0, width, height*0.65);
+    scatterplot.draw(0, 0, width*0.9, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);
