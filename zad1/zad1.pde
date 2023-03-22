@@ -148,6 +148,7 @@ void draw() {
       impulsType = "Sygnal poddany operacji";
       signalName = "Sygnal poddany operacja";
       chart(S0.time, S0.amp.array()); //X DO PODMIANY
+      calculateData(S0);
     }
     catch (Exception e) {
       print("Wykres nie dziala");
