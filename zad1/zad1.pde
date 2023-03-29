@@ -4,7 +4,7 @@ XYChart lineChart;
 XYChart scatterplot;
 ControlP5 cp5, cp6;
 
-int SAMPLE_NUMBER = 1000; //liczba probek
+int SAMPLE_NUMBER = 3000; //liczba probek
 float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
