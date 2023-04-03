@@ -48,7 +48,7 @@ void calculateData(Signal S) {
   text("Moc średnia: " + nf(meanPowerValue(S),0,3), width*0.85, height*0.4);
 }
 
-void reconstructSignalZeroOrderHold(Signal S) {
+void reconstructSignalFirstOrderHold(Signal S) {
   R1 = new ReconstructedSignalFirstOrderHold(S);
   R1.calculate();
 }

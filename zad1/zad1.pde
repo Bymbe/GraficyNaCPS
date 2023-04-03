@@ -106,7 +106,7 @@ void draw() {
     signalName = "sygnalSin";
     calculateData(S3);
     //if guzik
-    //reconstructSignalZeroOrderHold(S3);
+    //reconstructSignalFirstOrderHold(S3);
     //reconstructed(S3.time, R1.amp.array());
     break;
   case 4:
