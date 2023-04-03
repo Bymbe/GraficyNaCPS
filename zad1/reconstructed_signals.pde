@@ -76,13 +76,16 @@ public class ReconstructedSignalZeroOrderHold {
   float signalS; // start of signal
   float signalE; // end of signal
   FloatList amp; // tablica przechowujaca X
-  float[] time = new float[SAMPLE_NUMBER]; // tablica przechowujaca Y
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
   float ampl; // amplitude
 
   public ReconstructedSignalZeroOrderHold(Signal sS) {
     this.signalS = sS.signalS;
     this.signalE = sS.signalE;
-    this.amp = sS.amp;
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    for(int i = 0; i < sS.amp.size(); i++) {
+      this.amp.set(i, sS.amp.get(i));
+    }
     this.time = sS.time;
     this.ampl = sS.ampl;
   }
@@ -91,8 +94,8 @@ public class ReconstructedSignalZeroOrderHold {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
       index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
-      amp.set(j, index);
-      //sourceSignal.time[j] = i;
+      this.amp.set(j, index);
+      //this.time[j] = i;
       j++;
     }
   }
