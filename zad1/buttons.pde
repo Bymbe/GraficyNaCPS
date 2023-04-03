@@ -44,6 +44,7 @@ void chooseReconstructedButton() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.65 && mouseY <= height*0.73) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
+      showChooseWindow();
       buttonColor = 100;
     } else {
       buttonColor = 150;
@@ -54,7 +55,7 @@ void chooseReconstructedButton() {
   fill(0);
   textAlign(CENTER, CENTER);
   textSize(12);
-  text("WYBIERZ RODZAJ REKONSTRUKCJI", width*0.90, height*0.65, width*0.98, height*0.73);
+  text("WYBIERZ RODZAJ REKONSTRUKCJI", width*0.90, height*0.65, width*0.98, height*0.72);
 }
 
 void showReconstructedButton() {
