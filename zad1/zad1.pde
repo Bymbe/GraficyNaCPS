@@ -42,6 +42,8 @@ float[] calc1, calc2;
 float[] calcResult = new float[SAMPLE_NUMBER];
 float[] calcTime = new float[SAMPLE_NUMBER];
 
+int reconstructionChoice = 1;
+
 Signal S0;
 
 ContinuosSignal S1 = new ContinuosSignal(startEndAmp);
