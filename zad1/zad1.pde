@@ -93,7 +93,7 @@ void setup() {
 }
 
 void draw() {
-  surface.setTitle(str(frameRate));
+  surface.setTitle(nf(frameRate, 0, 1) + " FPS");
   background(255);
   fill(0);
   switch(wyborWykresu) {

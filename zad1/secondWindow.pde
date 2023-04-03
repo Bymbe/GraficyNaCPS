@@ -7,7 +7,7 @@ public void showChooseWindow() {
 public class SecondApplet extends PApplet {
 
   public void settings() {
-    size(400, 400);
+    size(displayWidth/4, displayHeight/2);
   }
   public void draw() {
     background(255);
