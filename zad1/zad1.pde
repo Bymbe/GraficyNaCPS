@@ -107,15 +107,15 @@ void draw() {
     calculateData(S3);
     //if guzik
     
-    //reconstructSignalFirstOrderHold(S3);
+    //reconstructSignalFirstOrderHold(S3);    //--------- jakims cudem te funkcje dziwnie oddzialuja na dzialajace juz sygnaly
     //reconstructSignalZeroOrderHold(S3);
     //reconstructSignalSincBasic(S3);
     
     //switch ktora rekonstrukcja 
     
-    //reconstructed(S3.time, R1.amp.array());
-    //reconstructed(S3.time, R2.amp.array());
-    //reconstructed(S3.time, R3.amp.array());
+    //reconstructed(R1.time, R1.amp.array());     ------------- a to rysuje stala funkcje w y = 0
+    //reconstructed(R2.time, R2.amp.array());
+    //reconstructed(R3.time, R3.amp.array());
     break;
   case 4:
     chart(S4.time, S4.amp.array());
