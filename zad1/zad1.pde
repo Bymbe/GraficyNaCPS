@@ -57,6 +57,10 @@ UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
 UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
 NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, FILL_FACTOR, IMPULSE_NOISETIME);
 
+ReconstructedSignalFirstOrderHold R1;
+ReconstructedSignalSincBasic R2;
+ReconstructedSignalZeroOrderHold R3;
+
 void setup() {
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
@@ -85,7 +89,7 @@ void draw() {
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
-    reconstructed(S1.time, S1.amp.array());
+    //reconstructed(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
@@ -101,6 +105,9 @@ void draw() {
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
+    //if guzik
+    //reconstructSignalZeroOrderHold(S3);
+    //reconstructed(S3.time, R1.amp.array());
     break;
   case 4:
     chart(S4.time, S4.amp.array());
@@ -177,14 +184,14 @@ void draw() {
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    //reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
-    reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    //reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);

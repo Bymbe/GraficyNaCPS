@@ -47,3 +47,18 @@ void calculateData(Signal S) {
   text("Odchylenie: " + nf(rmsValue(S),0,3), width*0.85, height*0.35);
   text("Moc średnia: " + nf(meanPowerValue(S),0,3), width*0.85, height*0.4);
 }
+
+void reconstructSignalZeroOrderHold(Signal S) {
+  R1 = new ReconstructedSignalFirstOrderHold(S);
+  R1.calculate();
+}
+
+void reconstructSignalSincBasic(Signal S) {
+ R2 = new ReconstructedSignalSincBasic(S);
+ R2.calculate();
+}
+
+void reconstructSignalZeroOrderHold(Signal S) {
+ R3 = new ReconstructedSignalZeroOrderHold(S);
+ R3.calculate();
+}
