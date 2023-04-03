@@ -7,15 +7,16 @@ public class ReconstructedSignalFirstOrderHold extends Signal {
   }
 
   public void calculate() {
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      float index = floor((i - signalS) / (signalE - signalS) * SAMPLE_NUMBER);
-      //if (index < SAMPLE_NUMBER - 1) {
-      //  return (i - sourceSignal.argument(index)) /
-      //    (sourceSignal.argument(index + 1) - sourceSignal.argument(index)) *
-      //    (sourceSignal.value(index + 1) - sourceSignal.value(index)) + sourceSignal.value(index);
-      //} else {
-      //  return sourceSignal.value(index);
-      //}
+    int index = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
+      index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
+      if (index < RECONSTRUCTED_SAMPLE_NUMBER - 1) {
+        sourceSignal.amp.set(i, i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS)) /
+          ((index + 1) * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS) - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS)) *
+          (sourceSignal.amp.get(index + 1) - sourceSignal.amp.get(index)) + sourceSignal.amp.get(index);
+      } else {
+        sourceSignal.amp.set(i, index);
+      }
     }
   }
 }
@@ -47,5 +48,10 @@ public class ReconstructedSignalZeroOrderHold extends Signal {
     this.sourceSignal = sS;
   }
   public void calculate() {
+    int index = 0;
+    for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
+      index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
+      sourceSignal.amp.set(i, index);
+    }
   }
 }
