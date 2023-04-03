@@ -8,15 +8,17 @@ public class ReconstructedSignalFirstOrderHold extends Signal {
 
   public void calculate() {
     int index = 0;
+    int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
       index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
       if (index < RECONSTRUCTED_SAMPLE_NUMBER - 1) {
-        sourceSignal.amp.set(i, i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS) /
+        sourceSignal.amp.set(j, i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS) /
           ((index + 1) * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS) - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + sourceSignal.signalS) *
           (sourceSignal.amp.get(index + 1) - sourceSignal.amp.get(index)) + sourceSignal.amp.get(index));
       } else {
-        sourceSignal.amp.set(i, index);
+        sourceSignal.amp.set(j, index);
       }
+      j++;
     }
   }
 }
