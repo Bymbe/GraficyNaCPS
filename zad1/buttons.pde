@@ -62,6 +62,7 @@ void showReconstructedButton() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.75 && mouseY <= height*0.83) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
+      isReconstructionChartVisible = !isReconstructionChartVisible;
       buttonColor = 100;
     } else {
       buttonColor = 150;
@@ -72,7 +73,7 @@ void showReconstructedButton() {
   fill(0);
   textAlign(CENTER, CENTER);
   textSize(12);
-  text("POKAŻ REKONSTRUKCJĘ", width*0.90, height*0.75, width*0.98, height*0.83);
+  text("POKAŻ/UKRYJ REKONSTRUKCJĘ", width*0.90, height*0.75, width*0.98, height*0.83);
 }
 
 void calculateButton() {

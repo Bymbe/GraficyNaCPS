@@ -45,7 +45,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.0, height*0.0, width*1.0, height*0.333);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("PRÓBKOWANIE RÓWNOMIERNE", width*0.0, height*0.0, width*1.0, height*0.333);
   }
 
@@ -64,7 +64,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.0, height*0.334, width*0.5, height*0.666);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("KWANTYZACJA RÓWNOMIERNA Z OBCIĄŻENIEM", width*0.0, height*0.334, width*0.5, height*0.666);
   }
 
@@ -83,7 +83,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.5, height*0.334, width*1.0, height*0.666);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("KWANTYZACJA RÓWNOMIERNA Z ZAOKRĄGLENIEM", width*0.5, height*0.334, width*1.0, height*0.666);
   }
 
@@ -102,7 +102,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.0, height*0.667, width*0.333, height*1);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("EKSTRAPOLACJA ZEROWEGO RZĘDU", width*0.0, height*0.667, width*0.333, height*1);
   }
 
@@ -121,7 +121,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.334, height*0.667, width*0.666, height*1);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("INTERPOLACJA PIERWSZEGO RZĘDU", width*0.334, height*0.667, width*0.666, height*1);
   }
 
@@ -140,7 +140,7 @@ public class SecondApplet extends PApplet {
     rect(width*0.667, height*0.667, width*1, height*1);
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(16);
     text("REKONSTRUKCJA W OPARCIU O FUNKCJĘ SINC", width*0.667, height*0.667, width*1, height*1);
   }
 }
