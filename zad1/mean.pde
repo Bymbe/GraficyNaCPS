@@ -54,7 +54,7 @@ void reconstructSignalFirstOrderHold(Signal S) {
 }
 
 void reconstructSignalSincBasic(Signal S) {
- R2 = new ReconstructedSignalSincBasic(S);
+ R2 = new ReconstructedSignalSincBasic(S, 1);
  R2.enumerate();
 }
 

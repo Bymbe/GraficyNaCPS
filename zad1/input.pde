@@ -1,5 +1,28 @@
 boolean activeWriting = false;
 
+void setReconstructionType() {
+  switch(reconstructionChoice) {
+  case 1:
+    reconstructionType = "próbkowanie równomierne";
+    break;
+  case 2:
+    reconstructionType = "kwantyzacja równomierna z obcięciem";
+    break;
+  case 3:
+    reconstructionType = "kwantyzacja równomierna z zaokrąglaniem";
+    break;
+  case 4:
+    reconstructionType = "ekstrapolacja zerowego rzędu";
+    break;
+  case 5:
+    reconstructionType = "interpolacja pierwszego rzędu";
+    break;
+  case 6:
+    reconstructionType = "rekonstrukcja w oparciu o funkcję sinc";
+    break;
+  }
+}
+
 void keyPressed() {
   if (!(cp6.getController("wykres1").isMouseOver() || cp6.getController("operacja").isMouseOver() || cp6.getController("wykres2").isMouseOver())) { // jezeli wpisujemy to nie bedzie zmienialo nam wykresu w tle 
     if (key == '1') {

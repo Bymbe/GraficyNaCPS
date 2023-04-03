@@ -1,32 +1,13 @@
-void setReconstructionType() {
-  switch(reconstructionChoice) {
-    case 1:
-    reconstructionType = "próbkowanie równomierne";
-    break;
-    case 2:
-    reconstructionType = "kwantyzacja równomierna z obcięciem";
-    break;
-    case 3:
-    reconstructionType = "kwantyzacja równomierna z zaokrąglaniem";
-    break; 
-    case 4:
-    reconstructionType = "ekstrapolacja zerowego rzędu";
-    break;
-    case 5:
-    reconstructionType = "interpolacja pierwszego rzędu";
-    break;
-    case 6:
-    reconstructionType = "rekonstrukcja w oparciu o funkcję sinc";
-    break; 
-  }
-}
-
 public class ReconstructedSignalFirstOrderHold extends Signal {
-  private Signal sourceSignal;
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
 
   public ReconstructedSignalFirstOrderHold(Signal sS) {
     super(sS.signalS, sS.signalE, sS.ampl);
-    this.sourceSignal = sS;
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    for (int i = 0; i < sS.amp.size(); i++) {
+      this.amp.set(i, sS.amp.get(i));
+    }
+    this.time = sS.time;
   }
 
   public void enumerate() {
@@ -35,11 +16,11 @@ public class ReconstructedSignalFirstOrderHold extends Signal {
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
       index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
       if (index < RECONSTRUCTED_SAMPLE_NUMBER - 1) {
-        sourceSignal.amp.set(j, (i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS)) /
+        this.amp.set(j, (i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS)) /
           ((i - ((index + 1.0) * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS) - (i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS)) *
-          (sourceSignal.amp.get(index + 1) - sourceSignal.amp.get(index)) + sourceSignal.amp.get(index))));
+          (this.amp.get(index + 1) - this.amp.get(index)) + this.amp.get(index))));
       } else {
-        sourceSignal.amp.set(j, index);
+        this.amp.set(j, index);
       }
       time[j] = i;
       j++;
@@ -48,12 +29,17 @@ public class ReconstructedSignalFirstOrderHold extends Signal {
 }
 
 public class ReconstructedSignalSincBasic extends Signal {
-  private Signal sourceSignal;
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
   private int N;
 
-  public ReconstructedSignalSincBasic(Signal sS) {
+  public ReconstructedSignalSincBasic(Signal sS, int n) {
     super(sS.signalS, sS.signalE, sS.ampl);
-    this.sourceSignal = sS;
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    for (int i = 0; i < sS.amp.size(); i++) {
+      this.amp.set(i, sS.amp.get(i));
+    }
+    this.time = sS.time;
+    this.N = n;
   }
   private float sinc(float i) {
     if (i == 0.0) {
@@ -86,31 +72,25 @@ public class ReconstructedSignalSincBasic extends Signal {
       final float step = (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER;
       float sum = 0.0;
       for (int k = int(firstSample); k < lastSample; k++) {
-        sum += sourceSignal.amp.get(int((k) * (i / step - k)));
+        sum += this.amp.get(int((k) * (i / step - k)));
       }
-      sourceSignal.amp.set(j, sum);
+      this.amp.set(j, sum);
       time[j] = i;
       j++;
     }
   }
 }
 
-public class ReconstructedSignalZeroOrderHold {
-  float signalS; // start of signal
-  float signalE; // end of signal
-  FloatList amp; // tablica przechowujaca X
+public class ReconstructedSignalZeroOrderHold extends Signal {
   float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
-  float ampl; // amplitude
 
   public ReconstructedSignalZeroOrderHold(Signal sS) {
-    this.signalS = sS.signalS;
-    this.signalE = sS.signalE;
+    super(sS.signalS, sS.signalE, sS.ampl);
     this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
-    for(int i = 0; i < sS.amp.size(); i++) {
+    for (int i = 0; i < sS.amp.size(); i++) {
       this.amp.set(i, sS.amp.get(i));
     }
     this.time = sS.time;
-    this.ampl = sS.ampl;
   }
   public void enumerate() {
     int index = 0;
