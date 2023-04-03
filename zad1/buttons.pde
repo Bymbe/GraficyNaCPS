@@ -40,6 +40,40 @@ void operationTextFields() {
     .setColor(color(255, 0, 0));
 }
 
+void chooseReconstructedButton() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.65 && mouseY <= height*0.73) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.65, width*0.98, height*0.73, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text("WYBIERZ RODZAJ REKONSTRUKCJI", width*0.90, height*0.65, width*0.98, height*0.73);
+}
+
+void showReconstructedButton() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.75 && mouseY <= height*0.83) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.75, width*0.98, height*0.83, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text("POKAŻ REKONSTRUKCJĘ", width*0.90, height*0.75, width*0.98, height*0.83);
+}
+
 void calculateButton() {
   if (mouseX >= width*0.60 && mouseX <= width*0.68  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU LICZENIA
@@ -206,4 +240,6 @@ void ActiveDraw() {
   saveButton();
   arrowButtons();
   calculateButton();
+  chooseReconstructedButton();
+  showReconstructedButton();
 }
