@@ -62,6 +62,9 @@ ReconstructedSignalSincBasic R2;
 ReconstructedSignalZeroOrderHold R3;
 
 void setup() {
+  lineChart = new XYChart(this);
+    scatterplot = new XYChart(this);
+
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
   StaticDraw();
@@ -81,9 +84,22 @@ void setup() {
   size(1280, 720);
   background(255);
   textSize(16);
+  
+  
+  reconstructedChart = new XYChart(this);
+  reconstructedChart.showXAxis(true);
+  reconstructedChart.showYAxis(true);
+  reconstructedChart.setPointColour(color(50, 50, 180, 100));
+  reconstructedChart.setPointSize(2);
+  reconstructedChart.setLineWidth(2);
+  reconstructedChart.setLineColour(color(50,50,150));
+  reconstructedChart.setAxisColour(color(0,0));
+  reconstructedChart.setAxisLabelColour(color(0,0));
+  reconstructedChart.setAxisValuesColour(color(0,0));
 }
 
 void draw() {
+  surface.setTitle(str(frameRate));
   background(255);
   fill(0);
   switch(wyborWykresu) {
@@ -275,7 +291,6 @@ void draw() {
 }
 
 void scatter(float[] x, float[] y) {
-  scatterplot = new XYChart(this);
   scatterplot.setData(x, y);
   scatterplot.showXAxis(true);
   scatterplot.showYAxis(true);
@@ -284,7 +299,7 @@ void scatter(float[] x, float[] y) {
 }
 
 void chart(float[] x, float[] y) {
-  lineChart = new XYChart(this);
+  
   lineChart.setData(x, y);
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
@@ -294,15 +309,6 @@ void chart(float[] x, float[] y) {
 }
 
 void reconstructed(float[]x, float[] y) {
-  reconstructedChart = new XYChart(this);
   reconstructedChart.setData(x, y);
-  reconstructedChart.showXAxis(true);
-  reconstructedChart.showYAxis(true);
-  reconstructedChart.setPointColour(color(50, 50, 180, 100));
-  reconstructedChart.setPointSize(2);
-  reconstructedChart.setLineWidth(2);
-  reconstructedChart.setLineColour(color(50,50,150));
-  reconstructedChart.setAxisColour(color(0,0));
-  reconstructedChart.setAxisLabelColour(color(0,0));
-  reconstructedChart.setAxisValuesColour(color(0,0));
+  
 }
