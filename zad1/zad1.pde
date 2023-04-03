@@ -63,7 +63,8 @@ ReconstructedSignalZeroOrderHold R3;
 
 void setup() {
   lineChart = new XYChart(this);
-    scatterplot = new XYChart(this);
+  scatterplot = new XYChart(this);
+  reconstructedChart = new XYChart(this);
 
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
@@ -84,18 +85,6 @@ void setup() {
   size(1280, 720);
   background(255);
   textSize(16);
-  
-  
-  reconstructedChart = new XYChart(this);
-  reconstructedChart.showXAxis(true);
-  reconstructedChart.showYAxis(true);
-  reconstructedChart.setPointColour(color(50, 50, 180, 100));
-  reconstructedChart.setPointSize(2);
-  reconstructedChart.setLineWidth(2);
-  reconstructedChart.setLineColour(color(50,50,150));
-  reconstructedChart.setAxisColour(color(0,0));
-  reconstructedChart.setAxisLabelColour(color(0,0));
-  reconstructedChart.setAxisValuesColour(color(0,0));
 }
 
 void draw() {
@@ -105,7 +94,7 @@ void draw() {
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
-    reconstructed(S1.time, S1.amp.array());
+    reconstructed(toZeroX, toZeroY);
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
@@ -121,7 +110,7 @@ void draw() {
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    //if guzik
+    //if guzik to ma sie wywolac tylko raz jak klikniety przycisk zostanie i obliczy rekonstrukcje zeby sie ciagle nie obliczalo 
     
     //reconstructSignalFirstOrderHold(S3);    //--------- jakims cudem te funkcje dziwnie oddzialuja na dzialajace juz sygnaly
     //reconstructSignalZeroOrderHold(S3);
@@ -299,7 +288,6 @@ void scatter(float[] x, float[] y) {
 }
 
 void chart(float[] x, float[] y) {
-  
   lineChart.setData(x, y);
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
@@ -310,5 +298,13 @@ void chart(float[] x, float[] y) {
 
 void reconstructed(float[]x, float[] y) {
   reconstructedChart.setData(x, y);
-  
+  reconstructedChart.showXAxis(true);
+  reconstructedChart.showYAxis(true);
+  reconstructedChart.setPointColour(color(50, 50, 180, 100));
+  reconstructedChart.setPointSize(2);
+  reconstructedChart.setLineWidth(2);
+  reconstructedChart.setLineColour(color(50,50,150));
+  reconstructedChart.setAxisColour(color(0,0));
+  reconstructedChart.setAxisLabelColour(color(0,0));
+  reconstructedChart.setAxisValuesColour(color(0,0));
 }

@@ -6,7 +6,7 @@ public class ReconstructedSignalFirstOrderHold extends Signal {
     this.sourceSignal = sS;
   }
 
-  public void calculate() {
+  public void enumerate() {
     int index = 0;
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
@@ -39,7 +39,7 @@ public class ReconstructedSignalSincBasic extends Signal {
       return sin(PI * i) / (PI * i);
     }
   }
-  public void calculate() {
+  public void enumerate() {
     int index = 0;
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
@@ -72,20 +72,27 @@ public class ReconstructedSignalSincBasic extends Signal {
   }
 }
 
-public class ReconstructedSignalZeroOrderHold extends Signal {
-  private Signal sourceSignal;
+public class ReconstructedSignalZeroOrderHold {
+  float signalS; // start of signal
+  float signalE; // end of signal
+  FloatList amp; // tablica przechowujaca X
+  float[] time = new float[SAMPLE_NUMBER]; // tablica przechowujaca Y
+  float ampl; // amplitude
 
   public ReconstructedSignalZeroOrderHold(Signal sS) {
-    super(sS.signalS, sS.signalE, sS.ampl);
-    this.sourceSignal = sS;
+    this.signalS = sS.signalS;
+    this.signalE = sS.signalE;
+    this.amp = sS.amp;
+    this.time = sS.time;
+    this.ampl = sS.ampl;
   }
-  public void calculate() {
+  public void enumerate() {
     int index = 0;
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
       index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
-      sourceSignal.amp.set(j, index);
-      time[j] = i;
+      amp.set(j, index);
+      //sourceSignal.time[j] = i;
       j++;
     }
   }

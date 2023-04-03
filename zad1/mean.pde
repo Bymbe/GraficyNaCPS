@@ -50,15 +50,15 @@ void calculateData(Signal S) {
 
 void reconstructSignalFirstOrderHold(Signal S) {
   R1 = new ReconstructedSignalFirstOrderHold(S);
-  R1.calculate();
+  R1.enumerate();
 }
 
 void reconstructSignalSincBasic(Signal S) {
  R2 = new ReconstructedSignalSincBasic(S);
- R2.calculate();
+ R2.enumerate();
 }
 
 void reconstructSignalZeroOrderHold(Signal S) {
  R3 = new ReconstructedSignalZeroOrderHold(S);
- R3.calculate();
+ R3.enumerate();
 }
