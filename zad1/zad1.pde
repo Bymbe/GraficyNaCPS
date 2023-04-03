@@ -2,14 +2,18 @@ import controlP5.*;
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 XYChart scatterplot;
+XYChart reconstructedChart;
+
 ControlP5 cp5, cp6;
 
-int SAMPLE_NUMBER = 3000; //liczba probek
+int SAMPLE_NUMBER = 1000; //liczba probek
 float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
+
+float RECONSTRUCTED_SAMPLE_NUMBER = 500;
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
@@ -81,6 +85,7 @@ void draw() {
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
+    reconstructed(S1.time, S1.amp.array());
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
@@ -172,12 +177,14 @@ void draw() {
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
+    reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
+    reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);
@@ -258,7 +265,7 @@ void scatter(float[] x, float[] y) {
   scatterplot.showXAxis(true);
   scatterplot.showYAxis(true);
   scatterplot.setPointColour(color(20, 20, 120, 100));
-  scatterplot.setPointSize(5);
+  scatterplot.setPointSize(3);
 }
 
 void chart(float[] x, float[] y) {
@@ -267,6 +274,20 @@ void chart(float[] x, float[] y) {
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
   lineChart.setPointColour(color(180, 50, 50, 100));
-  lineChart.setPointSize(5);
+  lineChart.setPointSize(3);
   lineChart.setLineWidth(2);
+}
+
+void reconstructed(float[]x, float[] y) {
+  reconstructedChart = new XYChart(this);
+  reconstructedChart.setData(x, y);
+  reconstructedChart.showXAxis(true);
+  reconstructedChart.showYAxis(true);
+  reconstructedChart.setPointColour(color(50, 50, 180, 100));
+  reconstructedChart.setPointSize(2);
+  reconstructedChart.setLineWidth(2);
+  reconstructedChart.setLineColour(color(50,50,150));
+  reconstructedChart.setAxisColour(color(0,0));
+  reconstructedChart.setAxisLabelColour(color(0,0));
+  reconstructedChart.setAxisValuesColour(color(0,0));
 }
