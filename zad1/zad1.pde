@@ -45,6 +45,7 @@ float[] calcTime = new float[SAMPLE_NUMBER];
 Boolean isReconstructionChartVisible = false;
 
 int reconstructionChoice = 1;
+String reconstructionType;
 
 Signal S0;
 
@@ -193,12 +194,15 @@ void draw() {
   }
 
   fill(0);
+  
+  setReconstructionType();
 
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
     textAlign(CENTER, CENTER);
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
+    text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if(isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
@@ -206,6 +210,7 @@ void draw() {
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
+    text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
     if(isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);

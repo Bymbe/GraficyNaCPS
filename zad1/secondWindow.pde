@@ -13,7 +13,6 @@ public class SecondApplet extends PApplet {
     background(255);
     fill(0);
     drawSecondWindowButtons();
-    println(reconstructionChoice);
   }
 
   void mouseReleased() {
@@ -65,7 +64,7 @@ public class SecondApplet extends PApplet {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(16);
-    text("KWANTYZACJA RÓWNOMIERNA Z OBCIĄŻENIEM", width*0.0, height*0.334, width*0.5, height*0.666);
+    text("KWANTYZACJA RÓWNOMIERNA Z OBCIĘCIEM", width*0.0, height*0.334, width*0.5, height*0.666);
   }
 
   void drawKwantyzacjaZaokroglenie() {
@@ -84,7 +83,7 @@ public class SecondApplet extends PApplet {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(16);
-    text("KWANTYZACJA RÓWNOMIERNA Z ZAOKRĄGLENIEM", width*0.5, height*0.334, width*1.0, height*0.666);
+    text("KWANTYZACJA RÓWNOMIERNA Z ZAOKRĄGLANIEM", width*0.5, height*0.334, width*1.0, height*0.666);
   }
 
   void drawEkstrapolacjaZerowegoRzedu() {
