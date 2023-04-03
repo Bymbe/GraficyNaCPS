@@ -115,17 +115,16 @@ void draw() {
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    //if guzik to ma sie wywolac tylko raz jak klikniety przycisk zostanie i obliczy rekonstrukcje zeby sie ciagle nie obliczalo 
     
-    //reconstructSignalFirstOrderHold(S3);    //--------- jakims cudem te funkcje dziwnie oddzialuja na dzialajace juz sygnaly
+    //if guzik to ma sie wywolac tylko raz jak klikniety przycisk zostanie i obliczy rekonstrukcje zeby sie ciagle nie obliczalo |||| to trzeba przeniesc do nowego UI
+    reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
-    //reconstructSignalSincBasic(S3);
-    
+    reconstructSignalSincBasic(S3);
     //switch ktora rekonstrukcja 
-    
-    //reconstructed(R1.time, R1.amp.array());     ------------- a to rysuje stala funkcje w y = 0
+    //reconstructed(R1.time, R1.amp.array());
     //reconstructed(R2.time, R2.amp.array());
     reconstructed(R3.time, R3.amp.array());
+    
     break;
   case 4:
     chart(S4.time, S4.amp.array());
