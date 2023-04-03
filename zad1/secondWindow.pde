@@ -13,6 +13,6 @@ public class SecondApplet extends PApplet {
     background(255);
     fill(0);
     ellipse(100, 50, 10, 10);
-    if(mouseButton == LEFT) exit();
+    if(mouseButton == LEFT) surface.setVisible(false);
   }
 }
