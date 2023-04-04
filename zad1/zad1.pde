@@ -55,7 +55,7 @@ Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres, 
 RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
 RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
 Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
-SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD,FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
+SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
 Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
 UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
 
@@ -103,64 +103,81 @@ void draw() {
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
+    //reconstructSignalFirstOrderHold(S1);
+    reconstructSignalZeroOrderHold(S1);
+    reconstructSignalSincBasic(S1);
     break;
   case 2:
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     signalName = "szumGaussowski";
     calculateData(S2);
+    //reconstructSignalFirstOrderHold(S2);
+    reconstructSignalZeroOrderHold(S2);
+    reconstructSignalSincBasic(S2);
     break;
   case 3:
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    
-    //if guzik to ma sie wywolac tylko raz jak klikniety przycisk zostanie i obliczy rekonstrukcje zeby sie ciagle nie obliczalo |||| to trzeba przeniesc do nowego UI
-    reconstructSignalFirstOrderHold(S3);
+    //reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
     reconstructSignalSincBasic(S3);
-    //switch ktora rekonstrukcja 
-    //reconstructed(R1.time, R1.amp.array());
-    //reconstructed(R2.time, R2.amp.array());
-    reconstructed(R3.time, R3.amp.array());
-    
     break;
   case 4:
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
+    //reconstructSignalFirstOrderHold(S4);
+    reconstructSignalZeroOrderHold(S4);
+    reconstructSignalSincBasic(S4);
     break;
   case 5:
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
+    //reconstructSignalFirstOrderHold(S5);
+    reconstructSignalZeroOrderHold(S5);
+    reconstructSignalSincBasic(S5);
     break;
   case 6:
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
+    //reconstructSignalFirstOrderHold(S6);
+    reconstructSignalZeroOrderHold(S6);
+    reconstructSignalSincBasic(S6);
     break;
   case 7:
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     calculateData(S7);
+    //reconstructSignalFirstOrderHold(S7);
+    reconstructSignalZeroOrderHold(S7);
+    reconstructSignalSincBasic(S7);
     break;
   case 8:
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     calculateData(S8);
+    //reconstructSignalFirstOrderHold(S8);
+    reconstructSignalZeroOrderHold(S8);
+    //reconstructSignalSincBasic(S8);
     break;
   case 9:
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     calculateData(S9);
+    //reconstructSignalFirstOrderHold(S9);
+    reconstructSignalZeroOrderHold(S9);
+    //reconstructSignalSincBasic(S9);
     break;
   case 10:
     scatter(I1.time, I1.amp.array());
@@ -193,7 +210,7 @@ void draw() {
   }
 
   fill(0);
-  
+
   setReconstructionType();
 
   if (wyborWykresu < 10) { // UI
@@ -204,7 +221,7 @@ void draw() {
     text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if(isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
@@ -212,7 +229,7 @@ void draw() {
     text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
-    if(isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);
@@ -257,6 +274,16 @@ void draw() {
   S7.setFillFactor(FILL_FACTOR);
   S8.setFillFactor(FILL_FACTOR);
   I2.setProbability(FILL_FACTOR);
+  if (isReconstructionChartVisible) {
+    switch(reconstructionChoice) {
+    case 4:
+      reconstructed(R3.time, R3.amp.array());
+    case 5:
+      //reconstructed(R1.time, R1.amp.array());
+    case 6:
+      //reconstructed(R2.time, R2.amp.array());
+    }
+  }
   if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();
@@ -279,7 +306,7 @@ void draw() {
     S8.calculate();
     S9.calculate();
   }
-  if(cp5.getController("fill factor").isMousePressed()) {
+  if (cp5.getController("fill factor").isMousePressed()) {
     S6.calculate();
     S7.calculate();
     S8.calculate();
@@ -311,8 +338,8 @@ void reconstructed(float[]x, float[] y) {
   reconstructedChart.setPointColour(color(50, 50, 180, 100));
   reconstructedChart.setPointSize(2);
   reconstructedChart.setLineWidth(2);
-  reconstructedChart.setLineColour(color(50,50,150));
-  reconstructedChart.setAxisColour(color(0,0));
-  reconstructedChart.setAxisLabelColour(color(0,0));
-  reconstructedChart.setAxisValuesColour(color(0,0));
+  reconstructedChart.setLineColour(color(50, 50, 150));
+  reconstructedChart.setAxisColour(color(0, 0));
+  reconstructedChart.setAxisLabelColour(color(0, 0));
+  reconstructedChart.setAxisValuesColour(color(0, 0));
 }
