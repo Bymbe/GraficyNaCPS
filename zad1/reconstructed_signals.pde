@@ -51,6 +51,31 @@ class ReconstructedSignalSincBasic extends Signal {
   }
 }
 
+class ReconstructedSignalFirstOrderHold extends Signal {
+  float sampleR;
+
+  public ReconstructedSignalFirstOrderHold(Signal S, float sR) {
+    super(S.signalS, S.signalE, S.ampl);
+    sampleR = sR;
+  }
+
+  public void calculate() {
+    super.calculate(); // wywołanie metody calculate z klasy RectifiedOneSinusoidal
+    for (int i = 0; i < SAMPLE_NUMBER - 1; i++) {
+      float x1 = time[i] - signalS; // czas dla pierwszego punktu
+      float x2 = time[i + 1] - signalS; // czas dla drugiego punktu
+      float y1 = amp.get(i); // wartość dla pierwszego punktu
+      float y2 = amp.get(i + 1); // wartość dla drugiego punktu
+      float slope = (y2 - y1) / (x2 - x1); // współczynnik kierunkowy
+      for (float x = x1; x < x2; x += 1.0f / sampleR) {
+        int j = i + (int) ((x - x1) / (x2 - x1) * SAMPLE_NUMBER); // indeks próbki
+        float y = y1 + slope * (x - x1); // wartość sygnału dla punktu x
+        amp.set(j, y);
+      }
+    }
+  }
+}
+
 /*
 public class ReconstructedSignalFirstOrderHold extends Signal {
  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
