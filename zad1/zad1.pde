@@ -62,7 +62,7 @@ UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
 UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
 NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, FILL_FACTOR, IMPULSE_NOISETIME);
 
-ReconstructedSignalFirstOrderHold R1;
+//ReconstructedSignalFirstOrderHold R1;
 ReconstructedSignalSincBasic R2;
 ReconstructedSignalZeroOrderHold R3;
 
