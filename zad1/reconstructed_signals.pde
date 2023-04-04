@@ -1,28 +1,35 @@
 public class ReconstructedSignalFirstOrderHold extends Signal {
   float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  float sampleR;
+  Signal S;
 
-  public ReconstructedSignalFirstOrderHold(Signal sS) {
+  public ReconstructedSignalFirstOrderHold(Signal sS, float sR) {
     super(sS.signalS, sS.signalE, sS.ampl);
     this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
     for (int i = 0; i < sS.amp.size(); i++) {
       this.amp.set(i, sS.amp.get(i));
     }
     this.time = sS.time;
+    this.sampleR = sR;
   }
-
+  
+  public float argument(float t) {
+    return t * (1.0 / sampleR) + this.signalS;
+  }
+  
   public void enumerate() {
     int index = 0;
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
       index = floor((i - signalS) / (signalE - signalS) * RECONSTRUCTED_SAMPLE_NUMBER);
       if (index < RECONSTRUCTED_SAMPLE_NUMBER - 1) {
-        this.amp.set(j, (i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS)) /
-          ((i - ((index + 1.0) * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS) - (i - (index * (1.0 / RECONSTRUCTED_SAMPLE_NUMBER) + signalS)) *
-          (this.amp.get(index + 1) - this.amp.get(index)) + this.amp.get(index))));
+        this.amp.set(j, (i - this.argument(index)) /
+          (this.argument(index + 1) - this.argument(index)) *
+          (this.argument(index + 1) - this.argument(index)) + this.argument(index));
       } else {
-        this.amp.set(j, index);
+        this.amp.set(j, this.argument(index));
       }
-      time[j] = i;
+      //time[j] = i;
       j++;
     }
   }
@@ -75,7 +82,7 @@ public class ReconstructedSignalSincBasic extends Signal {
         sum += this.amp.get(int((k) * (i / step - k)));
       }
       this.amp.set(j, sum);
-      time[j] = i;
+      //time[j] = i;
       j++;
     }
   }

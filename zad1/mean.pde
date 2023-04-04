@@ -49,7 +49,7 @@ void calculateData(Signal S) {
 }
 
 void reconstructSignalFirstOrderHold(Signal S) {
-  R1 = new ReconstructedSignalFirstOrderHold(S);
+  R1 = new ReconstructedSignalFirstOrderHold(S, SAMPLE_RATE);
   R1.enumerate();
 }
 
