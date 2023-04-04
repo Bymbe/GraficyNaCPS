@@ -1,38 +1,22 @@
 class ReconstructedSignalZeroOrderHold extends Signal {
-  float sampleR;
-
-  public ReconstructedSignalZeroOrderHold(Signal S, float sR) {
+  public ReconstructedSignalZeroOrderHold(Signal S) {
     super(S.signalS, S.signalE, S.ampl);
-    sampleR = sR;
   }
 
   public void calculate() {
-    super.calculate(); // wywołanie metody calculate z klasy RectifiedOneSinusoidal
-    for (int i = 0; i < SAMPLE_NUMBER; i++) {
-      if (i == 0) {
-        // obliczanie wartości sygnału dla pierwszej próbki
-        amp.set(i, amp.get(i) * sampleR - amp.get(i + 1) * (sampleR - 1));
-      } else if (i == SAMPLE_NUMBER - 1) {
-        // obliczanie wartości sygnału dla ostatniej próbki
-        amp.set(i, amp.get(i) * sampleR - amp.get(i - 1) * (sampleR - 1));
-      } else {
-        // obliczanie wartości sygnału dla pozostałych próbek
-        amp.set(i, amp.get(i) * sampleR - amp.get(i - 1) * (sampleR - 1) - amp.get(i + 1) * (sampleR - 1));
-      }
-    }
   }
 }
 
 class ReconstructedSignalSincBasic extends Signal {
   float sampleR;
+  Signal sourceSignal;
 
   public ReconstructedSignalSincBasic(Signal S, float sR) {
     super(S.signalS, S.signalE, S.ampl);
+    sourceSignal = S;
     sampleR = sR;
   }
-
   public void calculate() {
-    super.calculate(); // wywołanie metody calculate z klasy RectifiedOneSinusoidal
     float[] sinc = new float[int(sampleR)];
     for (int i = 0; i < SAMPLE_NUMBER; i++) {
       float x = time[i] - signalS; // przesunięcie czasowe
@@ -44,7 +28,7 @@ class ReconstructedSignalSincBasic extends Signal {
         }
         float t = (j - sampleR / 2) * (1.0f / SAMPLE_RATE); // czas dla punktu próbkowania funkcji sinc
         float sincValue = (float)sin(PI * (x - t)) / (PI * (x - t)); // wartość funkcji sinc
-        sum += amp.get(i) * sincValue;
+        sum += sourceSignal.amp.get(i) * sincValue;
       }
       amp.set(i, sum);
     }
@@ -52,27 +36,45 @@ class ReconstructedSignalSincBasic extends Signal {
 }
 
 class ReconstructedSignalFirstOrderHold extends Signal {
-  float sampleR;
-
-  public ReconstructedSignalFirstOrderHold(Signal S, float sR) {
+  public ReconstructedSignalFirstOrderHold(Signal S) {
     super(S.signalS, S.signalE, S.ampl);
-    sampleR = sR;
   }
 
   public void calculate() {
-    super.calculate(); // wywołanie metody calculate z klasy RectifiedOneSinusoidal
-    for (int i = 0; i < SAMPLE_NUMBER - 1; i++) {
-      float x1 = time[i] - signalS; // czas dla pierwszego punktu
-      float x2 = time[i + 1] - signalS; // czas dla drugiego punktu
-      float y1 = amp.get(i); // wartość dla pierwszego punktu
-      float y2 = amp.get(i + 1); // wartość dla drugiego punktu
-      float slope = (y2 - y1) / (x2 - x1); // współczynnik kierunkowy
-      for (float x = x1; x < x2; x += 1.0f / sampleR) {
-        int j = i + (int) ((x - x1) / (x2 - x1) * SAMPLE_NUMBER); // indeks próbki
-        float y = y1 + slope * (x - x1); // wartość sygnału dla punktu x
-        amp.set(j, y);
+    float step = (signalE - signalS) / (SAMPLE_NUMBER - 1);
+    float currentTime = signalS;
+    for (int i = 0; i < SAMPLE_NUMBER; i++) {
+      int nextIndex = findNextIndex(currentTime);
+      if (nextIndex == -1) {
+        // current time is after the last point, use the last value
+        amp.set(i, amp.get(SAMPLE_NUMBER - 1));
+      } else if (nextIndex == 0) {
+        // current time is before the first point, use the first value
+        amp.set(i, amp.get(0));
+      } else {
+        // interpolate between two points
+        float x1 = time[nextIndex - 1];
+        float y1 = amp.get(nextIndex - 1);
+        float x2 = time[nextIndex];
+        float y2 = amp.get(nextIndex);
+        float y = lerp(y1, y2, (currentTime - x1) / (x2 - x1));
+        amp.set(i, y);
+      }
+      currentTime += step;
+    }
+  }
+
+  private int findNextIndex(float currentTime) {
+    for (int i = 0; i < SAMPLE_NUMBER; i++) {
+      if (time[i] >= currentTime) {
+        return i;
       }
     }
+    return -1;
+  }
+
+  private float lerp(float a, float b, float t) {
+    return a + (b - a) * t;
   }
 }
 

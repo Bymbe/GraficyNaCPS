@@ -49,7 +49,7 @@ void calculateData(Signal S) {
 }
 
 void reconstructSignalFirstOrderHold(Signal S) {
-  R1 = new ReconstructedSignalFirstOrderHold(S, SAMPLE_RATE);
+  R1 = new ReconstructedSignalFirstOrderHold(S);
   R1.calculate();
 }
 
@@ -59,6 +59,6 @@ void reconstructSignalSincBasic(Signal S) {
 }
 
 void reconstructSignalZeroOrderHold(Signal S) {
-  R3 = new ReconstructedSignalZeroOrderHold(S, SAMPLE_RATE);
+  R3 = new ReconstructedSignalZeroOrderHold(S);
   R3.calculate();
 }
