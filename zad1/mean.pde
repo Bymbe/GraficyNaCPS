@@ -50,7 +50,7 @@ void calculateData(Signal S) {
 
 void reconstructSignalFirstOrderHold(Signal S) {
   R1 = new ReconstructedSignalFirstOrderHold(S, SAMPLE_RATE);
-  R1.enumerate();
+  //R1.enumerate();
 }
 
 void reconstructSignalSincBasic(Signal S) {

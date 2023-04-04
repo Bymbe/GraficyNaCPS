@@ -13,7 +13,7 @@ float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
 int RECONSTRUCTED_SAMPLE_NUMBER = 500;
-int SAMPLE_RATE = 1;
+float SAMPLE_RATE = 5;
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
