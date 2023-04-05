@@ -12,7 +12,7 @@ float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
-int RECONSTRUCTED_SAMPLE_NUMBER = 500;
+int RECONSTRUCTED_SAMPLE_NUMBER = 200;
 float SAMPLE_RATE = 5;
 
 float IMPULSE_FREQUENCY = 1000;
@@ -99,7 +99,7 @@ void draw() {
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
-    reconstructed(toZeroX, toZeroY);
+    //reconstructed(toZeroX, toZeroY);
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
@@ -124,6 +124,8 @@ void draw() {
     reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
     //reconstructSignalSincBasic(S3);
+    quantizationCut(S3.time, S3.amp.array());
+    reconstructed(recTime, recAmpl);
     break;
   case 4:
     chart(S4.time, S4.amp.array());
