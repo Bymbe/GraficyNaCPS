@@ -40,6 +40,7 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
 
     newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
+    if(sigAmpl[x] < 0) newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE - QUANTIZATION_JUMP_SIZE;
     newTime[i] = sigTime[x];
   } //basically probkowanie... chyba...
 
