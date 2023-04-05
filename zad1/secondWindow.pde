@@ -22,7 +22,7 @@ public class SecondApplet extends PApplet {
   void drawSecondWindowButtons() {
     rectMode(CORNERS);
     drawProbkowanieRownomierne();
-    drawKwantyzacjaObciazenie();
+    drawKwantyzacjaObciecie();
     drawKwantyzacjaZaokroglenie();
     drawEkstrapolacjaZerowegoRzedu();
     drawInterpolacjaPierwszegoRzedu();
@@ -48,7 +48,7 @@ public class SecondApplet extends PApplet {
     text("PRÓBKOWANIE RÓWNOMIERNE", width*0.0, height*0.0, width*1.0, height*0.333);
   }
 
-  void drawKwantyzacjaObciazenie() {
+  void drawKwantyzacjaObciecie() {
     if (mouseX >= width*0.0 && mouseX <= width*0.5  && mouseY >= height*0.334 && mouseY <= height*0.666) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;

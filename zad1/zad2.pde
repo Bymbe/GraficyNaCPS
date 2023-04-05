@@ -1,7 +1,32 @@
-float quantizationStepSize = USER_AMPLITUDE/10;
+int RECONSTRUCTED_SAMPLE_NUMBER = 200;
+float quantizationStepSize = USER_AMPLITUDE/10; //skok pionowy
 
 float recTime[];
 float recAmpl[];
+
+void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
+  switch(reconstructionChoice) {
+  case 1:
+    //
+    break;
+  case 2:
+    quantizationCut(xaxis, yaxis);
+    reconstructed(recTime, recAmpl);
+    break;
+  case 3:
+    //
+    break;
+  case 4:
+    //
+    break;
+  case 5:
+    //
+    break;
+  case 6:
+    //
+    break;
+  }
+}
 
 void quantizationCut(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
@@ -11,8 +36,8 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
 
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-    
-    if(x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
+
+    if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
 
     newAmpl[i] = sigAmpl[x] - sigAmpl[x]%quantizationStepSize; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
     newTime[i] = sigTime[x];

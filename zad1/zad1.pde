@@ -12,7 +12,6 @@ float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
-int RECONSTRUCTED_SAMPLE_NUMBER = 200;
 float SAMPLE_RATE = 5;
 
 float IMPULSE_FREQUENCY = 1000;
@@ -124,8 +123,7 @@ void draw() {
     reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
     //reconstructSignalSincBasic(S3);
-    quantizationCut(S3.time, S3.amp.array());
-    reconstructed(recTime, recAmpl);
+    showSelectedReconstruction(S3.time, S3.amp.array());
     break;
   case 4:
     chart(S4.time, S4.amp.array());
@@ -135,6 +133,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S4);
     reconstructSignalZeroOrderHold(S4);
     //reconstructSignalSincBasic(S4);
+    showSelectedReconstruction(S4.time, S4.amp.array());
     break;
   case 5:
     chart(S5.time, S5.amp.array());
@@ -144,6 +143,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S5);
     reconstructSignalZeroOrderHold(S5);
     //reconstructSignalSincBasic(S5);
+    showSelectedReconstruction(S5.time, S5.amp.array());
     break;
   case 6:
     chart(S6.time, S6.amp.array());
@@ -153,6 +153,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S6);
     reconstructSignalZeroOrderHold(S6);
     //reconstructSignalSincBasic(S6);
+    showSelectedReconstruction(S6.time, S6.amp.array());
     break;
   case 7:
     chart(S7.time, S7.amp.array());
@@ -162,6 +163,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S7);
     reconstructSignalZeroOrderHold(S7);
     //reconstructSignalSincBasic(S7);
+    showSelectedReconstruction(S7.time, S7.amp.array());
     break;
   case 8:
     chart(S8.time, S8.amp.array());
@@ -171,6 +173,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S8);
     reconstructSignalZeroOrderHold(S8);
     //reconstructSignalSincBasic(S8);
+    showSelectedReconstruction(S8.time, S8.amp.array());
     break;
   case 9:
     chart(S9.time, S9.amp.array());
@@ -180,6 +183,7 @@ void draw() {
     //reconstructSignalFirstOrderHold(S9);
     reconstructSignalZeroOrderHold(S9);
     //reconstructSignalSincBasic(S9);
+    showSelectedReconstruction(S8.time, S8.amp.array());
     break;
   case 10:
     scatter(I1.time, I1.amp.array());
@@ -223,7 +227,7 @@ void draw() {
     text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if (isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (isReconstructionChartVisible && wyborWykresu >2) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
@@ -231,7 +235,7 @@ void draw() {
     text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
-    if (isReconstructionChartVisible) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    //if (isReconstructionChartVisible && wyborWykresu >2) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
   }
   textSize(16);
   textAlign(LEFT);
