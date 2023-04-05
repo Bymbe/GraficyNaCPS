@@ -218,6 +218,8 @@ void draw() {
   fill(0);
 
   setReconstructionType();
+  reconstructedChart.setMaxY(lineChart.getMaxY());
+  reconstructedChart.setMinY(lineChart.getMinY());
 
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
@@ -322,6 +324,8 @@ void draw() {
     S8.calculate();
     I2.calculate();
   }
+  
+  
 }
 
 void scatter(float[] x, float[] y) {
