@@ -92,7 +92,6 @@ void calculateButton() {
   fill(0);
   textAlign(CENTER, CENTER);
   text("WYKONAJ OPERACJĘ", width*0.60, height*0.85, width*0.68, height*0.98);
-
 }
 
 void saveButton() {
@@ -169,7 +168,7 @@ void amplitudeButton() {
     .setBroadcast(false)
     .setPosition(width*0.01, height*0.92)
     .setValue(USER_AMPLITUDE)
-    .setRange(1, 100)
+    .setRange(1, 25)
     .setSize(int(width*0.09), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
@@ -208,11 +207,43 @@ void fillFactorButton() {
     .setPaddingX(0);
 }
 
+void quantizationVerticalJumpSize() {
+  String quanVertJump = "vertical jump size";
+  cp5.addSlider(quanVertJump)
+    .setBroadcast(false)
+    .setPosition(width*0.88, height*0.45)
+    .setValue(QUANTIZATION_JUMP_SIZE)
+    .setRange(0.5, 10)
+    .setSize(int(width*0.10), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
+void reconstructionSampleNumber() {
+  String recSampleNumber = "reconstrucion sample number";
+  cp5.addSlider(recSampleNumber)
+    .setBroadcast(false)
+    .setPosition(width*0.88, height*0.55)
+    .setValue(RECONSTRUCTED_SAMPLE_NUMBER)
+    .setRange(10, 100)
+    .setSize(int(width*0.10), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void StaticDraw() {
   operationTextFields();
   amplitudeButton();
   periodButton();
   fillFactorButton();
+  quantizationVerticalJumpSize();
+  reconstructionSampleNumber();
 }
 
 void ActiveDraw() {
@@ -223,4 +254,8 @@ void ActiveDraw() {
   calculateButton();
   chooseReconstructedButton();
   showReconstructedButton();
+  
+  if (reconstructionChoice == 2) {
+    cp5.getController("vertical jump size").show();
+  } else cp5.getController("vertical jump size").hide();
 }

@@ -1,5 +1,5 @@
 int RECONSTRUCTED_SAMPLE_NUMBER = 200;
-float quantizationStepSize = USER_AMPLITUDE/10; //skok pionowy
+float QUANTIZATION_JUMP_SIZE = 2; //skok pionowy
 
 float recTime[];
 float recAmpl[];
@@ -39,7 +39,7 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
 
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
 
-    newAmpl[i] = sigAmpl[x] - sigAmpl[x]%quantizationStepSize; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
+    newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
     newTime[i] = sigTime[x];
   } //basically probkowanie... chyba...
 

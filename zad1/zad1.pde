@@ -6,7 +6,7 @@ XYChart reconstructedChart;
 
 ControlP5 cp5, cp6;
 
-int SAMPLE_NUMBER = 1000; //liczba probek
+int SAMPLE_NUMBER = 200; //liczba probek
 float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
@@ -258,6 +258,10 @@ void draw() {
   USER_AMPLITUDE = int(cp5.getController("amplitude").getValue()); //aktualizowanie co klatke amplitudy wybranej przez uzytkownika i odswiezenie jej w sygnalach
   USER_PERIOD = (cp5.getController("period").getValue());
   FILL_FACTOR = (cp5.getController("fill factor").getValue());
+  QUANTIZATION_JUMP_SIZE = (cp5.getController("vertical jump size").getValue());
+  RECONSTRUCTED_SAMPLE_NUMBER = int((cp5.getController("reconstrucion sample number").getValue()));
+  cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
+
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
   S3.setAmplitude(USER_AMPLITUDE);
@@ -283,7 +287,7 @@ void draw() {
   if (isReconstructionChartVisible) {
     switch(reconstructionChoice) {
     case 4:
-      reconstructed(R3.time, R3.amp.array());
+      //reconstructed(R3.time, R3.amp.array());
     case 5:
       //reconstructed(R1.time, R1.amp.array());
     case 6:
@@ -341,8 +345,8 @@ void reconstructed(float[]x, float[] y) {
   reconstructedChart.setData(x, y);
   reconstructedChart.showXAxis(true);
   reconstructedChart.showYAxis(true);
-  reconstructedChart.setPointColour(color(50, 50, 180, 100));
-  reconstructedChart.setPointSize(2);
+  reconstructedChart.setPointColour(color(20, 20, 150, 255));
+  reconstructedChart.setPointSize(4);
   reconstructedChart.setLineWidth(2);
   reconstructedChart.setLineColour(color(50, 50, 150));
   reconstructedChart.setAxisColour(color(0, 0));

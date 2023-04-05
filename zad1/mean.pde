@@ -41,11 +41,11 @@ float rmsValue(Signal S) {
 void calculateData(Signal S) {
   textAlign(LEFT, CENTER);
   textSize(16);
-  text("Średnia: " + nf(meanValue(S), 0, 3), width*0.85, height*0.2);
-  text("Średnia bezwzględna: " + nf(absMeanValue(S), 0, 3), width*0.85, height*0.25);
-  text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.3);
-  text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.35);
-  text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.4);
+  text("Średnia: " + nf(meanValue(S), 0, 3), width*0.85, height*0.04);
+  text("Średnia bezwzględna: " + nf(absMeanValue(S), 0, 3), width*0.85, height*0.08);
+  text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
+  text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
+  text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
 }
 
 void reconstructSignalFirstOrderHold(Signal S) {
