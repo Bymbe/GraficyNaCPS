@@ -36,12 +36,20 @@ class ReconstructedSignalFirstOrderHold extends Signal {
     time[0] = this.signalS;
     int j = int(this.signalS);
     for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
-      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), ((sS.amp.get(i) + sS.amp.get(i+1)) / 2));
-      if (i != 0)
+      if (i != 0) {
         time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+        this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(time[i - 1], time[i], sS.amp.get(i - 1), amp.get(i))); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+      } else {
+        this.amp.set(i, sS.amp.get(i)); 
+      }
       j++;
     }
     sourceSignal = sS;
+  }
+  public float findReconstructedPoint(float X1, float X2, float Y1, float Y2) {
+    float point;
+    point = Y2 - Y1;
+    return point;
   }
 }
 
