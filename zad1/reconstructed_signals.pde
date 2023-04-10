@@ -9,16 +9,13 @@ class ReconstructedSignalSincBasic extends Signal {
     this.sampleRate = sR;
     time[0] = this.signalS;
     int j = int(this.signalS);
-    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) { //<>//
       if (i != 0)
         time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
 
-      /* find nearest sample */
-      int index = int(sS.amp.get(i));
-
-      /* find range of N (or less) samples */
-      int firstSample = index - sampleRate / 2;
+      int firstSample = i;
       int lastSample = firstSample + sampleRate;
+      //zabezpieczenie przeciwko array out of bounds
       if (firstSample < 0) {
         lastSample = lastSample - firstSample;
         firstSample = 0;
@@ -32,12 +29,10 @@ class ReconstructedSignalSincBasic extends Signal {
           firstSample = 0;
         }
       }
-
-      /* calculate value */
-      double step = (signalE - signalS) / SAMPLE_NUMBER;
+      float step = (signalE - signalS) / SAMPLE_NUMBER;
       float sum = 0.0;
       for (int k = firstSample; k < lastSample; k++) {
-        sum += sS.amp.get(k) * sinc(i / step - k);
+        sum += sS.amp.get(k) * sinc(i - k);
       }
       this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sum);
 
@@ -48,9 +43,9 @@ class ReconstructedSignalSincBasic extends Signal {
 
   private double sinc(double t) {
     if (t == 0.0) {
-      return 1.0;
+      return this.ampl;
     } else {
-      return Math.sin(Math.PI * t) / (Math.PI * t);
+      return Math.sin(PI * t) / (PI * t);
     }
   }
 }

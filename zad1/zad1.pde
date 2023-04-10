@@ -6,13 +6,13 @@ XYChart reconstructedChart;
 
 ControlP5 cp5, cp6;
 
-int SAMPLE_NUMBER = 200; //liczba probek
+int SAMPLE_NUMBER = 1000; //liczba probek
 float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
-int SAMPLE_RATE = 50;
+int SAMPLE_RATE = 10;
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
@@ -130,6 +130,7 @@ void draw() {
     reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
     reconstructSignalSincBasic(S3);
+    reconstructed(R2.time, R2.amp.array());
     showSelectedReconstruction(S3.time, S3.amp.array());
 
     break;
