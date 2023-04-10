@@ -1,27 +1,56 @@
 class ReconstructedSignalSincBasic extends Signal {
-  float sampleR;
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
   Signal sourceSignal;
+  int sampleRate;
 
-  public ReconstructedSignalSincBasic(Signal S, float sR) {
-    super(S.signalS, S.signalE, S.ampl);
-    sourceSignal = S;
-    sampleR = sR;
-  }
-  public void calculate() {
-    float[] sinc = new float[int(sampleR)];
-    for (int i = 0; i < SAMPLE_NUMBER; i++) {
-      float x = time[i] - signalS; // przesunięcie czasowe
-      float sum = 0;
-      for (int j = 0; j < sampleR; j++) {
-        if (j == sampleR / 2) {
-          // omijamy punkt środkowy, aby uniknąć dzielenia przez zero
-          continue;
+  public ReconstructedSignalSincBasic(Signal sS, int sR) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    this.sampleRate = sR;
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+
+      /* find nearest sample */
+      int index = int(sS.amp.get(i));
+
+      /* find range of N (or less) samples */
+      int firstSample = index - sampleRate / 2;
+      int lastSample = firstSample + sampleRate;
+      if (firstSample < 0) {
+        lastSample = lastSample - firstSample;
+        firstSample = 0;
+        if (lastSample > SAMPLE_NUMBER) {
+          lastSample = SAMPLE_NUMBER;
         }
-        float t = (j - sampleR / 2) * (1.0f / SAMPLE_RATE); // czas dla punktu próbkowania funkcji sinc
-        float sincValue = (float)sin(PI * (x - t)) / (PI * (x - t)); // wartość funkcji sinc
-        sum += sourceSignal.amp.get(i) * sincValue;
+      } else if (lastSample > SAMPLE_NUMBER) {
+        firstSample = firstSample - (lastSample - SAMPLE_NUMBER);
+        lastSample = SAMPLE_NUMBER;
+        if (firstSample < 0) {
+          firstSample = 0;
+        }
       }
-      amp.set(i, sum);
+
+      /* calculate value */
+      double step = (signalE - signalS) / SAMPLE_NUMBER;
+      float sum = 0.0;
+      for (int k = firstSample; k < lastSample; k++) {
+        sum += sS.amp.get(k) * sinc(i / step - k);
+      }
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sum);
+
+      j++;
+    }
+    sourceSignal = sS;
+  }
+
+  private double sinc(double t) {
+    if (t == 0.0) {
+      return 1.0;
+    } else {
+      return Math.sin(Math.PI * t) / (Math.PI * t);
     }
   }
 }

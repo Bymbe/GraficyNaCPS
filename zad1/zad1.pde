@@ -12,7 +12,7 @@ float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
-float SAMPLE_RATE = 5;
+int SAMPLE_RATE = 50;
 
 float IMPULSE_FREQUENCY = 1000;
 int IMPULSE_AMPLITUDE = 10;
@@ -130,7 +130,6 @@ void draw() {
     reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
     reconstructSignalSincBasic(S3);
-    reconstructed(R1.time, R1.amp.array());
     showSelectedReconstruction(S3.time, S3.amp.array());
 
     break;
