@@ -27,45 +27,21 @@ class ReconstructedSignalSincBasic extends Signal {
 }
 
 class ReconstructedSignalFirstOrderHold extends Signal {
-  public ReconstructedSignalFirstOrderHold(Signal S) {
-    super(S.signalS, S.signalE, S.ampl);
-  }
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
 
-  public void calculate() {
-    float step = (signalE - signalS) / (SAMPLE_NUMBER - 1);
-    float currentTime = signalS;
-    for (int i = 0; i < SAMPLE_NUMBER; i++) {
-      int nextIndex = findNextIndex(currentTime);
-      if (nextIndex == -1) {
-        // current time is after the last point, use the last value
-        amp.set(i, amp.get(SAMPLE_NUMBER - 1));
-      } else if (nextIndex == 0) {
-        // current time is before the first point, use the first value
-        amp.set(i, amp.get(0));
-      } else {
-        // interpolate between two points
-        float x1 = time[nextIndex - 1];
-        float y1 = amp.get(nextIndex - 1);
-        float x2 = time[nextIndex];
-        float y2 = amp.get(nextIndex);
-        float y = lerp(y1, y2, (currentTime - x1) / (x2 - x1));
-        amp.set(i, y);
-      }
-      currentTime += step;
+  public ReconstructedSignalFirstOrderHold(Signal sS) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), ((sS.amp.get(i) + sS.amp.get(i+1)) / 2));
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+      j++;
     }
-  }
-
-  private int findNextIndex(float currentTime) {
-    for (int i = 0; i < SAMPLE_NUMBER; i++) {
-      if (time[i] >= currentTime) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  private float lerp(float a, float b, float t) {
-    return a + (b - a) * t;
+    sourceSignal = sS;
   }
 }
 
