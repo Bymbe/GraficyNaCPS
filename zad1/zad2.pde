@@ -1,4 +1,4 @@
-int RECONSTRUCTED_SAMPLE_NUMBER = 200;
+int RECONSTRUCTED_SAMPLE_NUMBER = 50;
 float QUANTIZATION_JUMP_SIZE = 2; //skok pionowy
 
 float recTime[];

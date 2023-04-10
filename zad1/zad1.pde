@@ -102,58 +102,71 @@ void draw() {
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
+    
     reconstructSignalFirstOrderHold(S1);
     reconstructSignalZeroOrderHold(S1);
     reconstructSignalSincBasic(S1);
+    showSelectedReconstruction(S1.time, S1.amp.array());
+    
     break;
   case 2:
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     signalName = "szumGaussowski";
     calculateData(S2);
+    
     reconstructSignalFirstOrderHold(S2);
     reconstructSignalZeroOrderHold(S2);
     reconstructSignalSincBasic(S2);
+    
     break;
   case 3:
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
+    
     reconstructSignalFirstOrderHold(S3);
     reconstructSignalZeroOrderHold(S3);
-    //reconstructSignalSincBasic(S3);
-    showSelectedReconstruction(S3.time, S3.amp.array());
+    reconstructSignalSincBasic(S3);
+    reconstructed(R3.time, R3.amp.array());
+    
     break;
   case 4:
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
-    //reconstructSignalFirstOrderHold(S4);
+    
+    reconstructSignalFirstOrderHold(S4);
     reconstructSignalZeroOrderHold(S4);
-    //reconstructSignalSincBasic(S4);
+    reconstructSignalSincBasic(S4);
     showSelectedReconstruction(S4.time, S4.amp.array());
+    
     break;
   case 5:
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
-    //reconstructSignalFirstOrderHold(S5);
+    
+    reconstructSignalFirstOrderHold(S5);
     reconstructSignalZeroOrderHold(S5);
-    //reconstructSignalSincBasic(S5);
+    reconstructSignalSincBasic(S5);
     showSelectedReconstruction(S5.time, S5.amp.array());
+    
     break;
   case 6:
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
-    //reconstructSignalFirstOrderHold(S6);
+    
+    reconstructSignalFirstOrderHold(S6);
     reconstructSignalZeroOrderHold(S6);
-    //reconstructSignalSincBasic(S6);
+    reconstructSignalSincBasic(S6);
     showSelectedReconstruction(S6.time, S6.amp.array());
+    
     break;
   case 7:
     chart(S7.time, S7.amp.array());

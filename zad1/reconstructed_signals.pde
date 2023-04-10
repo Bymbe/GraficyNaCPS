@@ -1,12 +1,3 @@
-class ReconstructedSignalZeroOrderHold extends Signal {
-  public ReconstructedSignalZeroOrderHold(Signal S) {
-    super(S.signalS, S.signalE, S.ampl);
-  }
-
-  public void calculate() {
-  }
-}
-
 class ReconstructedSignalSincBasic extends Signal {
   float sampleR;
   Signal sourceSignal;
@@ -209,36 +200,21 @@ public class ReconstructedSignalSincBasic extends Signal {
  }
  */
 
-/*
 public class ReconstructedSignalZeroOrderHold extends Signal {
- float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
- 
- public ReconstructedSignalZeroOrderHold(Signal sS) {
- super(sS.signalS, sS.signalE, sS.ampl);
- this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
- for (int i = 0; i < sS.amp.size(); i++) {
- this.amp.set(i, sS.amp.get(i));
- }
- this.time = sS.time;
- }
- 
- public void enumerate() {
- //int index = 0;
- //int length = int(signalE - signalS);
- //int j = 0;
- //for (float i = signalS + 1; i <= signalE + 1; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
- //}
- }
- 
- public void enumerate() {
- int index = 0;
- int j = 0;
- for (float i = signalS; i <= signalE; i += (signalE - signalS) / RECONSTRUCTED_SAMPLE_NUMBER) {
- index = floor((i - signalS) / (signalE - signalS) * SAMPLE_NUMBER);
- this.amp.set(j, index);
- //this.time[j] = i;
- j++;
- }
- }
- }
- */
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
+
+  public ReconstructedSignalZeroOrderHold(Signal sS) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sS.amp.get(i));
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+      j++;
+    }
+    sourceSignal = sS;
+  }
+}
