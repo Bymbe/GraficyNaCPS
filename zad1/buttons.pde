@@ -74,16 +74,6 @@ void showReconstructedButton() {
   textAlign(CENTER, CENTER);
   textSize(12);
   text("POKAŻ/UKRYJ REKONSTRUKCJĘ", width*0.90, height*0.75, width*0.98, height*0.83);
-  //switch(reconstructionChoice) {
-  //default:
-  //  reconstructed(R2.time, R2.amp.array());
-  //case 5:
-  //  reconstructed(R1.time, R1.amp.array());
-  //case 6:
-  //  reconstructed(R2.time, R2.amp.array());
-  //case 4:
-  //  reconstructed(R3.time, R3.amp.array());
-  //}
 }
 
 void calculateButton() {

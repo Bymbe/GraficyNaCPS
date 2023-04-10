@@ -17,13 +17,13 @@ void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
     //
     break;
   case 4:
-    //
+    reconstructed(R3.time, R3.amp.array());
     break;
   case 5:
-    //
+    reconstructed(R1.time, R1.amp.array());
     break;
   case 6:
-    //
+    reconstructed(R2.time, R2.amp.array());
     break;
   }
 }
