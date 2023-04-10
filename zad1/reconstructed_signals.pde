@@ -38,17 +38,19 @@ class ReconstructedSignalFirstOrderHold extends Signal {
     for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
       if (i != 0) {
         time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
-        this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(time[i - 1], time[i], sS.amp.get(i - 1), amp.get(i))); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        if (i == 1)
+          this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(sS.amp.get(i), sS.amp.get(i - 1), time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2)); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        else
+          this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(sS.amp.get(i - 1), sS.amp.get(i - 2), time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2)); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
       } else {
-        this.amp.set(i, sS.amp.get(i)); 
+        this.amp.set(i, sS.amp.get(i));
       }
       j++;
     }
     sourceSignal = sS;
   }
-  public float findReconstructedPoint(float X1, float X2, float Y1, float Y2) {
-    float point;
-    point = Y2 - Y1;
+  public float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
+    float point = Y2 + (X1 - X2) * (Y1 - Y2) / (X1 - X2);
     return point;
   }
 }
