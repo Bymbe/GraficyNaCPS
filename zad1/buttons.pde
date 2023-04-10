@@ -238,7 +238,7 @@ void reconstructionSampleNumber() {
     .setBroadcast(false)
     .setPosition(width*0.88, height*0.55)
     .setValue(RECONSTRUCTED_SAMPLE_NUMBER)
-    .setRange(10, 100)
+    .setRange(10, 250)
     .setSize(int(width*0.10), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)

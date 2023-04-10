@@ -32,7 +32,7 @@ class ReconstructedSignalSincBasic extends Signal {
       float step = (signalE - signalS) / SAMPLE_NUMBER;
       float sum = 0.0;
       for (int k = firstSample; k < lastSample; k++) {
-        sum += sS.amp.get(k) * sinc(i - k);
+        sum += sS.amp.get(k) * sinc((i - step - k));
       }
       this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sum);
 
