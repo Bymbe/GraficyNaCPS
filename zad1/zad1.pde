@@ -221,6 +221,8 @@ void draw() {
   setReconstructionType();
   reconstructedChart.setMaxY(lineChart.getMaxY());
   reconstructedChart.setMinY(lineChart.getMinY());
+  reconstructedChart.setMaxX(lineChart.getMaxX());
+  reconstructedChart.setMinX(lineChart.getMinX());
 
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;

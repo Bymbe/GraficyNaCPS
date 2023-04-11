@@ -255,7 +255,7 @@ void ActiveDraw() {
   chooseReconstructedButton();
   showReconstructedButton();
 
-  if (reconstructionChoice == 2) {
+  if (reconstructionChoice == 2 || reconstructionChoice == 3) {
     cp5.getController("vertical jump size").show();
   } else cp5.getController("vertical jump size").hide();
 }
