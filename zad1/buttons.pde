@@ -1,5 +1,3 @@
-int buttonColor = 200;
-
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.getName() == "wykres1") {
     wykres1String = theEvent.getStringValue();

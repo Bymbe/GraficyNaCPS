@@ -1,6 +1,3 @@
-//te calki to jakas masakra
-//kocham calki
-
 float meanValue(Signal S) {
   float sum = 0;
   for (int i = 0; i < S.amp.size(); i++) {

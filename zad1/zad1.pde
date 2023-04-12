@@ -1,72 +1,7 @@
 import controlP5.*;
 import org.gicentre.utils.stat.*;
-XYChart lineChart;
-XYChart scatterplot;
-BarChart barChart;
-XYChart reconstructedChart;
 
-ControlP5 cp5, cp6;
-
-int SAMPLE_NUMBER = 500; //liczba probek
-float USER_AMPLITUDE = 10; //amplituda
-float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
-float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
-float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
-float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
-int SAMPLE_RATE = 10;
-
-float IMPULSE_FREQUENCY = 1000;
-int IMPULSE_AMPLITUDE = 10;
-int IMPULSE_FIRSTSAMPLE = 25;
-int IMPULSE_JUMPSAMPLE = 0;
-float IMPULSE_PROBABILITY = 0.25;
-int IMPULSE_NOISETIME = 50;
-
-float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i koniec sygnalu oraz amplituda
-
-int wyborWykresu = 1;
-String signalType;
-String impulsType;
-boolean isItSignalOrImpulse = true; // flaga okreslajaca czy wyswietalmy signaly czy impuls aby podmienic tekst w ui
-float[] toZeroX = {0, 0}; // pomocniczna tablica do wyzerowania wykresu, aby poprzedni nie chodzil na naastepny // tablica osi X
-float[] toZeroY = {0, 0}; // -||- tablica osi Y
-float[] loadedFloatList;
-String signalName;
-float[] a = {1, 2, 3, 4};
-String[] string1;
-String[] string2;
-boolean wasMousePressedLastFrame = false;
-String wykres1String, operacjaString, wykres2String; // zmienne do operacji na sygnalach
-int w1, op, w2; // ^^ w formie intow
-float[] calc1, calc2;
-float[] calcResult = new float[SAMPLE_NUMBER];
-float[] calcTime = new float[SAMPLE_NUMBER];
-
-Boolean isReconstructionChartVisible = false;
-
-int reconstructionChoice = 1;
-String reconstructionType;
-
-Signal S0;
-
-ContinuosSignal S1 = new ContinuosSignal(startEndAmp);
-Gauss S2 = new Gauss(startEndAmp, 0, 1); //startEndAmp, srednia, odchylenie
-Sinusoidal S3 = new Sinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres, term
-RectifiedOneSinusoidal S4 = new RectifiedOneSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
-RectifiedTwoSinusoidal S5 = new RectifiedTwoSinusoidal(startEndAmp, USER_PERIOD); //startEndAmp, okres
-Rectangular S6 = new Rectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
-SymmetricalRectangular S7 = new SymmetricalRectangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
-Triangular S8 = new Triangular(startEndAmp, USER_PERIOD, FILL_FACTOR); //startEndAmp, okres, wspolczynnik wypelnienia
-UnitStroke S9 = new UnitStroke(startEndAmp, USER_PERIOD); //startEndAmp
-
-UnitImpulse I1 = new UnitImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, IMPULSE_FIRSTSAMPLE, IMPULSE_JUMPSAMPLE);
-NoiseImpulse I2 = new NoiseImpulse(IMPULSE_FREQUENCY, USER_AMPLITUDE, FILL_FACTOR, IMPULSE_NOISETIME);
-
-ReconstructedSignalFirstOrderHold R1;
-ReconstructedSignalSincBasic R2;
-ReconstructedSignalZeroOrderHold R3;
-
-void setup() {
+void setup() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SETUP
   lineChart = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
@@ -93,7 +28,7 @@ void setup() {
   textSize(16);
 }
 
-void draw() {
+void draw() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////DRAW
   surface.setTitle(nf(frameRate, 0, 1) + " FPS");
   background(255);
   fill(0);

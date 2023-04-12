@@ -1,12 +1,3 @@
-int RECONSTRUCTED_SAMPLE_NUMBER = 50;
-float QUANTIZATION_JUMP_SIZE = 2; //skok pionowy
-
-Boolean showBarChart = false;
-Boolean showLineChart = false;
-
-float recTime[];
-float recAmpl[];
-
 void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
   switch(reconstructionChoice) {
   case 1:
@@ -149,4 +140,104 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
+}
+
+class ReconstructedSignalSincBasic extends Signal {
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
+  int sampleRate;
+
+  public ReconstructedSignalSincBasic(Signal sS, int sR) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    this.sampleRate = sR;
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+
+      int firstSample = i;
+      int lastSample = firstSample + sampleRate;
+      //zabezpieczenie przeciwko array out of bounds
+      if (firstSample < 0) {
+        lastSample = lastSample - firstSample;
+        firstSample = 0;
+        if (lastSample > SAMPLE_NUMBER) {
+          lastSample = SAMPLE_NUMBER;
+        }
+      } else if (lastSample > SAMPLE_NUMBER) {
+        firstSample = firstSample - (lastSample - SAMPLE_NUMBER);
+        lastSample = SAMPLE_NUMBER;
+        if (firstSample < 0) {
+          firstSample = 0;
+        }
+      }
+      float step = (signalE - signalS) / SAMPLE_NUMBER;
+      float sum = 0.0;
+      for (int k = firstSample; k < lastSample; k++) {
+        sum += sS.amp.get(k) * sinc((i - step - k));
+      }
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sum);
+
+      j++;
+    }
+    sourceSignal = sS;
+  }
+
+  private double sinc(double t) {
+    if (t == 0.0) {
+      return this.ampl;
+    } else {
+      return Math.sin(PI * t) / (PI * t);
+    }
+  }
+}
+
+class ReconstructedSignalFirstOrderHold extends Signal {
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
+
+  public ReconstructedSignalFirstOrderHold(Signal sS) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      if (i != 0) {
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+        if (i == 1)
+          this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(sS.amp.get(i), sS.amp.get(i - 1), time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2)); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        else
+          this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), findReconstructedPoint(sS.amp.get(i - 1), sS.amp.get(i - 2), time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2)); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+      } else {
+        this.amp.set(i, sS.amp.get(i));
+      }
+      j++;
+    }
+    sourceSignal = sS;
+  }
+  public float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
+    float point = Y2 + (X1 - X2) * (Y1 - Y2) / (X1 - X2);
+    return point;
+  }
+}
+
+public class ReconstructedSignalZeroOrderHold extends Signal {
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
+
+  public ReconstructedSignalZeroOrderHold(Signal sS) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sS.amp.get(i));
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+      j++;
+    }
+    sourceSignal = sS;
+  }
 }

@@ -1,5 +1,3 @@
-boolean activeWriting = false;
-
 void setReconstructionType() {
   switch(reconstructionChoice) {
   case 1:
