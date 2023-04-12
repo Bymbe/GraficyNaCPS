@@ -34,7 +34,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 1;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -53,7 +53,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 2;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -72,7 +72,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 3;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -91,7 +91,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 4;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -110,7 +110,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 5;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -129,7 +129,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 6;
-        surface.setVisible(false);
+        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
