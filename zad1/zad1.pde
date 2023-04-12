@@ -2,6 +2,7 @@ import controlP5.*;
 import org.gicentre.utils.stat.*;
 XYChart lineChart;
 XYChart scatterplot;
+BarChart barChart;
 XYChart reconstructedChart;
 
 ControlP5 cp5, cp6;
@@ -69,6 +70,7 @@ void setup() {
   lineChart = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
+  barChart = new BarChart(this);
 
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
@@ -223,6 +225,8 @@ void draw() {
   reconstructedChart.setMinY(lineChart.getMinY());
   reconstructedChart.setMaxX(lineChart.getMaxX());
   reconstructedChart.setMinX(lineChart.getMinX());
+  barChart.setMaxValue(lineChart.getMaxY());
+  barChart.setMinValue(lineChart.getMinY());
 
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
@@ -232,7 +236,10 @@ void draw() {
     text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if (isReconstructionChartVisible && wyborWykresu >2) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (isReconstructionChartVisible && wyborWykresu >2) {
+      reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+      barChart.draw(0, height*0.1, width*0.85, height*0.65);
+    }
   } else {
     isItSignalOrImpulse = false;
     textSize(20);
@@ -327,34 +334,4 @@ void draw() {
     S8.calculate();
     I2.calculate();
   }
-}
-
-void scatter(float[] x, float[] y) {
-  scatterplot.setData(x, y);
-  scatterplot.showXAxis(true);
-  scatterplot.showYAxis(true);
-  scatterplot.setPointColour(color(20, 20, 120, 100));
-  scatterplot.setPointSize(3);
-}
-
-void chart(float[] x, float[] y) {
-  lineChart.setData(x, y);
-  lineChart.showXAxis(true);
-  lineChart.showYAxis(true);
-  lineChart.setPointColour(color(180, 50, 50, 100));
-  lineChart.setPointSize(3);
-  lineChart.setLineWidth(2);
-}
-
-void reconstructed(float[]x, float[] y) {
-  reconstructedChart.setData(x, y);
-  reconstructedChart.showXAxis(true);
-  reconstructedChart.showYAxis(true);
-  reconstructedChart.setPointColour(color(20, 20, 150, 255));
-  reconstructedChart.setPointSize(4);
-  reconstructedChart.setLineWidth(2);
-  reconstructedChart.setLineColour(color(50, 50, 150));
-  reconstructedChart.setAxisColour(color(0, 0));
-  reconstructedChart.setAxisLabelColour(color(0, 0));
-  reconstructedChart.setAxisValuesColour(color(0, 0));
 }
