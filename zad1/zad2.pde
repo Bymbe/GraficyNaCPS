@@ -7,7 +7,7 @@ float recAmpl[];
 void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
   switch(reconstructionChoice) {
   case 1:
-    //
+    
     break;
   case 2:
     quantizationCut(xaxis, yaxis);
@@ -18,7 +18,8 @@ void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
     reconstructed(recTime, recAmpl);
     break;
   case 4:
-    reconstructed(R3.time, R3.amp.array());
+    extrapolation0row(xaxis, yaxis);
+    reconstructed(recTime, recAmpl);
     break;
   case 5:
     reconstructed(R1.time, R1.amp.array());
@@ -27,6 +28,27 @@ void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
     reconstructed(R2.time, R2.amp.array());
     break;
   }
+}
+
+void extrapolation0row(float[] sigTime, float[] sigAmpl) {
+  float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  int x = 0;
+
+  for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+
+    x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+
+    if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
+
+    newAmpl[i] = sigAmpl[x]; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
+    newTime[i] = sigTime[x];
+  } //basically probkowanie... chyba...
+
+  recTime = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recAmpl = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  arrayCopy(newTime, recTime);
+  arrayCopy(newAmpl, recAmpl);
 }
 
 void quantizationCut(float[] sigTime, float[] sigAmpl) {
