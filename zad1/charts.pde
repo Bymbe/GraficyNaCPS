@@ -34,6 +34,7 @@ void bar(float[] y) {
   barChart.showValueAxis(true);
   barChart.setBarColour(color(70, 70, 150));
   barChart.setCategoryAxisAt(0);
+  barChart.setValueFormat("");
   //barChart.setAxisColour(color(0, 0));
   //barChart.setAxisLabelColour(color(0, 0));
   //barChart.setAxisValuesColour(color(0, 0));
