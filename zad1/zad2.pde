@@ -37,20 +37,14 @@ void sampling(float[] sigAmpl) {
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmplFinal[] = new float[RECONSTRUCTED_SAMPLE_NUMBER];
   int x = 0;
-
   for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
-
     newAmpl[i] = sigAmpl[x];
   }
-
   for (int i = 0; i <RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     newAmplFinal[i] = (newAmpl[i] + newAmpl[i+1])/2;
   }
-
   recAmpl = new float[RECONSTRUCTED_SAMPLE_NUMBER];
   arrayCopy(newAmplFinal, recAmpl);
 }
@@ -59,23 +53,17 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   int x = 0;
-
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
-
     newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
     if (sigAmpl[x] < 0) newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE - QUANTIZATION_JUMP_SIZE;
     newTime[i] = sigTime[x];
   } //basically probkowanie... chyba...
-
   float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newTimeDoubled[0] = newTime[0];
   float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newAmplDoubled[0] = newAmpl[0];
-
   for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) { //by ladnie sie pokazywalo
     if (newAmpl[i] < newAmpl[i-1]) {
       //linia na wykresie idzie w dol, dopiero potem w prawo
@@ -98,13 +86,9 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   int x = 0;
-
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
-
     //newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
     if (sigAmpl[x]>=0) {
       if (sigAmpl[x]%QUANTIZATION_JUMP_SIZE > QUANTIZATION_JUMP_SIZE/2) {
@@ -115,16 +99,12 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
         newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE + QUANTIZATION_JUMP_SIZE;
       } else newAmpl[i] = sigAmpl[x] - sigAmpl[x]%QUANTIZATION_JUMP_SIZE;
     }
-
     newTime[i] = sigTime[x];
   } //basically probkowanie... chyba...
-
   float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newTimeDoubled[0] = newTime[0];
   float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newAmplDoubled[0] = newAmpl[0];
-
-
   for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) { //by ladnie sie pokazywalo
     if (newAmpl[i] < newAmpl[i-1]) {
       //linia na wykresie idzie w dol, dopiero potem w prawo
@@ -147,25 +127,18 @@ void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   int x = 0;
-
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
-
     newAmpl[i] = sigAmpl[x];
     newTime[i] = sigTime[x];
   }
-
   float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newTimeDoubled[0] = newTime[0];
   float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   newAmplDoubled[0] = newAmpl[0];
-
   for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) { //by ladnie sie pokazywalo
     if (newAmpl[i] < newAmpl[i-1]) {
-      //linia na wykresie idzie w dol, dopiero potem w prawo
       newAmplDoubled[(i*2)-1] = newAmpl[i];
       newTimeDoubled[(i*2)-1] = newTime[i-1];
     } else {
@@ -185,44 +158,43 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   int x = 0;
-
-  for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+  for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+    x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+    if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
+    newTime[i] = sigTime[x];
     if (i != 0) {
-      newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = x;
       if (i == 1)
-        newAmpl[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = findReconstructedPoint(sigAmpl[i], sigAmpl[i - 1], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x], sigAmpl[x - 1], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
       else
-        newAmpl[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = findReconstructedPoint(sigAmpl[i - 1], sigAmpl[i - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x - 1], sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
     } else {
-      newAmpl[i] =  sigAmpl[i];
+      newAmpl[i] =  sigAmpl[x];
     }
-    x++;
+    newAmpl[i] = sigAmpl[x];
   }
-
-  float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
   newTimeDoubled[0] = newTime[0];
-  float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
   newAmplDoubled[0] = newAmpl[0];
-
-  for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) { //by ladnie sie pokazywalo
+  for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     if (newAmpl[i] < newAmpl[i-1]) {
-      //linia na wykresie idzie w dol, dopiero potem w prawo
-      newAmplDoubled[(i*2)-1] = newAmpl[i];
-      newTimeDoubled[(i*2)-1] = newTime[i-1];
+      newAmplDoubled[(i)-1] = newAmpl[i];
+      newTimeDoubled[(i)-1] = newTime[i-1];
     } else {
-      newAmplDoubled[(i*2)-1] = newAmpl[i-1];
-      newTimeDoubled[(i*2)-1] = newTime[i];
+      newAmplDoubled[(i)-1] = newAmpl[i-1];
+      newTimeDoubled[(i)-1] = newTime[i];
     }
-    newAmplDoubled[(i*2)] = newAmpl[i];
-    newTimeDoubled[(i*2)] = newTime[i];
+    newAmplDoubled[(i)] = newAmpl[i];
+    newTimeDoubled[(i)] = newTime[i];
   }
-  recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
-  recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  newTimeDoubled[0] = sigTime[0];
+  recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }
 
-public float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
+float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
   float point = Y2 + (X1 - X2) * (Y1 - Y2) / (X1 - X2);
   return point;
 }
@@ -269,12 +241,12 @@ class ReconstructedSignalSincBasic extends Signal {
     }
     sourceSignal = sS;
   }
+}
 
-  private double sinc(double t) {
-    if (t == 0.0) {
-      return this.ampl;
-    } else {
-      return Math.sin(PI * t) / (PI * t);
-    }
+double sinc(double t) {
+  if (t == 0.0) {
+    return 1.0;
+  } else {
+    return Math.sin(PI * t) / (PI * t);
   }
 }
