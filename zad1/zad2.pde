@@ -154,8 +154,7 @@ void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
 
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
 
-    newAmpl[i] = sigAmpl[x] - sigAmpl[x]%(SAMPLE_NUMBER/RECONSTRUCTED_SAMPLE_NUMBER); //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
-    if (sigAmpl[x] < 0) newAmpl[i] = sigAmpl[x] - sigAmpl[x]%(SAMPLE_NUMBER/RECONSTRUCTED_SAMPLE_NUMBER) - (SAMPLE_NUMBER/RECONSTRUCTED_SAMPLE_NUMBER);
+    newAmpl[i] = sigAmpl[x];
     newTime[i] = sigTime[x];
   }
 
