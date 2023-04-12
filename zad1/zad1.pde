@@ -39,8 +39,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
-    reconstructSignalFirstOrderHold(S1);
-    reconstructSignalZeroOrderHold(S1);
     reconstructSignalSincBasic(S1);
     showSelectedReconstruction(S1.time, S1.amp.array());
     break;
@@ -48,8 +46,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     calculateData(S2);
-    reconstructSignalFirstOrderHold(S2);
-    reconstructSignalZeroOrderHold(S2);
     reconstructSignalSincBasic(S2);
     showSelectedReconstruction(S2.time, S2.amp.array());
     break;
@@ -58,8 +54,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    reconstructSignalFirstOrderHold(S3);
-    reconstructSignalZeroOrderHold(S3);
     reconstructSignalSincBasic(S3);
     showSelectedReconstruction(S3.time, S3.amp.array());
     break;
@@ -68,8 +62,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
-    reconstructSignalFirstOrderHold(S4);
-    reconstructSignalZeroOrderHold(S4);
     reconstructSignalSincBasic(S4);
     showSelectedReconstruction(S4.time, S4.amp.array());
     break;
@@ -78,8 +70,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
-    reconstructSignalFirstOrderHold(S5);
-    reconstructSignalZeroOrderHold(S5);
     reconstructSignalSincBasic(S5);
     showSelectedReconstruction(S5.time, S5.amp.array());
     break;
@@ -88,8 +78,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
-    reconstructSignalFirstOrderHold(S6);
-    reconstructSignalZeroOrderHold(S6);
     reconstructSignalSincBasic(S6);
     showSelectedReconstruction(S6.time, S6.amp.array());
     break;
@@ -98,8 +86,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     calculateData(S7);
-    reconstructSignalFirstOrderHold(S7);
-    reconstructSignalZeroOrderHold(S7);
     reconstructSignalSincBasic(S7);
     showSelectedReconstruction(S7.time, S7.amp.array());
     break;
@@ -108,8 +94,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     calculateData(S8);
-    reconstructSignalFirstOrderHold(S8);
-    reconstructSignalZeroOrderHold(S8);
     reconstructSignalSincBasic(S8);
     showSelectedReconstruction(S8.time, S8.amp.array());
     break;
@@ -118,8 +102,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     calculateData(S9);
-    reconstructSignalFirstOrderHold(S9);
-    reconstructSignalZeroOrderHold(S9);
     reconstructSignalSincBasic(S9);
     showSelectedReconstruction(S8.time, S8.amp.array());
     break;

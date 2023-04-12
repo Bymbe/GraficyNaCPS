@@ -43,16 +43,17 @@ void calculateData(Signal S) {
   text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
   text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
   text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
+  if(isReconstructionChartVisible != false) text("Ilosc błędów: " + nf(failuresCounter(S, recAmpl), 0, 3), width*0.85, height*0.24);
 }
 
-void reconstructSignalFirstOrderHold(Signal S) {
-  R1 = new ReconstructedSignalFirstOrderHold(S);
+int failuresCounter(Signal S, float[] sigAmpl) {
+  int counter = 0;
+  for(int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+    if(S.amp.get(i) != sigAmpl[i]) counter++;
+  }
+  return counter;
 }
 
 void reconstructSignalSincBasic(Signal S) {
   R2 = new ReconstructedSignalSincBasic(S, SAMPLE_RATE);
-}
-
-void reconstructSignalZeroOrderHold(Signal S) {
-  R3 = new ReconstructedSignalZeroOrderHold(S);
 }
