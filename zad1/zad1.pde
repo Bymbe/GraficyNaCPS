@@ -227,7 +227,6 @@ void draw() {
   reconstructedChart.setMinX(lineChart.getMinX());
   barChart.setMaxValue(lineChart.getMaxY());
   barChart.setMinValue(lineChart.getMinY());
-
   if (wyborWykresu < 10) { // UI
     isItSignalOrImpulse = true;
     textAlign(CENTER, CENTER);

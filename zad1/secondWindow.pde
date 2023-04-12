@@ -34,7 +34,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 1;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -53,7 +53,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 2;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -72,7 +72,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 3;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -91,7 +91,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 4;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -104,13 +104,13 @@ public class SecondApplet extends PApplet {
     textSize(16);
     text("EKSTRAPOLACJA ZEROWEGO RZĘDU", width*0.0, height*0.667, width*0.333, height*1);
   }
-
+  
   void drawInterpolacjaPierwszegoRzedu() {
     if (mouseX >= width*0.334 && mouseX <= width*0.666  && mouseY >= height*0.666 && mouseY <= height*1) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 5;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
@@ -129,7 +129,7 @@ public class SecondApplet extends PApplet {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
         reconstructionChoice = 6;
-        if(System.getProperty("os.name") != "Mac OS X") surface.setVisible(false);
+        if(platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
         buttonColor = 150;
