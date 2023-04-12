@@ -237,8 +237,8 @@ void draw() {
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if (isReconstructionChartVisible && wyborWykresu >2) {
-      reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
-      barChart.draw(0, height*0.1, width*0.85, height*0.65);
+      if(showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+      if(showBarChart == true) barChart.draw(0, height*0.1, width*0.85, height*0.65);
     }
   } else {
     isItSignalOrImpulse = false;

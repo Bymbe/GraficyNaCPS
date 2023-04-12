@@ -1,6 +1,9 @@
 int RECONSTRUCTED_SAMPLE_NUMBER = 50;
 float QUANTIZATION_JUMP_SIZE = 2; //skok pionowy
 
+Boolean showBarChart = false;
+Boolean showLineChart = false;
+
 float recTime[];
 float recAmpl[];
 
@@ -28,6 +31,13 @@ void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
     reconstructed(R2.time, R2.amp.array());
     break;
   }
+  if (reconstructionChoice == 1) {
+    showBarChart = true;
+    showLineChart = false;
+  } else {
+    showBarChart = false;
+    showLineChart = true;
+  }
 }
 
 void sampling(float[] sigAmpl) {
@@ -43,7 +53,7 @@ void sampling(float[] sigAmpl) {
 
     newAmpl[i] = sigAmpl[x];
   }
-  
+
   for (int i = 0; i <RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     newAmplFinal[i] = (newAmpl[i] + newAmpl[i+1])/2;
   }
