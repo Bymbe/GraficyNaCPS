@@ -1,4 +1,4 @@
- import controlP5.*;
+import controlP5.*;
 import org.gicentre.utils.stat.*;
 
 void setup() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SETUP
@@ -38,62 +38,62 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
-    showSelectedReconstruction(S1.time, S1.amp.array());
+    showSelectedReconstruction(S1);
     break;
   case 2:
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     calculateData(S2);
-    showSelectedReconstruction(S2.time, S2.amp.array());
+    showSelectedReconstruction(S2);
     break;
   case 3:
     chart(S3.time, S3.amp.array());
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    showSelectedReconstruction(S3.time, S3.amp.array());
+    showSelectedReconstruction(S3);
     break;
   case 4:
     chart(S4.time, S4.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
-    showSelectedReconstruction(S4.time, S4.amp.array());
+    showSelectedReconstruction(S4);
     break;
   case 5:
     chart(S5.time, S5.amp.array());
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
-    showSelectedReconstruction(S5.time, S5.amp.array());
+    showSelectedReconstruction(S5);
     break;
   case 6:
     chart(S6.time, S6.amp.array());
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
-    showSelectedReconstruction(S6.time, S6.amp.array());
+    showSelectedReconstruction(S6);
     break;
   case 7:
     chart(S7.time, S7.amp.array());
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     calculateData(S7);
-    showSelectedReconstruction(S7.time, S7.amp.array());
+    showSelectedReconstruction(S7);
     break;
   case 8:
     chart(S8.time, S8.amp.array());
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     calculateData(S8);
-    showSelectedReconstruction(S8.time, S8.amp.array());
+    showSelectedReconstruction(S8);
     break;
   case 9:
     chart(S9.time, S9.amp.array());
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     calculateData(S9);
-    showSelectedReconstruction(S8.time, S8.amp.array());
+    showSelectedReconstruction(S9);
     break;
   case 10:
     scatter(I1.time, I1.amp.array());
@@ -143,8 +143,8 @@ void draw() { //////////////////////////////////////////////////////////////////
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if (isReconstructionChartVisible && wyborWykresu >2) {
-      if(showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
-      if(showBarChart == true) barChart.draw(0, height*0.1, width*0.85, height*0.65);
+      if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+      if (showBarChart == true) barChart.draw(0, height*0.1, width*0.85, height*0.65);
     }
   } else {
     isItSignalOrImpulse = false;
