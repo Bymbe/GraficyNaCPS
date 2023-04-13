@@ -1,8 +1,8 @@
 void showSelectedReconstruction(Signal S) {
   switch(reconstructionChoice) {
   case 1:
-    sampling(S.time);
-    bar(S.amp.array());
+    sampling(S.amp.array());
+    bar(recAmpl);
     break;
   case 2:
     quantizationCut(S.time, S.amp.array());
@@ -200,7 +200,7 @@ float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
   return point;
 }
 
-void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmp, float signalE, float signalS) {
+void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmpl, float signalE, float signalS) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   int x = 0;
@@ -209,7 +209,7 @@ void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmp, float signalE
     if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
     newTime[i] = sigTime[x];
     if (i != 0) {
-      int firstSample = i;
+      int firstSample = x;
       int lastSample = firstSample + SAMPLE_RATE;
       //zabezpieczenie przeciwko array out of bounds
       if (firstSample < 0) {
@@ -228,7 +228,7 @@ void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmp, float signalE
       float step = (signalE - signalS) / SAMPLE_NUMBER;
       float sum = 0.0;
       for (int k = firstSample; k < lastSample; k++) {
-        //sum += sigAmpl[k] * sinc((i - step - k));
+        sum += sigAmpl[k] * sinc((x - step - k));
       }
       newAmpl[i] = sum;
     }
