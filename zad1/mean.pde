@@ -53,7 +53,3 @@ int failuresCounter(Signal S, float[] sigAmpl) {
   }
   return counter;
 }
-
-void reconstructSignalSincBasic(Signal S) {
-  R2 = new ReconstructedSignalSincBasic(S, SAMPLE_RATE);
-}

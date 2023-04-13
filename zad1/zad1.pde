@@ -1,4 +1,4 @@
-import controlP5.*;
+ import controlP5.*;
 import org.gicentre.utils.stat.*;
 
 void setup() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SETUP
@@ -35,18 +35,15 @@ void draw() { //////////////////////////////////////////////////////////////////
   switch(wyborWykresu) {
   case 1:
     chart(S1.time, S1.amp.array());
-    //reconstructed(toZeroX, toZeroY);
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
-    reconstructSignalSincBasic(S1);
     showSelectedReconstruction(S1.time, S1.amp.array());
     break;
   case 2:
     chart(S2.time, S2.amp.array());
     signalType = "Szum gaussowski";
     calculateData(S2);
-    reconstructSignalSincBasic(S2);
     showSelectedReconstruction(S2.time, S2.amp.array());
     break;
   case 3:
@@ -54,7 +51,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
-    reconstructSignalSincBasic(S3);
     showSelectedReconstruction(S3.time, S3.amp.array());
     break;
   case 4:
@@ -62,7 +58,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
-    reconstructSignalSincBasic(S4);
     showSelectedReconstruction(S4.time, S4.amp.array());
     break;
   case 5:
@@ -70,7 +65,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
-    reconstructSignalSincBasic(S5);
     showSelectedReconstruction(S5.time, S5.amp.array());
     break;
   case 6:
@@ -78,7 +72,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
-    reconstructSignalSincBasic(S6);
     showSelectedReconstruction(S6.time, S6.amp.array());
     break;
   case 7:
@@ -86,7 +79,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     calculateData(S7);
-    reconstructSignalSincBasic(S7);
     showSelectedReconstruction(S7.time, S7.amp.array());
     break;
   case 8:
@@ -94,7 +86,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     calculateData(S8);
-    reconstructSignalSincBasic(S8);
     showSelectedReconstruction(S8.time, S8.amp.array());
     break;
   case 9:
@@ -102,7 +93,6 @@ void draw() { //////////////////////////////////////////////////////////////////
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     calculateData(S9);
-    reconstructSignalSincBasic(S9);
     showSelectedReconstruction(S8.time, S8.amp.array());
     break;
   case 10:
@@ -119,7 +109,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     try {
       impulsType = "Sygnal poddany operacji";
       signalName = "Sygnal poddany operacja";
-      chart(S0.time, S0.amp.array()); //X DO PODMIANY
+      chart(S0.time, S0.amp.array());
       calculateData(S0);
     }
     catch (Exception e) {
@@ -187,6 +177,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   USER_PERIOD = (cp5.getController("period").getValue());
   FILL_FACTOR = (cp5.getController("fill factor").getValue());
   QUANTIZATION_JUMP_SIZE = (cp5.getController("vertical jump size").getValue());
+  SAMPLE_RATE = int(cp5.getController("sample rate").getValue());
   RECONSTRUCTED_SAMPLE_NUMBER = int((cp5.getController("reconstrucion sample number").getValue()));
   cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
 
@@ -212,16 +203,6 @@ void draw() { //////////////////////////////////////////////////////////////////
   S7.setFillFactor(FILL_FACTOR);
   S8.setFillFactor(FILL_FACTOR);
   I2.setProbability(FILL_FACTOR);
-  if (isReconstructionChartVisible) {
-    switch(reconstructionChoice) {
-    case 4:
-      //reconstructed(R3.time, R3.amp.array());
-    case 5:
-      //reconstructed(R1.time, R1.amp.array());
-    case 6:
-      //reconstructed(R2.time, R2.amp.array());
-    }
-  }
   if (cp5.getController("amplitude").isMousePressed()) { //przeliczenie wartosci nowego sygnalu z nowa amplituda, dzieki temu slider nadaza za sygnalem i na odwrot, przelaczajac sygnal wartosc amplitudy sie zgadza a nie jest poprzednia zapisana
     S1.calculate();
     S2.calculate();

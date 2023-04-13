@@ -21,7 +21,8 @@ void showSelectedReconstruction(float[] xaxis, float[] yaxis) {
     reconstructed(recTime, recAmpl);
     break;
   case 6:
-    reconstructed(R2.time, R2.amp.array());
+    reconstructedSignalSincBasic(xaxis, yaxis);
+    reconstructed(recTime, recAmpl);
     break;
   }
   if (reconstructionChoice == 1) {
@@ -197,6 +198,46 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
 float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
   float point = Y2 + (X1 - X2) * (Y1 - Y2) / (X1 - X2);
   return point;
+}
+
+void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmpl) {
+  float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  int x = 0;
+  for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+    x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+    if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
+    newTime[i] = sigTime[x];
+    if (i != 0) {
+      if (i == 1)
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x], sigAmpl[x - 1], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+      else
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x - 1], sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+    } else {
+      newAmpl[i] =  sigAmpl[x];
+    }
+    newAmpl[i] = sigAmpl[x];
+  }
+  float newTimeDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  newTimeDoubled[0] = newTime[0];
+  float newAmplDoubled[] = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  newAmplDoubled[0] = newAmpl[0];
+  for (int i = 1; i <=RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+    if (newAmpl[i] < newAmpl[i-1]) {
+      newAmplDoubled[(i)-1] = newAmpl[i];
+      newTimeDoubled[(i)-1] = newTime[i-1];
+    } else {
+      newAmplDoubled[(i)-1] = newAmpl[i-1];
+      newTimeDoubled[(i)-1] = newTime[i];
+    }
+    newAmplDoubled[(i)] = newAmpl[i];
+    newTimeDoubled[(i)] = newTime[i];
+  }
+  newTimeDoubled[0] = sigTime[0];
+  recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  arrayCopy(newTimeDoubled, recTime);
+  arrayCopy(newAmplDoubled, recAmpl);
 }
 
 class ReconstructedSignalSincBasic extends Signal {

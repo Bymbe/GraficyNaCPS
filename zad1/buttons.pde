@@ -220,6 +220,21 @@ void quantizationVerticalJumpSize() {
     .setPaddingX(0);
 }
 
+void sincBasicSmpleRate() {
+  String sampleRate = "sample rate";
+  cp5.addSlider(sampleRate)
+    .setBroadcast(false)
+    .setPosition(width*0.88, height*0.45)
+    .setValue(SAMPLE_RATE)
+    .setRange(1, 10)
+    .setSize(int(width*0.10), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void reconstructionSampleNumber() {
   String recSampleNumber = "reconstrucion sample number";
   cp5.addSlider(recSampleNumber)
@@ -241,6 +256,7 @@ void StaticDraw() {
   periodButton();
   fillFactorButton();
   quantizationVerticalJumpSize();
+  sincBasicSmpleRate();
   reconstructionSampleNumber();
 }
 
@@ -256,4 +272,7 @@ void ActiveDraw() {
   if (reconstructionChoice == 2 || reconstructionChoice == 3) {
     cp5.getController("vertical jump size").show();
   } else cp5.getController("vertical jump size").hide();
+    if (reconstructionChoice == 6) {
+    cp5.getController("sample rate").show();
+  } else cp5.getController("sample rate").hide();
 }
