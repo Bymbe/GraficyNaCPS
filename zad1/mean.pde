@@ -43,7 +43,6 @@ void calculateData(Signal S) {
   text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
   text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
   text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
-  if (isReconstructionChartVisible != false) text("Ilosc błędów: " + nf(failuresCounter(S, recAmpl), 0, 3), width*0.85, height*0.24);
   if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
   if (isReconstructionChartVisible != false) text("Stosunek syg-szum: " + nf(snr(S, recOnlyValues), 0, 3), width*0.85, height*0.32);
   if (isReconstructionChartVisible != false) text("Szczyt. st. syg-szum: " + nf(psnr(S, recOnlyValues), 0, 3), width*0.85, height*0.36);
@@ -96,6 +95,7 @@ float snr(Signal S, float[] rec) {
       licznik += S.amp.get(x) * S.amp.get(x);
       mianownik += diff * diff;
     }
+    if (mianownik == 0) mianownik = 1;
     wynik = licznik/mianownik;
   }
   catch(Exception e) {
@@ -115,6 +115,7 @@ float psnr(Signal S, float[] rec) {
       x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
       if(S.amp.get(x) > licznik) licznik = S.amp.get(x);
     }
+    if (mianownik == 0) mianownik = 1;
     wynik = licznik/mianownik;
   }
   catch(Exception e) {
