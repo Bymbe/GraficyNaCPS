@@ -53,6 +53,8 @@ void sampling(float[] sigAmpl) {
 void quantizationCut(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -79,6 +81,7 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
   }
   recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }
@@ -86,6 +89,8 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
 void quantizationMean(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -120,6 +125,7 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
   }
   recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }
@@ -127,6 +133,8 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
 void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -151,6 +159,7 @@ void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
   }
   recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER*2)+1];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }
@@ -158,6 +167,8 @@ void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
 void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -191,6 +202,7 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
   newTimeDoubled[0] = sigTime[0];
   recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }
@@ -203,6 +215,8 @@ float findReconstructedPoint(float Y1, float Y2, float X1, float X2) {
 void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmpl, float signalE, float signalS) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -251,6 +265,7 @@ void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmpl, float signal
   newTimeDoubled[0] = sigTime[0];
   recTime = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
   recAmpl = new float[(RECONSTRUCTED_SAMPLE_NUMBER)+1];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newTimeDoubled, recTime);
   arrayCopy(newAmplDoubled, recAmpl);
 }

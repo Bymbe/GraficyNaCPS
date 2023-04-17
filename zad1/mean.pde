@@ -43,16 +43,43 @@ void calculateData(Signal S) {
   text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
   text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
   text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
-  if(isReconstructionChartVisible != false) text("Ilosc błędów: " + nf(failuresCounter(S, recAmpl), 0, 3), width*0.85, height*0.24);
+  if (isReconstructionChartVisible != false) text("Ilosc błędów: " + nf(failuresCounter(S, recAmpl), 0, 3), width*0.85, height*0.24);
+  if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
 }
 
 int failuresCounter(Signal S, float[] sigAmpl) {
   int counter = 0;
-  try{
-  for(int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-    if(S.amp.get(i) != sigAmpl[i]) counter++;
-  }} catch(Exception e) {
+  try {
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+      if (S.amp.get(i) != sigAmpl[i]) counter++;
+    }
+  }
+  catch(Exception e) {
     println("exception e");
   }
   return counter;
+}
+
+float mse(Signal S, float[] rec) {
+  float mse = 0;
+  int x;
+  float diff;
+
+  try {
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+      x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+      diff = S.amp.get(x) - rec[i];
+      mse += diff * diff;
+      if (i==1) {
+        text(S.amp.get(x), width*0.85, height*0.32);
+        text(rec[i], width*0.85, height*0.36);
+      }
+    }
+    mse /= RECONSTRUCTED_SAMPLE_NUMBER;
+  }
+  catch(Exception e) {
+  }
+
+
+  return mse;
 }

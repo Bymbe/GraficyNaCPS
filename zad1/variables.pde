@@ -33,6 +33,7 @@ int IMPULSE_JUMPSAMPLE = 0;
 //zmienne pomocnicze, przechowujace dane dynamicznei
 float recTime[];
 float recAmpl[];
+float recOnlyValues[];
 float[] calc1, calc2;
 float[] calcResult = new float[SAMPLE_NUMBER];
 float[] calcTime = new float[SAMPLE_NUMBER];
