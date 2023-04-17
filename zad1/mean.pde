@@ -47,6 +47,7 @@ void calculateData(Signal S) {
   if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
   if (isReconstructionChartVisible != false) text("Stosunek syg-szum: " + nf(snr(S, recOnlyValues), 0, 3), width*0.85, height*0.32);
   if (isReconstructionChartVisible != false) text("Szczyt. st. syg-szum: " + nf(psnr(S, recOnlyValues), 0, 3), width*0.85, height*0.36);
+  if (isReconstructionChartVisible != false) text("Maksymalna różnica: " + nf(md(S, recOnlyValues), 0, 3), width*0.85, height*0.40);
 }
 
 int failuresCounter(Signal S, float[] sigAmpl) {
@@ -120,4 +121,20 @@ float psnr(Signal S, float[] rec) {
   }
 
   return 10 * (log(wynik) / log(10));
+}
+
+float md(Signal S, float[] rec) {
+  float wynik = abs(S.amp.get(0) - rec[0]);
+  int x;
+
+  try {
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+      x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+      if(abs(S.amp.get(x) - rec[i]) > wynik) wynik = abs(S.amp.get(x) - rec[i]);
+    }
+  }
+  catch(Exception e) {
+  }
+
+  return wynik;
 }
