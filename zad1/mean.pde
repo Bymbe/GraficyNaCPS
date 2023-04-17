@@ -48,8 +48,11 @@ void calculateData(Signal S) {
 
 int failuresCounter(Signal S, float[] sigAmpl) {
   int counter = 0;
+  try{
   for(int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
-    //if(S.amp.get(i) != sigAmpl[i]) counter++;
+    if(S.amp.get(i) != sigAmpl[i]) counter++;
+  }} catch(Exception e) {
+    println("exception e");
   }
   return counter;
 }
