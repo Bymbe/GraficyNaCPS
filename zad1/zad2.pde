@@ -37,6 +37,8 @@ void showSelectedReconstruction(Signal S) {
 void sampling(float[] sigAmpl) {
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmplFinal[] = new float[RECONSTRUCTED_SAMPLE_NUMBER];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  
   int x = 0;
   for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -47,6 +49,7 @@ void sampling(float[] sigAmpl) {
     newAmplFinal[i] = (newAmpl[i] + newAmpl[i+1])/2;
   }
   recAmpl = new float[RECONSTRUCTED_SAMPLE_NUMBER];
+  arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newAmplFinal, recAmpl);
 }
 
