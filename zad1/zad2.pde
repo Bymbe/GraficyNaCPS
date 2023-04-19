@@ -183,9 +183,15 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
     newTime[i] = sigTime[x];
     if (i != 0) {
       if (i == 1)
-        newAmpl[i] = findReconstructedPoint(sigAmpl[x], sigAmpl[x - 1], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x], sigAmpl[x - 1],
+        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)],
+        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
+        // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
       else
-        newAmpl[i] = findReconstructedPoint(sigAmpl[x - 1], sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1, newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2); // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+        newAmpl[i] = findReconstructedPoint(sigAmpl[x - 1],
+        sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1,
+        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
+        // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
     } else {
       newAmpl[i] =  sigAmpl[x];
     }
