@@ -18,11 +18,14 @@ void setReconstructionType() {
   case 6:
     reconstructionType = "rekonstrukcja w oparciu o funkcję sinc";
     break;
+  case 7:
+    reconstructionType = "alliasing";
+    break;
   }
 }
 
 void keyPressed() {
-  if (!(cp6.getController("wykres1").isMouseOver() || cp6.getController("operacja").isMouseOver() || cp6.getController("wykres2").isMouseOver())) { // jezeli wpisujemy to nie bedzie zmienialo nam wykresu w tle 
+  if (!(cp6.getController("wykres1").isMouseOver() || cp6.getController("operacja").isMouseOver() || cp6.getController("wykres2").isMouseOver())) { // jezeli wpisujemy to nie bedzie zmienialo nam wykresu w tle
     if (key == '1') {
       wyborWykresu = 1;
       isItSignalOrImpulse = true;

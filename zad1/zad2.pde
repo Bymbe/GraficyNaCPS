@@ -24,6 +24,10 @@ void showSelectedReconstruction(Signal S) {
     reconstructedSignalSincBasic(S.time, S.amp.array(), S.signalE, S.signalS);
     reconstructed(recTime, recAmpl);
     break;
+  case 7:
+    Alliasing A1 = new Alliasing(S);
+    reconstructed(A1.time, A1.amp.array());
+    break;
   }
   if (reconstructionChoice == 1) {
     showBarChart = true;
@@ -38,7 +42,7 @@ void sampling(float[] sigAmpl) {
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmplFinal[] = new float[RECONSTRUCTED_SAMPLE_NUMBER];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -57,7 +61,7 @@ void quantizationCut(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -93,7 +97,7 @@ void quantizationMean(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -137,7 +141,7 @@ void reconstructedSignalZeroOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -171,7 +175,7 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -219,7 +223,7 @@ void reconstructedSignalSincBasic(float[] sigTime, float[] sigAmpl, float signal
   float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
   recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
-  
+
   int x = 0;
   for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
     x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
@@ -278,5 +282,24 @@ double sinc(double t) {
     return 1.0;
   } else {
     return Math.sin(PI * t) / (PI * t);
+  }
+}
+
+public class Alliasing extends Signal {
+  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
+  Signal sourceSignal;
+
+  public Alliasing(Signal sS) {
+    super(sS.signalS, sS.signalE, sS.ampl);
+    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
+    time[0] = this.signalS;
+    int j = int(this.signalS);
+    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
+      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sS.amp.get(i));
+      if (i != 0)
+        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
+      j++;
+    }
+    sourceSignal = sS;
   }
 }
