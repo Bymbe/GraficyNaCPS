@@ -139,12 +139,14 @@ void draw() { //////////////////////////////////////////////////////////////////
     textAlign(CENTER, CENTER);
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
-    text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
+    if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if (isReconstructionChartVisible && wyborWykresu >2) {
-      if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
-      if (showBarChart == true) barChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (numerZadania == 2) {
+      if (isReconstructionChartVisible && wyborWykresu >2) {
+        if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
+        if (showBarChart == true) barChart.draw(0, height*0.1, width*0.85, height*0.65);
+      }
     }
   } else {
     isItSignalOrImpulse = false;
@@ -160,16 +162,16 @@ void draw() { //////////////////////////////////////////////////////////////////
   text("Alternatywny wybór grafu (od '1' do '-')", 20, 600);
   textAlign(LEFT);
   textSize(12);
-  text("Możliwość wyboru dezaktywuje się po najechaniu kursorem na okienka operacji: ", 20, 630);
+  //text("Możliwość wyboru dezaktywuje się po najechaniu kursorem na okienka operacji: ", 20, 630);
   text(">", 230, 631);
   textSize(16);
   fill(0);
-  text("wykres 1", width*0.42, height*0.83);
-  text("operacja", width*0.48, height*0.83);
-  text("wykres 2", width*0.54, height*0.83);
+  if (numerZadania == 1)text("wykres 1", width*0.42, height*0.83);
+  if (numerZadania == 1)text("operacja", width*0.48, height*0.83);
+  if (numerZadania == 1)text("wykres 2", width*0.54, height*0.83);
   textAlign(CENTER);
   textSize(12);
-  text("(Wciśnij ENTER po wpisaniu każdej z wartości)", width*0.50, height*0.80);
+  if (numerZadania == 1) text("(Wciśnij ENTER po wpisaniu każdej z wartości)", width*0.50, height*0.80);
   textSize(20);
   ActiveDraw();
 

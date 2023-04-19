@@ -46,7 +46,7 @@ public class SecondApplet extends PApplet {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(16);
-    text("ALLIASING", width*0.5, height*0.0, width*1.0, height*0.333);
+    text("ALIASING", width*0.5, height*0.0, width*1.0, height*0.333);
   }
 
   void drawProbkowanieRownomierne() {

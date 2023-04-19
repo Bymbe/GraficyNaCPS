@@ -38,8 +38,28 @@ void operationTextFields() {
     .setColor(color(255, 0, 0));
 }
 
+void chooseNumerZadania() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      numerZadania += 1;
+      if (numerZadania > 4) numerZadania = 1;
+      if (numerZadania < 1) numerZadania = 1;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.85, width*0.98, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text("PRZEŁĄCZ NUMER ZADANIA (" + numerZadania + ")", width*0.90, height*0.85, width*0.98, height*0.98);
+}
+
 void chooseReconstructedButton() {
-  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.65 && mouseY <= height*0.73) {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.65 && mouseY <= height*0.72) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
       showChooseWindow();
@@ -93,7 +113,7 @@ void calculateButton() {
 }
 
 void saveButton() {
-  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.85 && mouseY <= height*0.91) {
+  if (mouseX >= width*0.32 && mouseX <= width*0.40  && mouseY >= height*0.85 && mouseY <= height*0.91) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
       buttonColor = 100;
@@ -103,14 +123,14 @@ void saveButton() {
     }
   } else buttonColor = 200;
   fill(buttonColor);
-  rect(width*0.90, height*0.85, width*0.98, height*0.91, 10, 10, 10, 10);
+  rect(width*0.32, height*0.85, width*0.40, height*0.91, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("ZAPISZ", width*0.90, height*0.85, width*0.98, height*0.91);
+  text("ZAPISZ", width*0.32, height*0.85, width*0.40, height*0.91);
 }
 
 void loadButton() {
-  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.92 && mouseY <= height*0.98) {
+  if (mouseX >= width*0.32 && mouseX <= width*0.40  && mouseY >= height*0.92 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU WCZYTAJ
       wasMousePressedLastFrame = true;
       buttonColor = 100;
@@ -120,10 +140,10 @@ void loadButton() {
     }
   } else buttonColor = 200;
   fill(buttonColor);
-  rect(width*0.90, height*0.92, width*0.98, height*0.98, 10, 10, 10, 10);
+  rect(width*0.32, height*0.92, width*0.40, height*0.98, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("WCZYTAJ", width*0.90, height*0.92, width*0.98, height*0.98);
+  text("WCZYTAJ", width*0.32, height*0.92, width*0.40, height*0.98);
   textAlign(LEFT);
 }
 
@@ -262,17 +282,34 @@ void StaticDraw() {
 
 void ActiveDraw() {
   //addButton();
-  loadButton();
-  saveButton();
+  if (numerZadania == 1) loadButton();
+  if (numerZadania == 1) saveButton();
   arrowButtons();
-  calculateButton();
-  chooseReconstructedButton();
-  showReconstructedButton();
+  if (numerZadania == 1) calculateButton();
+  if (numerZadania == 2) chooseReconstructedButton();
+  if (numerZadania == 2) showReconstructedButton();
+  chooseNumerZadania();
 
   if (reconstructionChoice == 2 || reconstructionChoice == 3) {
     cp5.getController("vertical jump size").show();
   } else cp5.getController("vertical jump size").hide();
-    if (reconstructionChoice == 6) {
+  if (reconstructionChoice == 6) {
     cp5.getController("sample rate").show();
   } else cp5.getController("sample rate").hide();
+  
+  if(numerZadania != 2) {
+    cp5.getController("vertical jump size").hide();
+    cp5.getController("sample rate").hide();
+    cp5.getController("reconstrucion sample number").hide();
+  } else cp5.getController("reconstrucion sample number").show();
+  if(numerZadania != 1) {
+    cp6.getController("wykres1").hide();
+    cp6.getController("wykres2").hide();
+    cp6.getController("operacja").hide();
+  }
+  if(numerZadania == 1) {
+    cp6.getController("wykres1").show();
+    cp6.getController("wykres2").show();
+    cp6.getController("operacja").show();
+  }
 }

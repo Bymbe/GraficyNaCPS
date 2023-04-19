@@ -43,10 +43,12 @@ void calculateData(Signal S) {
   text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
   text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
   text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
-  if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
-  if (isReconstructionChartVisible != false) text("Stosunek syg-szum: " + nf(snr(S, recOnlyValues), 0, 3), width*0.85, height*0.32);
-  if (isReconstructionChartVisible != false) text("Szczyt. st. syg-szum: " + nf(psnr(S, recOnlyValues), 0, 3), width*0.85, height*0.36);
-  if (isReconstructionChartVisible != false) text("Maksymalna różnica: " + nf(md(S, recOnlyValues), 0, 3), width*0.85, height*0.40);
+  if (numerZadania == 2) {
+    if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
+    if (isReconstructionChartVisible != false) text("Stosunek syg-szum: " + nf(snr(S, recOnlyValues), 0, 3), width*0.85, height*0.32);
+    if (isReconstructionChartVisible != false) text("Szczyt. st. syg-szum: " + nf(psnr(S, recOnlyValues), 0, 3), width*0.85, height*0.36);
+    if (isReconstructionChartVisible != false) text("Maksymalna różnica: " + nf(md(S, recOnlyValues), 0, 3), width*0.85, height*0.40);
+  }
 }
 
 int failuresCounter(Signal S, float[] sigAmpl) {
@@ -113,7 +115,7 @@ float psnr(Signal S, float[] rec) {
   try {
     for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
       x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-      if(S.amp.get(x) > licznik) licznik = S.amp.get(x);
+      if (S.amp.get(x) > licznik) licznik = S.amp.get(x);
     }
     if (mianownik == 0) mianownik = 1;
     wynik = licznik/mianownik;
@@ -131,7 +133,7 @@ float md(Signal S, float[] rec) {
   try {
     for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER; i++) {
       x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
-      if(abs(S.amp.get(x) - rec[i]) > wynik) wynik = abs(S.amp.get(x) - rec[i]);
+      if (abs(S.amp.get(x) - rec[i]) > wynik) wynik = abs(S.amp.get(x) - rec[i]);
     }
   }
   catch(Exception e) {

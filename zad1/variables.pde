@@ -1,3 +1,7 @@
+//wybor zadania
+int numerZadania = 3; //1-4
+
+//kolor przycisku
 int buttonColor = 200;
 
 //flagi wykresow
