@@ -301,7 +301,10 @@ public class Alliasing extends Signal {
     time[0] = this.signalS;
     int j = int(this.signalS);
     for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
-      this.amp.set(i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER), sS.amp.get(i));
+      if ( j < SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)
+        this.amp.set(j, sS.amp.get(i));
+      else
+        this.amp.set(j, 0);
       if (i != 0)
         time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
       j++;
