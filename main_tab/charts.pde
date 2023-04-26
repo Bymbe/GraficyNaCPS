@@ -11,8 +11,8 @@ void chart(float[] x, float[] y) {
   lineChart.showXAxis(true);
   lineChart.showYAxis(true);
   lineChart.setPointColour(color(180, 50, 50, 100));
-  lineChart.setPointSize(3);
-  lineChart.setLineWidth(2);
+  lineChart.setPointSize(4);
+  lineChart.setLineWidth(1);
 }
 
 void reconstructed(float[]x, float[] y) {
@@ -20,8 +20,8 @@ void reconstructed(float[]x, float[] y) {
   reconstructedChart.showXAxis(true);
   reconstructedChart.showYAxis(true);
   reconstructedChart.setPointColour(color(20, 20, 150, 255));
-  reconstructedChart.setPointSize(4);
-  reconstructedChart.setLineWidth(2);
+  reconstructedChart.setPointSize(6);
+  reconstructedChart.setLineWidth(1);
   reconstructedChart.setLineColour(color(50, 50, 150));
   reconstructedChart.setAxisColour(color(0, 0));
   reconstructedChart.setAxisLabelColour(color(0, 0));

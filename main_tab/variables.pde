@@ -1,5 +1,5 @@
 //wybor zadania
-int numerZadania = 3; //1-4
+int numerZadania = 2; //1-4
 
 //kolor przycisku
 int buttonColor = 200;

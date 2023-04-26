@@ -25,8 +25,8 @@ void showSelectedReconstruction(Signal S) {
     reconstructed(recTime, recAmpl);
     break;
   case 7:
-    Alliasing A1 = new Alliasing(S);
-    reconstructed(A1.time, A1.amp.array());
+    aliasing(S.time, S.amp.array());
+    reconstructed(recTime, recAmpl);
     break;
   }
   if (reconstructionChoice == 1) {
@@ -55,6 +55,27 @@ void sampling(float[] sigAmpl) {
   recAmpl = new float[RECONSTRUCTED_SAMPLE_NUMBER];
   arrayCopy(newAmpl, recOnlyValues);
   arrayCopy(newAmplFinal, recAmpl);
+}
+
+void aliasing(float[] sigTime, float[] sigAmpl) {
+  float newTime[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  float newAmpl[] = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recOnlyValues = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+
+  int x = 0;
+  for (int i = 0; i <= RECONSTRUCTED_SAMPLE_NUMBER; i++) {
+    x = int(map(i, 0, RECONSTRUCTED_SAMPLE_NUMBER, 0, SAMPLE_NUMBER));
+    if (x == SAMPLE_NUMBER) x = SAMPLE_NUMBER-1;
+    newAmpl[i] = sigAmpl[x]; //tutaj gdyby to bylo tylko probkowanie to wystarczyloby bez odejmowania modulo
+    newTime[i] = sigTime[x];
+  } //basically probkowanie... chyba...
+
+  recTime = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+  recAmpl = new float[RECONSTRUCTED_SAMPLE_NUMBER+1];
+
+  arrayCopy(newAmpl, recOnlyValues);
+  arrayCopy(newTime, recTime);
+  arrayCopy(newAmpl, recAmpl);
 }
 
 void quantizationCut(float[] sigTime, float[] sigAmpl) {
@@ -184,14 +205,14 @@ void reconstructedSignalFirstOrderHold(float[] sigTime, float[] sigAmpl) {
     if (i != 0) {
       if (i == 1)
         newAmpl[i] = findReconstructedPoint(sigAmpl[x], sigAmpl[x - 1],
-        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)],
-        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
-        // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+          newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)],
+          newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
+      // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
       else
         newAmpl[i] = findReconstructedPoint(sigAmpl[x - 1],
-        sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1,
-        newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
-        // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
+          sigAmpl[x - 2], newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 1,
+          newTime[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] - 2);
+      // z tych dwoch punktow ukladamy wzor funkcji oraz obliczamy a i b ktore sa punktami ktore trzeba wlozyc w rekonstruowany sygnal
     } else {
       newAmpl[i] =  sigAmpl[x];
     }
@@ -288,27 +309,5 @@ double sinc(double t) {
     return 1.0;
   } else {
     return Math.sin(PI * t) / (PI * t);
-  }
-}
-
-public class Alliasing extends Signal {
-  float[] time = new float[RECONSTRUCTED_SAMPLE_NUMBER]; // tablica przechowujaca Y
-  Signal sourceSignal;
-
-  public Alliasing(Signal sS) {
-    super(sS.signalS, sS.signalE, sS.ampl);
-    this.amp = new FloatList(RECONSTRUCTED_SAMPLE_NUMBER);
-    time[0] = this.signalS;
-    int j = int(this.signalS);
-    for (int i = 0; i < RECONSTRUCTED_SAMPLE_NUMBER * (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER); i += (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)) {
-      if ( j < SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)
-        this.amp.set(j, sS.amp.get(i));
-      else
-        this.amp.set(j, 0);
-      if (i != 0)
-        time[i / (SAMPLE_NUMBER / RECONSTRUCTED_SAMPLE_NUMBER)] = j;
-      j++;
-    }
-    sourceSignal = sS;
   }
 }
