@@ -29,7 +29,7 @@ public class SecondApplet extends PApplet {
     drawRekonstrukcjaSinc();
     drawAlliasing();
   }
-  
+
   void drawAlliasing() {
     if (mouseX >= width*0.5 && mouseX <= width*1.0  && mouseY >= height*0.00 && mouseY <= height*0.333) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ

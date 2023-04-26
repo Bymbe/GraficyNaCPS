@@ -16,7 +16,7 @@ BarChart barChart;
 XYChart reconstructedChart;
 ControlP5 cp5, cp6;
 
-//Zmienne dla uzytkownika 
+//Zmienne dla uzytkownika
 float USER_AMPLITUDE = 10; //amplituda
 float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach

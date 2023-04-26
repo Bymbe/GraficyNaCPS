@@ -296,18 +296,18 @@ void ActiveDraw() {
   if (reconstructionChoice == 6) {
     cp5.getController("sample rate").show();
   } else cp5.getController("sample rate").hide();
-  
-  if(numerZadania != 2) {
+
+  if (numerZadania != 2) {
     cp5.getController("vertical jump size").hide();
     cp5.getController("sample rate").hide();
     cp5.getController("reconstrucion sample number").hide();
   } else cp5.getController("reconstrucion sample number").show();
-  if(numerZadania != 1) {
+  if (numerZadania != 1) {
     cp6.getController("wykres1").hide();
     cp6.getController("wykres2").hide();
     cp6.getController("operacja").hide();
   }
-  if(numerZadania == 1) {
+  if (numerZadania == 1) {
     cp6.getController("wykres1").show();
     cp6.getController("wykres2").show();
     cp6.getController("operacja").show();
