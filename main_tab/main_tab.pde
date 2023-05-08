@@ -126,6 +126,10 @@ void draw() { //////////////////////////////////////////////////////////////////
   }
 
   fill(0);
+  
+  if(numerZadania == 3) {
+    chart(podwojnyczas(S1.amp.array(),S6.amp.array()), wykonajSplot(S1.amp.array(),S6.amp.array()));
+  }
 
   setReconstructionType();
   reconstructedChart.setMaxY(lineChart.getMaxY());
