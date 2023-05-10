@@ -196,12 +196,12 @@ void convolutionShowButton() {
   text("POKAŻ/UKRYJ SPLOT", width*0.40, height*0.85, width*0.48, height*0.98);
 }
 
-void convolutionChooseButtons() {
+void operationChooseButtons() {
   if (mouseX >= width*0.50 && mouseX <= width*0.58  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 1
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      convSignalChoice1 = wyborWykresu;
+      operationSignalChoice1 = wyborWykresu;
     } else {
       buttonColor = 150;
     }
@@ -210,13 +210,13 @@ void convolutionChooseButtons() {
   rect(width*0.50, height*0.85, width*0.58, height*0.98, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("SYGNAŁ 1 DO SPLOTU (" + convSignalChoice1 + ")", width*0.50, height*0.85, width*0.58, height*0.98);
+  text("SYGNAŁ 1 DO OPERACJI (" + operationSignalChoice1 + ")", width*0.50, height*0.85, width*0.58, height*0.98);
 
   if (mouseX >= width*0.60 && mouseX <= width*0.68  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      convSignalChoice2 = wyborWykresu;
+      operationSignalChoice2 = wyborWykresu;
     } else {
       buttonColor = 150;
     }
@@ -225,7 +225,7 @@ void convolutionChooseButtons() {
   rect(width*0.60, height*0.85, width*0.68, height*0.98, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("SYGNAŁ 2 DO SPLOTU (" + convSignalChoice2 + ")", width*0.60, height*0.85, width*0.68, height*0.98);
+  text("SYGNAŁ 2 DO OPERACJI (" + operationSignalChoice2 + ")", width*0.60, height*0.85, width*0.68, height*0.98);
 }
 
 
@@ -323,10 +323,25 @@ void convolutionSampleNumber() {
   String convSampleNumber = "convolution sample number";
   cp5.addSlider(convSampleNumber)
     .setBroadcast(false)
-    .setPosition(width*0.40, height*0.77)
+    .setPosition(width*0.39, height*0.77)
     .setValue(SAMPLE_NUMBER)
     .setRange(0, SAMPLE_NUMBER)
-    .setSize(int(width*0.28), int(height*0.05))
+    .setSize(int(width*0.14), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
+void delayCorelationNumber() {
+  String delayCoreNumber = "delay corelation number";
+  cp5.addSlider(delayCoreNumber)
+    .setBroadcast(false)
+    .setPosition(width*0.55, height*0.77)
+    .setValue(SAMPLE_NUMBER)
+    .setRange(0, SAMPLE_NUMBER)
+    .setSize(int(width*0.14), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
     .setColorCaptionLabel(#000000)
@@ -343,6 +358,7 @@ void StaticDraw() {
   sincBasicSmpleRate();
   reconstructionSampleNumber();
   convolutionSampleNumber();
+  delayCorelationNumber();
 }
 
 void ActiveDraw() {
@@ -379,8 +395,12 @@ void ActiveDraw() {
   }
 
   if (numerZadania == 3) {
-    convolutionChooseButtons();
+    operationChooseButtons();
     convolutionShowButton();
     cp5.getController("convolution sample number").show();
-  } else cp5.getController("convolution sample number").hide();
+    cp5.getController("delay corelation number").show();
+  } else  {
+    cp5.getController("convolution sample number").hide();
+    cp5.getController("delay corelation number").hide();
+  }
 }

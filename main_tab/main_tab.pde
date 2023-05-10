@@ -126,9 +126,14 @@ void draw() { //////////////////////////////////////////////////////////////////
   }
 
   fill(0);
-  
-  if(numerZadania == 3 && isConvolutionVisible == true) {
-    try{showConvolution();} catch (Exception e) {println("upsi pupsi");}
+
+  if (numerZadania == 3 && isConvolutionVisible == true) {
+    try {
+      showOperation();
+    }
+    catch (Exception e) {
+      println("upsi pupsi");
+    }
   }
 
   setReconstructionType();
@@ -145,7 +150,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     if (numerZadania == 3) {
-      if (isConvolutionVisible)text("Splot " + convultionSignalType(convSignalChoice1) + " i " + convultionSignalType(convSignalChoice2), width/2, height*0.08);
+      if (isConvolutionVisible)text("Splot " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
     }
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
@@ -190,8 +195,10 @@ void draw() { //////////////////////////////////////////////////////////////////
   RECONSTRUCTED_SAMPLE_NUMBER = int((cp5.getController("reconstrucion sample number").getValue()));
   cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
   convSignal2SampleNumber = int((cp5.getController("convolution sample number").getValue())) - int((cp5.getController("convolution sample number").getValue()))%10;
+  delayCorelationNumber = int((cp5.getController("delay corelation number").getValue())) - int((cp5.getController("delay corelation number").getValue()))%10;
   cp5.getController("convolution sample number").setValue(convSignal2SampleNumber);
-
+  cp5.getController("delay corelation number").setValue(delayCorelationNumber);
+  
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
   S3.setAmplitude(USER_AMPLITUDE);

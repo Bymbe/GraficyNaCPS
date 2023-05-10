@@ -36,13 +36,18 @@ int IMPULSE_JUMPSAMPLE = 0;
 
 //sploty
 Boolean isConvolutionVisible = false;
-int convSignalChoice1 = 3;
-int convSignalChoice2 = 5;
 int convSignal2SampleNumber = SAMPLE_NUMBER;
-float[] convSignalAmp;
-float[] convSignalTime;
-float[] tempPreConvSignal1;
-float[] tempPreConvSignal2;
+
+//korelacje
+Boolean isCorelationVisible = false;
+int delayCorelationNumber = SAMPLE_NUMBER;
+
+int operationSignalChoice1 = 3;
+int operationSignalChoice2 = 5;
+float[] operationSignalAmp;
+float[] operationSignalTime;
+float[] tempOperationSignal1;
+float[] tempOperationSignal2;
 
 //zmienne pomocnicze, przechowujace dane dynamicznei
 float recTime[];
