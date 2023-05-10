@@ -1,10 +1,11 @@
 //wybor zadania
-int numerZadania = 2; //1-4
+int numerZadania = 3; //1-4
 
 //kolor przycisku
 int buttonColor = 200;
 
 //sploty
+Boolean isConvolutionVisible = false;
 int convSignalChoice1 = 3;
 int convSignalChoice2 = 5;
 float convSignal2Percent = 0.5;
@@ -66,7 +67,7 @@ float[] loadedFloatList;
 int w1, op, w2; // ^^ w formie intow
 
 //wyborowe
-int wyborWykresu = 1;
+int wyborWykresu = 3;
 Boolean isReconstructionChartVisible = false;
 int reconstructionChoice = 1;
 String reconstructionType;

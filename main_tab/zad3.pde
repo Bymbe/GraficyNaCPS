@@ -37,6 +37,7 @@ void showConvolution() {
     arrayCopy(S9.amp.array(), tempPreConvSignal1);
     break;
   }
+
   switch(convSignalChoice2) {
   case 1:
     tempPreConvSignal1 = new float[S1.amp.array().length];
@@ -76,7 +77,6 @@ void showConvolution() {
     break;
   }
 
-  //convolution(tempPreConvSignal1, tempPreConvSignal2);
   convolution(tempPreConvSignal1, tempPreConvSignal2);
   chart(convSignalTime, convSignalAmp);
 }

@@ -127,7 +127,7 @@ void draw() { //////////////////////////////////////////////////////////////////
 
   fill(0);
   
-  if(numerZadania == 3) {
+  if(numerZadania == 3 && isConvolutionVisible == true) {
     try{showConvolution();} catch (Exception e) {println("upsi pupsi");}
   }
 

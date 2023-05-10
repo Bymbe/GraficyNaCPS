@@ -179,6 +179,55 @@ void arrowButtons() {
   text("NASTĘPNY SYGNAŁ", width*0.80, height*0.85, width*0.88, height*0.98);
 }
 
+void convolutionShowButton() {
+  if (mouseX >= width*0.40 && mouseX <= width*0.48  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+      isConvolutionVisible = !isConvolutionVisible;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.40, height*0.85, width*0.48, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("POKAŻ/UKRYJ SPLOT", width*0.40, height*0.85, width*0.48, height*0.98);
+}
+
+void convolutionChooseButtons() {
+  if (mouseX >= width*0.50 && mouseX <= width*0.58  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 1
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+      convSignalChoice1 = wyborWykresu;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.50, height*0.85, width*0.58, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("SYGNAŁ 1 DO SPLOTU (" + convSignalChoice1 + ")", width*0.50, height*0.85, width*0.58, height*0.98);
+
+  if (mouseX >= width*0.60 && mouseX <= width*0.68  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+      convSignalChoice2 = wyborWykresu;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.60, height*0.85, width*0.68, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("SYGNAŁ 2 DO SPLOTU (" + convSignalChoice2 + ")", width*0.60, height*0.85, width*0.68, height*0.98);
+}
+
 
 void amplitudeButton() {
   String slid1 = "amplitude";
@@ -311,5 +360,10 @@ void ActiveDraw() {
     cp6.getController("wykres1").show();
     cp6.getController("wykres2").show();
     cp6.getController("operacja").show();
+  }
+
+  if (numerZadania == 3) {
+    convolutionChooseButtons();
+    convolutionShowButton();
   }
 }
