@@ -144,6 +144,9 @@ void draw() { //////////////////////////////////////////////////////////////////
     textSize(20);
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
+    if (numerZadania == 3) {
+      if (isConvolutionVisible)text("Splot " + convultionSignalType(convSignalChoice1) + " i " + convultionSignalType(convSignalChoice2), width/2, height*0.08);
+    }
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if (numerZadania == 2) {
@@ -156,7 +159,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     isItSignalOrImpulse = false;
     textSize(20);
     text("Obecny impuls (" + wyborWykresu + "): " + impulsType, width/2, height*0.05);
-    text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
+    if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     textSize(16);
     scatterplot.draw(0, 0, width*0.85, height*0.65);
     //if (isReconstructionChartVisible && wyborWykresu >2) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);

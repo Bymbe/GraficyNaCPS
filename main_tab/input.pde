@@ -24,6 +24,31 @@ void setReconstructionType() {
   }
 }
 
+String convultionSignalType(int convSignalChoice) { 
+  switch(convSignalChoice) {
+   case 1:
+     return "Szumu o rozkładzie jednostajnym";
+   case 2:
+     return "Szumu gaussowskiego";
+   case 3:
+     return "Sygnału sinusoidalnego";
+   case 4:
+     return "Sygnału sinusoidalnego wyprostowanego jednopołówkowo";
+   case 5:
+     return "Sygnału sinusoidalnego wyprostowanego dwupołówkowo";
+   case 6:
+     return "Sygnału prostokątnego";
+   case 7:
+     return "Sygnału prostokątnego symetrycznie";
+   case 8:
+     return "Sygnału trójkątnego";
+   case 9:
+     return "Skoku jednostkowego";
+   default:
+     return "";
+  }
+}
+
 void keyPressed() {
   if (!(cp6.getController("wykres1").isMouseOver() || cp6.getController("operacja").isMouseOver() || cp6.getController("wykres2").isMouseOver())) { // jezeli wpisujemy to nie bedzie zmienialo nam wykresu w tle
     if (key == '1') {
