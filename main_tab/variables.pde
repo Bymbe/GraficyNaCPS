@@ -4,16 +4,6 @@ int numerZadania = 3; //1-4
 //kolor przycisku
 int buttonColor = 200;
 
-//sploty
-Boolean isConvolutionVisible = false;
-int convSignalChoice1 = 3;
-int convSignalChoice2 = 5;
-float convSignal2Percent = 0.5;
-float[] convSignalAmp;
-float[] convSignalTime;
-float[] tempPreConvSignal1;
-float[] tempPreConvSignal2;
-
 //flagi wykresow
 boolean activeWriting = false;
 Boolean showBarChart = false;
@@ -43,6 +33,16 @@ int SAMPLE_RATE = 10;
 int IMPULSE_AMPLITUDE = 10;
 int IMPULSE_FIRSTSAMPLE = 25;
 int IMPULSE_JUMPSAMPLE = 0;
+
+//sploty
+Boolean isConvolutionVisible = false;
+int convSignalChoice1 = 3;
+int convSignalChoice2 = 5;
+int convSignal2SampleNumber = SAMPLE_NUMBER;
+float[] convSignalAmp;
+float[] convSignalTime;
+float[] tempPreConvSignal1;
+float[] tempPreConvSignal2;
 
 //zmienne pomocnicze, przechowujace dane dynamicznei
 float recTime[];

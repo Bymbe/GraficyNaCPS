@@ -81,7 +81,11 @@ void showConvolution() {
   chart(convSignalTime, convSignalAmp);
 }
 
-void convolution(float[] sygnalA, float[] sygnalB) {
+void convolution(float[] sygnalA, float[] sygnalC) {
+  float[] sygnalB = new float[convSignal2SampleNumber];
+  arrayCopy(sygnalC, sygnalB, convSignal2SampleNumber);
+  
+  
   int dlugoscA = sygnalA.length;
   int dlugoscB = sygnalB.length;
   int dlugoscWyniku = dlugoscA + dlugoscB - 1; // Długość wynikowej tablicy splotu

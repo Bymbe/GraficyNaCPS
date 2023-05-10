@@ -319,6 +319,21 @@ void reconstructionSampleNumber() {
     .setPaddingX(0);
 }
 
+void convolutionSampleNumber() {
+  String convSampleNumber = "convolution sample number";
+  cp5.addSlider(convSampleNumber)
+    .setBroadcast(false)
+    .setPosition(width*0.40, height*0.77)
+    .setValue(SAMPLE_NUMBER)
+    .setRange(0, SAMPLE_NUMBER)
+    .setSize(int(width*0.28), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void StaticDraw() {
   operationTextFields();
   amplitudeButton();
@@ -327,6 +342,7 @@ void StaticDraw() {
   quantizationVerticalJumpSize();
   sincBasicSmpleRate();
   reconstructionSampleNumber();
+  convolutionSampleNumber();
 }
 
 void ActiveDraw() {
@@ -365,5 +381,6 @@ void ActiveDraw() {
   if (numerZadania == 3) {
     convolutionChooseButtons();
     convolutionShowButton();
-  }
+    cp5.getController("convolution sample number").show();
+  } else cp5.getController("convolution sample number").hide();
 }

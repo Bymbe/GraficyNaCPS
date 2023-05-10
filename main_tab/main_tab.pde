@@ -186,6 +186,8 @@ void draw() { //////////////////////////////////////////////////////////////////
   SAMPLE_RATE = int(cp5.getController("sample rate").getValue());
   RECONSTRUCTED_SAMPLE_NUMBER = int((cp5.getController("reconstrucion sample number").getValue()));
   cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
+  convSignal2SampleNumber = int((cp5.getController("convolution sample number").getValue())) - int((cp5.getController("convolution sample number").getValue()))%10;
+  cp5.getController("convolution sample number").setValue(convSignal2SampleNumber);
 
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
