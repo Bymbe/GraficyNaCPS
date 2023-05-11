@@ -24,28 +24,28 @@ void setReconstructionType() {
   }
 }
 
-String convultionSignalType(int convSignalChoice) { 
+String convultionSignalType(int convSignalChoice) {
   switch(convSignalChoice) {
-   case 1:
-     return "Szumu o rozkładzie jednostajnym";
-   case 2:
-     return "Szumu gaussowskiego";
-   case 3:
-     return "Sygnału sinusoidalnego";
-   case 4:
-     return "Sygnału sinusoidalnego wyprostowanego jednopołówkowo";
-   case 5:
-     return "Sygnału sinusoidalnego wyprostowanego dwupołówkowo";
-   case 6:
-     return "Sygnału prostokątnego";
-   case 7:
-     return "Sygnału prostokątnego symetrycznie";
-   case 8:
-     return "Sygnału trójkątnego";
-   case 9:
-     return "Skoku jednostkowego";
-   default:
-     return "";
+  case 1:
+    return "Szumu o rozkładzie jednostajnym";
+  case 2:
+    return "Szumu gaussowskiego";
+  case 3:
+    return "Sygnału sinusoidalnego";
+  case 4:
+    return "Sygnału sinusoidalnego wyprostowanego jednopołówkowo";
+  case 5:
+    return "Sygnału sinusoidalnego wyprostowanego dwupołówkowo";
+  case 6:
+    return "Sygnału prostokątnego";
+  case 7:
+    return "Sygnału prostokątnego symetrycznie";
+  case 8:
+    return "Sygnału trójkątnego";
+  case 9:
+    return "Skoku jednostkowego";
+  default:
+    return "";
   }
 }
 
@@ -102,8 +102,18 @@ void keyPressed() {
   if (key == 'l') {
     initiateLoadFromFile();
   }
+  if (key == ',') {
+    easteregg();
+  }
 }
 
 void mouseReleased() {
   wasMousePressedLastFrame = false;
+}
+
+void easteregg() {
+  for (int i=0; i<100; i++) {
+    surface.setLocation(width/5 + int(random(-10, 10)), height/4 + int(random(-10, 10)));
+  }
+  surface.setLocation(width/5, height/4);
 }

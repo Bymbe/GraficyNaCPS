@@ -131,7 +131,7 @@ public class ThirdApplet extends PApplet {
     if (mouseX >= width*0.334 && mouseX <= width*0.666  && mouseY >= height*0.666 && mouseY <= height*1) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
-        reconstructionChoice = 5;
+        filterPassChoice = 2;
         if (platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
@@ -150,7 +150,7 @@ public class ThirdApplet extends PApplet {
     if (mouseX >= width*0.667 && mouseX <= width*1  && mouseY >= height*0.666 && mouseY <= height*1) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
-        reconstructionChoice = 6;
+        filterPassChoice = 3;
         if (platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {

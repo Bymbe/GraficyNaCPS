@@ -2,6 +2,7 @@ import controlP5.*;
 import org.gicentre.utils.stat.*;
 
 void setup() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SETUP
+  surface.setLocation(width/5, height/4);
   lineChart = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
@@ -198,7 +199,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   delayCorelationNumber = int((cp5.getController("delay corelation number").getValue())) - int((cp5.getController("delay corelation number").getValue()))%10;
   cp5.getController("convolution sample number").setValue(convSignal2SampleNumber);
   cp5.getController("delay corelation number").setValue(delayCorelationNumber);
-  
+
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);
   S3.setAmplitude(USER_AMPLITUDE);
