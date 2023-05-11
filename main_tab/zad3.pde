@@ -76,10 +76,23 @@ void showOperation() {
     arrayCopy(S9.amp.array(), tempOperationSignal2);
     break;
   }
-  //if (isConvolutionVisible) convolution(tempOperationSignal1, tempOperationSignal2);
-  if (isConvolutionVisible) convolution(tempOperationSignal1, filtrDolnoprzepustowy(), 7);
-  else if (isCorelationVisible) corelation(tempOperationSignal1, tempOperationSignal2);
-  chart(operationSignalTime, operationSignalAmp);
+
+  switch(whichIsVisible) {
+  case 1:
+    convolution(tempOperationSignal1, tempOperationSignal2);
+    chart(operationSignalTime, operationSignalAmp);
+    break;
+  case 2:
+    convolution(tempOperationSignal1, filtrDolnoprzepustowy(), 7);
+    chart(operationSignalTime, operationSignalAmp);
+    break;
+  case 3:
+    corelation(tempOperationSignal1, tempOperationSignal2);
+    chart(operationSignalTime, operationSignalAmp);
+    break;
+  default:
+    break;
+  }
 }
 
 void convolution(float[] sygnalA, float[] sygnalC) {
@@ -147,9 +160,9 @@ float[] filtrDolnoprzepustowy() {
   int M = 7;
   int K = 8;
   float wynik[] = new float[M];
-  
-  for(int i = 0; i<M; i++) {
-    if(i == (M-1)/2) {
+
+  for (int i = 0; i<M; i++) {
+    if (i == (M-1)/2) {
       wynik[i]=2/K;
     } else {
       wynik[i] = (sin(TWO_PI*(i-(M-1)/2)/K)/(PI*(i-(M-1)/2)));

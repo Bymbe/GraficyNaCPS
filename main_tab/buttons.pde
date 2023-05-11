@@ -38,6 +38,26 @@ void operationTextFields() {
     .setColor(color(255, 0, 0));
 }
 
+void adjustFilter() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      showChooseWindow3
+      if (numerZadania > 4) numerZadania = 1;
+      if (numerZadania < 1) numerZadania = 1;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.67, width*0.98, height*0.80, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text("DOSTOSUJ FILTRACJĘ", width*0.90, height*0.67, width*0.98, height*0.80);
+}
+
 void chooseNumerZadania() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
@@ -62,7 +82,7 @@ void chooseReconstructedButton() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.65 && mouseY <= height*0.72) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
-      showChooseWindow();
+      showChooseWindow2();
       buttonColor = 100;
     } else {
       buttonColor = 150;
@@ -179,12 +199,19 @@ void arrowButtons() {
   text("NASTĘPNY SYGNAŁ", width*0.80, height*0.85, width*0.88, height*0.98);
 }
 
-void convolutionShowButton() {
+void Conv_Filter_Cor_ShowButton() {
   if (mouseX >= width*0.40 && mouseX <= width*0.48  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
       wasMousePressedLastFrame = true;
       buttonColor = 100;
-      isConvolutionVisible = !isConvolutionVisible;
+      whichIsVisible++;
+      if(whichIsVisible > 3) {
+        whichIsVisible = 0;
+      }
+      if(whichIsVisible == 0) whichIsVisibleString = "nic";
+      else if(whichIsVisible == 1) whichIsVisibleString = "splot";
+      else if(whichIsVisible == 2) whichIsVisibleString = "filtrację ";
+      else if(whichIsVisible == 3) whichIsVisibleString = "korelację";
     } else {
       buttonColor = 150;
     }
@@ -193,7 +220,7 @@ void convolutionShowButton() {
   rect(width*0.40, height*0.85, width*0.48, height*0.98, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("POKAŻ/UKRYJ SPLOT", width*0.40, height*0.85, width*0.48, height*0.98);
+  text("Obecnie wyświetlam " + whichIsVisibleString, width*0.40, height*0.85, width*0.48, height*0.98);
 }
 
 void operationChooseButtons() {
@@ -369,7 +396,7 @@ void ActiveDraw() {
   if (numerZadania == 1) calculateButton();
   if (numerZadania == 2) chooseReconstructedButton();
   if (numerZadania == 2) showReconstructedButton();
-  chooseNumerZadania();
+  adjustFilter();
 
   if (reconstructionChoice == 2 || reconstructionChoice == 3) {
     cp5.getController("vertical jump size").show();
@@ -396,7 +423,8 @@ void ActiveDraw() {
 
   if (numerZadania == 3) {
     operationChooseButtons();
-    convolutionShowButton();
+    adjustFilter();
+    Conv_Filter_Cor_ShowButton();
     cp5.getController("convolution sample number").show();
     cp5.getController("delay corelation number").show();
   } else  {

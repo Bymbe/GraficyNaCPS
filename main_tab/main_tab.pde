@@ -127,7 +127,7 @@ void draw() { //////////////////////////////////////////////////////////////////
 
   fill(0);
 
-  if (numerZadania == 3 && isConvolutionVisible == true) {
+  if (numerZadania == 3) {
     try {
       showOperation();
     }
@@ -150,7 +150,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     if (numerZadania == 3) {
-      if (isConvolutionVisible)text("Splot " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
+      if (whichIsVisible == 1)text("Splot " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
     }
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);

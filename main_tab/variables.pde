@@ -34,13 +34,22 @@ int IMPULSE_AMPLITUDE = 10;
 int IMPULSE_FIRSTSAMPLE = 25;
 int IMPULSE_JUMPSAMPLE = 0;
 
+////////////////ZADANIE 3
 //sploty
-Boolean isConvolutionVisible = false;
 int convSignal2SampleNumber = SAMPLE_NUMBER;
 
 //korelacje
-Boolean isCorelationVisible = false;
 int delayCorelationNumber = SAMPLE_NUMBER;
+
+//filtracja
+int filterPassChoice = 1; //1-dolnoprzepustowy, 2-srodkowoprzepustowy, 3-gornoprzepustowy
+int filterWindowChoice = 1; //1-okno prostokatne, 2-okno hamminga, 3-okno hanninga, 4-okno blackmana *vine boom sound*
+
+//inne
+int whichIsVisible = 0; //0-nic, 1-splot, 2-filtracja, 3-korelacja
+String whichIsVisibleString = "nic";
+////////////////ZADANIE 3
+
 
 int operationSignalChoice1 = 3;
 int operationSignalChoice2 = 5;
