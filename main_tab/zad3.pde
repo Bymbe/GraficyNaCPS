@@ -83,8 +83,10 @@ void showOperation() {
     chart(operationSignalTime, operationSignalAmp);
     break;
   case 2:
-    convolution(tempOperationSignal1, filtracja(filterPassChoice, filterWindowChoice), 7);
+    convolution(tempOperationSignal1, filtracja(filterPassChoice, filterWindowChoice), parametrM);
     chart(operationSignalTime, operationSignalAmp);
+    if(isOptionalFilterVisible) chart2(makeXaxisValues(filtracja(filterPassChoice, filterWindowChoice)), filtracja(filterPassChoice, filterWindowChoice));
+    
     break;
   case 3:
     corelation(tempOperationSignal1, tempOperationSignal2);
@@ -175,5 +177,15 @@ float[] filtracja(int whichPass, int whichWindow) {
       wynik[i] *= (0.42-0.5*cos(TWO_PI*i/parametrM)+0.08*cos(2*TWO_PI*i/parametrM));
     }
   }
+  return wynik;
+}
+
+float[] makeXaxisValues(float[] axisY) {
+  float[] wynik = new float[axisY.length];
+  
+  for(int i=0; i<axisY.length; i++) {
+    wynik[i] = map(i, 0, axisY.length, 0, SIGNAL_END);
+  }
+  
   return wynik;
 }

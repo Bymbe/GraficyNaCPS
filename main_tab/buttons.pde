@@ -197,6 +197,23 @@ void arrowButtons() {
   text("NASTĘPNY SYGNAŁ", width*0.80, height*0.85, width*0.88, height*0.98);
 }
 
+void optionalFilterShow() {
+  if (mouseX >= width*0.31 && mouseX <= width*0.385  && mouseY >= height*0.85 && mouseY <= height*0.98) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
+      wasMousePressedLastFrame = true;
+      buttonColor = 100;
+      isOptionalFilterVisible = !isOptionalFilterVisible;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.31, height*0.85, width*0.385, height*0.98, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("POKAŻ/UKRYJ ODPOWIEDŹ IMPULSOWĄ", width*0.31, height*0.85, width*0.385, height*0.98);
+}
+
 void Conv_Filter_Cor_ShowButton() {
   if (mouseX >= width*0.40 && mouseX <= width*0.48  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU SPLOT 2
@@ -366,7 +383,7 @@ void MparametrNumber() {
     .setBroadcast(false)
     .setPosition(width*0.85, height*0.55)
     .setValue(parametrM)
-    .setRange(2, 70)
+    .setRange(2, 100)
     .setSize(int(width*0.14), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
@@ -456,6 +473,7 @@ void ActiveDraw() {
     operationChooseButtons();
     adjustFilter();
     Conv_Filter_Cor_ShowButton();
+    if(whichIsVisible == 2) optionalFilterShow();
     cp5.getController("convolution sample number").show();
     cp5.getController("delay corelation number").show();
     cp5.getController("parametr m").show();

@@ -4,6 +4,7 @@ import org.gicentre.utils.stat.*;
 void setup() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SETUP
   surface.setLocation(width/5, height/4);
   lineChart = new XYChart(this);
+  lineChart2 = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
   barChart = new BarChart(this);
@@ -151,6 +152,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
     if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     if (numerZadania == 3) {
+      if(whichIsVisible == 2 && isOptionalFilterVisible == true) lineChart2.draw(0, height*0.1, width*0.85, height*0.65);
       if (whichIsVisible == 1)text("Splot " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
     }
     textSize(16);
