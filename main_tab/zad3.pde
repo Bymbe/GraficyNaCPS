@@ -83,7 +83,7 @@ void showOperation() {
     chart(operationSignalTime, operationSignalAmp);
     break;
   case 2:
-    convolution(tempOperationSignal1, filtrDolnoprzepustowy(), 7);
+    convolution(tempOperationSignal1, filtracja(filterPassChoice, filterWindowChoice), 7);
     chart(operationSignalTime, operationSignalAmp);
     break;
   case 3:
@@ -156,7 +156,7 @@ void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
 void corelation(float[] SignalA, float[] SignalB) {
 }
 
-float[] filtrDolnoprzepustowy() {
+float[] filtracja(int whichPass, int whichWindow) {
   float wynik[] = new float[parametrM];
 
   for (int i = 0; i<parametrM; i++) {
@@ -164,6 +164,15 @@ float[] filtrDolnoprzepustowy() {
       wynik[i]=2/parametrK;
     } else {
       wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK)/(PI*(i-(parametrM-1)/2)));
+    }
+    if(whichWindow == 2) { //okno Hamminga
+      wynik[i] *= (0.53836-0.46164*cos(TWO_PI*i/parametrM));
+    }
+    if(whichWindow == 3) { //okno Hanninga
+      wynik[i] *= (0.5-0.5*cos(TWO_PI*i/parametrM));
+    }
+    if(whichWindow == 4) { //okno Blackmana *vine boom*
+      wynik[i] *= (0.42-0.5*cos(TWO_PI*i/parametrM)+0.08*cos(2*TWO_PI*i/parametrM));
     }
   }
   return wynik;

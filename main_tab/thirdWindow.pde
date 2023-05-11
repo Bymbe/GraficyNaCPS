@@ -93,7 +93,7 @@ public class ThirdApplet extends PApplet {
     if (mouseX >= width*0.5 && mouseX <= width*1.0  && mouseY >= height*0.334 && mouseY <= height*0.666) {
       if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
         wasMousePressedLastFrame = true;
-        reconstructionChoice = 3;
+        filterWindowChoice = 4;
         if (platformNames[platform] != "macos") surface.setVisible(false);
         buttonColor = 100;
       } else {
