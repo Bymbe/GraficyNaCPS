@@ -132,7 +132,7 @@ void draw() { //////////////////////////////////////////////////////////////////
       showOperation();
     }
     catch (Exception e) {
-      println("upsi pupsi");
+      println("upsi pupsi " + millis());
     }
   }
 

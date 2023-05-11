@@ -76,7 +76,8 @@ void showOperation() {
     arrayCopy(S9.amp.array(), tempOperationSignal2);
     break;
   }
-  if (isConvolutionVisible) convolution(tempOperationSignal1, tempOperationSignal2);
+  //if (isConvolutionVisible) convolution(tempOperationSignal1, tempOperationSignal2);
+  if (isConvolutionVisible) convolution(tempOperationSignal1, filtrDolnoprzepustowy(), 7);
   else if (isCorelationVisible) corelation(tempOperationSignal1, tempOperationSignal2);
   chart(operationSignalTime, operationSignalAmp);
 }
@@ -110,5 +111,49 @@ void convolution(float[] sygnalA, float[] sygnalC) {
   }
 }
 
+void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
+  float[] sygnalB = new float[convLength];
+  arrayCopy(sygnalC, sygnalB, convLength);
+
+
+  int dlugoscA = sygnalA.length;
+  int dlugoscB = sygnalB.length;
+  int dlugoscWyniku = dlugoscA + dlugoscB - 1; // Długość wynikowej tablicy splotu
+
+  operationSignalAmp = new float[dlugoscWyniku]; // Tablica wynikowa
+
+  // Wykonaj splot
+  for (int i = 0; i < dlugoscWyniku; i++) {
+    operationSignalAmp[i] = 0; // Zeruj wartość dla każdej próbki wynikowej
+
+    for (int j = 0; j < dlugoscA; j++) {
+      if (i - j >= 0 && i - j < dlugoscB) {
+        // Pomnóż odpowiadające próbki sygnałów A i B oraz dodaj do wyniku
+        operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j];
+      }
+    }
+  }
+
+  operationSignalTime = new float[dlugoscWyniku];
+  for (int i = 0; i<dlugoscWyniku; i++) {
+    operationSignalTime[i] = map(i, 0, dlugoscWyniku, 0, SIGNAL_END);
+  }
+}
+
 void corelation(float[] SignalA, float[] SignalB) {
+}
+
+float[] filtrDolnoprzepustowy() {
+  int M = 7;
+  int K = 8;
+  float wynik[] = new float[M];
+  
+  for(int i = 0; i<M; i++) {
+    if(i == (M-1)/2) {
+      wynik[i]=2/K;
+    } else {
+      wynik[i] = (sin(TWO_PI*(i-(M-1)/2)/K)/(PI*(i-(M-1)/2)));
+    }
+  }
+  return wynik;
 }
