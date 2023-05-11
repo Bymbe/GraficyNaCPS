@@ -197,8 +197,12 @@ void draw() { //////////////////////////////////////////////////////////////////
   cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
   convSignal2SampleNumber = int((cp5.getController("convolution sample number").getValue())) - int((cp5.getController("convolution sample number").getValue()))%10;
   delayCorelationNumber = int((cp5.getController("delay corelation number").getValue())) - int((cp5.getController("delay corelation number").getValue()))%10;
+  parametrM = int((cp5.getController("parametr m").getValue()));
+  parametrK = int((cp5.getController("parametr k").getValue()));
   cp5.getController("convolution sample number").setValue(convSignal2SampleNumber);
   cp5.getController("delay corelation number").setValue(delayCorelationNumber);
+  cp5.getController("parametr m").setValue(parametrM);
+  cp5.getController("parametr k").setValue(parametrK);
 
   S1.setAmplitude(USER_AMPLITUDE);
   S2.setAmplitude(USER_AMPLITUDE);

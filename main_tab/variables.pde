@@ -44,6 +44,8 @@ int delayCorelationNumber = SAMPLE_NUMBER;
 //filtracja
 int filterPassChoice = 1; //1-dolnoprzepustowy, 2-srodkowoprzepustowy, 3-gornoprzepustowy
 int filterWindowChoice = 1; //1-okno prostokatne, 2-okno hamminga, 3-okno hanninga, 4-okno blackmana *vine boom sound*
+int parametrK = 8;
+int parametrM = 7;
 
 //inne
 int whichIsVisible = 0; //0-nic, 1-splot, 2-filtracja, 3-korelacja

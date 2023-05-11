@@ -360,6 +360,36 @@ void convolutionSampleNumber() {
     .setPaddingX(0);
 }
 
+void MparametrNumber() {
+  String parametrMstring = "parametr m";
+  cp5.addSlider(parametrMstring)
+    .setBroadcast(false)
+    .setPosition(width*0.85, height*0.55)
+    .setValue(parametrM)
+    .setRange(2, 70)
+    .setSize(int(width*0.14), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
+void KparametrNumber() {
+  String parametrMstring = "parametr k";
+  cp5.addSlider(parametrMstring)
+    .setBroadcast(false)
+    .setPosition(width*0.85, height*0.45)
+    .setValue(parametrK)
+    .setRange(1, 25)
+    .setSize(int(width*0.14), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
 void delayCorelationNumber() {
   String delayCoreNumber = "delay corelation number";
   cp5.addSlider(delayCoreNumber)
@@ -385,6 +415,8 @@ void StaticDraw() {
   reconstructionSampleNumber();
   convolutionSampleNumber();
   delayCorelationNumber();
+  MparametrNumber();
+  KparametrNumber();
 }
 
 void ActiveDraw() {
@@ -426,8 +458,12 @@ void ActiveDraw() {
     Conv_Filter_Cor_ShowButton();
     cp5.getController("convolution sample number").show();
     cp5.getController("delay corelation number").show();
+    cp5.getController("parametr m").show();
+    cp5.getController("parametr k").show();
   } else  {
     cp5.getController("convolution sample number").hide();
     cp5.getController("delay corelation number").hide();
+    cp5.getController("parametr m").hide();
+    cp5.getController("parametr k").hide();
   }
 }

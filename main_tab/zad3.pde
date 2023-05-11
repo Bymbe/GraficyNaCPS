@@ -157,15 +157,13 @@ void corelation(float[] SignalA, float[] SignalB) {
 }
 
 float[] filtrDolnoprzepustowy() {
-  int M = 7;
-  int K = 8;
-  float wynik[] = new float[M];
+  float wynik[] = new float[parametrM];
 
-  for (int i = 0; i<M; i++) {
-    if (i == (M-1)/2) {
-      wynik[i]=2/K;
+  for (int i = 0; i<parametrM; i++) {
+    if (i == (parametrM-1)/2) {
+      wynik[i]=2/parametrK;
     } else {
-      wynik[i] = (sin(TWO_PI*(i-(M-1)/2)/K)/(PI*(i-(M-1)/2)));
+      wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK)/(PI*(i-(parametrM-1)/2)));
     }
   }
   return wynik;
