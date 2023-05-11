@@ -163,7 +163,7 @@ float[] filtracja(int whichPass, int whichWindow) {
 
   for (int i = 0; i<parametrM; i++) {
     if (i == (parametrM-1)/2) {
-      wynik[i]=2/parametrK;
+      wynik[i]= 2/float(parametrK);
     } else {
       wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK)/(PI*(i-(parametrM-1)/2)));
     }
