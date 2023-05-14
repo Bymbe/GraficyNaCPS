@@ -182,10 +182,15 @@ float[] filtracja(int whichPass, int whichWindow) {
   float wynik[] = new float[parametrM];
 
   for (int i = 0; i<parametrM; i++) {
+    
     if (i == (parametrM-1)/2) {
-      wynik[i]= 2/float(parametrK);
+      wynik[i]= 2/float(parametrK); // jezeli dolno
+      if (whichPass == 2) wynik[i] = wynik[i] * 2.0 * (sin(PI * i / 2.0));//jezeli srodkowo
+      if (whichPass == 3) wynik[i] = wynik[i] * ((i & 0x01) == 1 ? -1.0 : 1.0);// jezeli gorno
     } else {
-      wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK)/(PI*(i-(parametrM-1)/2)));
+      wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK) / (PI*(i-(parametrM-1)/2)));
+      if (whichPass == 2) wynik[i] = wynik[i] * 2.0 * (sin(PI * i / 2.0));//jezeli srodkowo
+      if (whichPass == 3) wynik[i] = wynik[i] * ((i & 0x01) == 1 ? -1.0 : 1.0);
     }
     if (whichWindow == 2) { //okno Hamminga
       wynik[i] *= (0.53836-0.46164*cos(TWO_PI*i/parametrM));
