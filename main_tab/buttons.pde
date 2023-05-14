@@ -413,7 +413,7 @@ void delayCorelationNumber() {
     .setBroadcast(false)
     .setPosition(width*0.55, height*0.77)
     .setValue(SAMPLE_NUMBER)
-    .setRange(0, SAMPLE_NUMBER)
+    .setRange(0, cp5.getController("convolution sample number").getValue())
     .setSize(int(width*0.14), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)

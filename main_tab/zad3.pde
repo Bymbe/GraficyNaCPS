@@ -88,7 +88,7 @@ void showOperation() {
     if (isOptionalFilterVisible) chart2(makeXaxisValues(filtracja(filterPassChoice, filterWindowChoice)), filtracja(filterPassChoice, filterWindowChoice));
     break;
   case 3:
-    corelation(tempOperationSignal1);
+    corelation(tempOperationSignal1, tempOperationSignal2);
     chart(operationSignalTime, operationSignalAmp);
     break;
   default:
@@ -152,9 +152,9 @@ void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
   }
 }
 
-void corelation(float[] sygnalA) {
-  float[] sygnalB = new float[delayCorelationNumber];
-  arrayCopy(sygnalA, sygnalB, delayCorelationNumber);
+void corelation(float[] sygnalA, float[] sygnalC) {
+  float[] sygnalB = new float[convSignal2SampleNumber];
+  arrayCopy(sygnalC, sygnalB, convSignal2SampleNumber);
 
   int dlugoscA = sygnalA.length;
   int dlugoscB = sygnalB.length;
@@ -162,12 +162,13 @@ void corelation(float[] sygnalA) {
 
   operationSignalAmp = new float[dlugoscWyniku];
 
+  // Wykonaj splot
   for (int i = 0; i < dlugoscWyniku; i++) {
-    operationSignalAmp[i] = 0; // Zeruj wartość dla każdej próbki wynikowej
+    operationSignalAmp[i] = 0;
     for (int j = 0; j < dlugoscA; j++) {
       if (i - j >= 0 && i - j < dlugoscB) {
-        // Pomnóż odpowiadające próbki sygnałów A i B oraz dodaj do wyniku
-        operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
+        if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
+        else operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber - dlugoscB];
       }
     }
   }
@@ -182,7 +183,7 @@ float[] filtracja(int whichPass, int whichWindow) {
   float wynik[] = new float[parametrM];
 
   for (int i = 0; i<parametrM; i++) {
-    
+
     if (i == (parametrM-1)/2) {
       wynik[i]= 2/float(parametrK); // jezeli dolno
       if (whichPass == 2) wynik[i] = wynik[i] * 2.0 * (sin(PI * i / 2.0));//jezeli srodkowo
