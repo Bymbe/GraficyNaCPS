@@ -85,11 +85,10 @@ void showOperation() {
   case 2:
     convolution(tempOperationSignal1, filtracja(filterPassChoice, filterWindowChoice), parametrM);
     chart(operationSignalTime, operationSignalAmp);
-    if(isOptionalFilterVisible) chart2(makeXaxisValues(filtracja(filterPassChoice, filterWindowChoice)), filtracja(filterPassChoice, filterWindowChoice));
-    
+    if (isOptionalFilterVisible) chart2(makeXaxisValues(filtracja(filterPassChoice, filterWindowChoice)), filtracja(filterPassChoice, filterWindowChoice));
     break;
   case 3:
-    corelation(tempOperationSignal1, tempOperationSignal2);
+    corelation(tempOperationSignal1);
     chart(operationSignalTime, operationSignalAmp);
     break;
   default:
@@ -100,7 +99,6 @@ void showOperation() {
 void convolution(float[] sygnalA, float[] sygnalC) {
   float[] sygnalB = new float[convSignal2SampleNumber];
   arrayCopy(sygnalC, sygnalB, convSignal2SampleNumber);
-
 
   int dlugoscA = sygnalA.length;
   int dlugoscB = sygnalB.length;
@@ -130,7 +128,6 @@ void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
   float[] sygnalB = new float[convLength];
   arrayCopy(sygnalC, sygnalB, convLength);
 
-
   int dlugoscA = sygnalA.length;
   int dlugoscB = sygnalB.length;
   int dlugoscWyniku = dlugoscA + dlugoscB - 1; // Długość wynikowej tablicy splotu
@@ -155,7 +152,30 @@ void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
   }
 }
 
-void corelation(float[] SignalA, float[] SignalB) {
+void corelation(float[] sygnalA) {
+  float[] sygnalB = new float[delayCorelationNumber];
+  arrayCopy(sygnalA, sygnalB, delayCorelationNumber);
+
+  int dlugoscA = sygnalA.length;
+  int dlugoscB = sygnalB.length;
+  int dlugoscWyniku = dlugoscA + dlugoscB - 1;
+
+  operationSignalAmp = new float[dlugoscWyniku];
+
+  for (int i = 0; i < dlugoscWyniku; i++) {
+    operationSignalAmp[i] = 0; // Zeruj wartość dla każdej próbki wynikowej
+    for (int j = 0; j < dlugoscA; j++) {
+      if (i - j >= 0 && i - j < dlugoscB) {
+        // Pomnóż odpowiadające próbki sygnałów A i B oraz dodaj do wyniku
+        operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
+      }
+    }
+  }
+
+  operationSignalTime = new float[dlugoscWyniku];
+  for (int i = 0; i<dlugoscWyniku; i++) {
+    operationSignalTime[i] = map(i, 0, dlugoscWyniku, 0, SIGNAL_END);
+  }
 }
 
 float[] filtracja(int whichPass, int whichWindow) {
@@ -167,13 +187,13 @@ float[] filtracja(int whichPass, int whichWindow) {
     } else {
       wynik[i] = (sin(TWO_PI*(i-(parametrM-1)/2)/parametrK)/(PI*(i-(parametrM-1)/2)));
     }
-    if(whichWindow == 2) { //okno Hamminga
+    if (whichWindow == 2) { //okno Hamminga
       wynik[i] *= (0.53836-0.46164*cos(TWO_PI*i/parametrM));
     }
-    if(whichWindow == 3) { //okno Hanninga
+    if (whichWindow == 3) { //okno Hanninga
       wynik[i] *= (0.5-0.5*cos(TWO_PI*i/parametrM));
     }
-    if(whichWindow == 4) { //okno Blackmana *vine boom*
+    if (whichWindow == 4) { //okno Blackmana *vine boom*
       wynik[i] *= (0.42-0.5*cos(TWO_PI*i/parametrM)+0.08*cos(2*TWO_PI*i/parametrM));
     }
   }
@@ -182,10 +202,10 @@ float[] filtracja(int whichPass, int whichWindow) {
 
 float[] makeXaxisValues(float[] axisY) {
   float[] wynik = new float[axisY.length];
-  
-  for(int i=0; i<axisY.length; i++) {
+
+  for (int i=0; i<axisY.length; i++) {
     wynik[i] = map(i, 0, axisY.length, 0, SIGNAL_END);
   }
-  
+
   return wynik;
 }

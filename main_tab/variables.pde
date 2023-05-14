@@ -62,7 +62,7 @@ float[] operationSignalTime;
 float[] tempOperationSignal1;
 float[] tempOperationSignal2;
 
-//zmienne pomocnicze, przechowujace dane dynamicznei
+//zmienne pomocnicze, przechowujace dane dynamicznie
 float recTime[];
 float recAmpl[];
 float recOnlyValues[];
