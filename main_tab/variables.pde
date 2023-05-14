@@ -41,6 +41,7 @@ int convSignal2SampleNumber = SAMPLE_NUMBER;
 
 //korelacje
 int delayCorelationNumber = SAMPLE_NUMBER;
+int corelationChoice = 1;
 
 //filtracja
 int filterPassChoice = 1; //1-dolnoprzepustowy, 2-srodkowoprzepustowy, 3-gornoprzepustowy

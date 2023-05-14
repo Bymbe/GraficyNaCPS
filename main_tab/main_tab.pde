@@ -199,7 +199,10 @@ void draw() { //////////////////////////////////////////////////////////////////
   cp5.getController("reconstrucion sample number").setValue(RECONSTRUCTED_SAMPLE_NUMBER);
   convSignal2SampleNumber = int((cp5.getController("convolution sample number").getValue())) - int((cp5.getController("convolution sample number").getValue()))%10;
   delayCorelationNumber = int((cp5.getController("delay corelation number").getValue())) - int((cp5.getController("delay corelation number").getValue()))%10;
-  if (delayCorelationNumber > convSignal2SampleNumber) delayCorelationNumber = convSignal2SampleNumber;
+  corelationChoice = int((cp5.getController("corelation type").getValue()));
+  if (corelationChoice == 1) {
+    if (delayCorelationNumber > convSignal2SampleNumber) delayCorelationNumber = convSignal2SampleNumber;
+  } else delayCorelationNumber = convSignal2SampleNumber;
   parametrM = int((cp5.getController("parametr m").getValue()));
   parametrK = int((cp5.getController("parametr k").getValue()));
   cp5.getController("convolution sample number").setValue(convSignal2SampleNumber);

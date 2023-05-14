@@ -162,13 +162,24 @@ void corelation(float[] sygnalA, float[] sygnalC) {
 
   operationSignalAmp = new float[dlugoscWyniku];
 
-  // Wykonaj splot
-  for (int i = 0; i < dlugoscWyniku; i++) {
-    operationSignalAmp[i] = 0;
-    for (int j = 0; j < dlugoscA; j++) {
-      if (i - j >= 0 && i - j < dlugoscB) {
-        if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
-        else operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber - dlugoscB];
+  if (corelationChoice == 1) { // jezeli korelacja oparta o splot
+    for (int i = 0; i < dlugoscWyniku; i++) {
+      operationSignalAmp[i] = 0;
+      for (int j = 0; j < dlugoscA; j++) {
+        if (i - j >= 0 && i - j < dlugoscB) {
+          if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
+          else operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber - dlugoscB];
+        }
+      }
+    }
+  } else {
+    for (int i = 0; i < dlugoscWyniku; i++) {
+      operationSignalAmp[i] = 0;
+      for (int j = 0; j < dlugoscA; j++) {
+        if (j - i >= 0 && j - i < dlugoscB) {
+          if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
+          else operationSignalAmp[i] += sygnalA[j] * sygnalB[j - i + delayCorelationNumber - dlugoscB];
+        }
       }
     }
   }

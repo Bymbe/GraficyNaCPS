@@ -411,11 +411,27 @@ void delayCorelationNumber() {
   String delayCoreNumber = "delay corelation number";
   cp5.addSlider(delayCoreNumber)
     .setBroadcast(false)
-    .setPosition(width*0.55, height*0.77)
+    .setPosition(width*0.71, height*0.77)
     .setValue(SAMPLE_NUMBER)
     .setRange(0, cp5.getController("convolution sample number").getValue())
     .setSize(int(width*0.14), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
+    .setBroadcast(true)
+    .setColorCaptionLabel(#000000)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
+    .setPaddingX(0);
+}
+
+void corelationChoice() {
+  String corelationType = "corelation type";
+  cp5.addSlider(corelationType)
+    .setBroadcast(false)
+    .setPosition(width*0.55, height*0.77)
+    .setValue(1)
+    .setRange(1, 2)
+    .setSize(int(width*0.14), int(height*0.05))
+    .setSliderMode(Slider.FLEXIBLE)
+    .snapToTickMarks(true)
     .setBroadcast(true)
     .setColorCaptionLabel(#000000)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.BOTTOM_OUTSIDE)
@@ -432,6 +448,7 @@ void StaticDraw() {
   reconstructionSampleNumber();
   convolutionSampleNumber();
   delayCorelationNumber();
+  corelationChoice();
   MparametrNumber();
   KparametrNumber();
 }
