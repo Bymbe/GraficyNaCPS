@@ -493,11 +493,13 @@ void ActiveDraw() {
     if(whichIsVisible == 2) optionalFilterShow();
     cp5.getController("convolution sample number").show();
     cp5.getController("delay corelation number").show();
+    cp5.getController("corelation type").show();
     cp5.getController("parametr m").show();
     cp5.getController("parametr k").show();
   } else  {
     cp5.getController("convolution sample number").hide();
     cp5.getController("delay corelation number").hide();
+    cp5.getController("corelation type").hide();
     cp5.getController("parametr m").hide();
     cp5.getController("parametr k").hide();
   }
