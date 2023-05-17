@@ -5,6 +5,7 @@ void setup() { /////////////////////////////////////////////////////////////////
   surface.setLocation(width/5, height/4);
   lineChart = new XYChart(this);
   lineChart2 = new XYChart(this);
+  lineChart4 = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
   barChart = new BarChart(this);
@@ -36,62 +37,116 @@ void draw() { //////////////////////////////////////////////////////////////////
   fill(0);
   switch(wyborWykresu) {
   case 1:
-    chart(S1.time, S1.amp.array());
+    if (chartMode) {
+      chart(S1.time, S1.amp.array());
+      chart4(S1.time, S1.amp.array());
+    } else {
+      chart(S1.time, S1.amp.array());
+      chart4(S1.time, S1.amp.array());
+    }
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
     calculateData(S1);
     showSelectedReconstruction(S1);
     break;
   case 2:
-    chart(S2.time, S2.amp.array());
+    if (chartMode) {
+      chart(S2.time, S2.amp.array());
+      chart4(S2.time, S2.amp.array());
+    } else {
+      chart(S2.time, S2.amp.array());
+      chart4(S2.time, S2.amp.array());
+    }
     signalType = "Szum gaussowski";
     calculateData(S2);
     showSelectedReconstruction(S2);
     break;
   case 3:
-    chart(S3.time, S3.amp.array());
+    if (chartMode) {
+      chart(S3.time, S3.amp.array());
+      chart4(S3.time, S3.amp.array());
+    } else {
+      chart(S3.time, S3.amp.array());
+      chart4(S3.time, S3.amp.array());
+    }
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
     calculateData(S3);
     showSelectedReconstruction(S3);
     break;
   case 4:
-    chart(S4.time, S4.amp.array());
+    if (chartMode) {
+      chart(S4.time, S4.amp.array());
+      chart4(S4.time, S4.amp.array());
+    } else {
+      chart(S4.time, S4.amp.array());
+      chart4(S4.time, S4.amp.array());
+    }
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
     calculateData(S4);
     showSelectedReconstruction(S4);
     break;
   case 5:
-    chart(S5.time, S5.amp.array());
+    if (chartMode) {
+      chart(S5.time, S5.amp.array());
+      chart4(S5.time, S5.amp.array());
+    } else {
+      chart(S5.time, S5.amp.array());
+      chart4(S5.time, S5.amp.array());
+    }
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
     calculateData(S5);
     showSelectedReconstruction(S5);
     break;
   case 6:
-    chart(S6.time, S6.amp.array());
+    if (chartMode) {
+      chart(S6.time, S6.amp.array());
+      chart4(S6.time, S6.amp.array());
+    } else {
+      chart(S6.time, S6.amp.array());
+      chart4(S6.time, S6.amp.array());
+    }
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
     calculateData(S6);
     showSelectedReconstruction(S6);
     break;
   case 7:
-    chart(S7.time, S7.amp.array());
+    if (chartMode) {
+      chart(S7.time, S7.amp.array());
+      chart4(S7.time, S7.amp.array());
+    } else {
+      chart(S7.time, S7.amp.array());
+      chart4(S7.time, S7.amp.array());
+    }
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
     calculateData(S7);
     showSelectedReconstruction(S7);
     break;
   case 8:
-    chart(S8.time, S8.amp.array());
+    if (chartMode) {
+      chart(S8.time, S8.amp.array());
+      chart4(S8.time, S8.amp.array());
+    } else {
+      chart(S8.time, S8.amp.array());
+      chart4(S8.time, S8.amp.array());
+    }
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
     calculateData(S8);
     showSelectedReconstruction(S8);
     break;
   case 9:
-    chart(S9.time, S9.amp.array());
+    if (chartMode) {
+      chart(S9.time, S9.amp.array());
+      chart4(S9.time, S9.amp.array());
+    } else {
+      chart(S9.time, S9.amp.array());
+      chart4(S9.time, S9.amp.array());
+    }
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
     calculateData(S9);
@@ -158,6 +213,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     }
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (numerZadania == 4) lineChart4.draw(width*0.014, 0, width*0.83, height*0.64);
     if (numerZadania == 2) {
       if (isReconstructionChartVisible && wyborWykresu >2) {
         if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);

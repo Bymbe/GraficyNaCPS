@@ -24,6 +24,15 @@ void chart2(float[] x, float[] y) {
   lineChart2.setLineWidth(0.5);
 }
 
+void chart4(float[] x, float[] y) {
+  lineChart4.setData(x, y);
+  lineChart4.showXAxis(false);
+  lineChart4.showYAxis(false);
+  lineChart4.setPointColour(color(100, 50, 50, 180));
+  lineChart4.setPointSize(4);
+  lineChart4.setLineWidth(1);
+}
+
 void reconstructed(float[]x, float[] y) {
   reconstructedChart.setData(x, y);
   reconstructedChart.showXAxis(true);

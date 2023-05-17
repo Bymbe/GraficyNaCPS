@@ -56,6 +56,25 @@ void adjustFilter() {
   text("DOSTOSUJ FILTRACJĘ", width*0.90, height*0.67, width*0.98, height*0.80);
 }
 
+void chartMode() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      if(chartMode) chartMode = false;
+      if(!chartMode) chartMode = true;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.67, width*0.98, height*0.80, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text("Zmień wyświetlanie wykresów", width*0.90, height*0.67, width*0.98, height*0.80);
+}
+
 void chooseNumerZadania() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.85 && mouseY <= height*0.98) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
@@ -502,5 +521,9 @@ void ActiveDraw() {
     cp5.getController("corelation type").hide();
     cp5.getController("parametr m").hide();
     cp5.getController("parametr k").hide();
+  }
+  
+  if (numerZadania == 4) {
+   chartMode(); 
   }
 }

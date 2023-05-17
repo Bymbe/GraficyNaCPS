@@ -147,7 +147,7 @@ void convolution(float[] sygnalA, float[] sygnalC, int convLength) {
   }
 
   operationSignalTime = new float[dlugoscWyniku];
-  for (int i = 0; i<dlugoscWyniku; i++) {
+  for (int i = 0; i < dlugoscWyniku; i++) {
     operationSignalTime[i] = map(i, 0, dlugoscWyniku, 0, SIGNAL_END);
   }
 }

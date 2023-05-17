@@ -1,5 +1,5 @@
 //wybor zadania
-int numerZadania = 3; //1-4
+int numerZadania = 4; //1-4
 
 //kolor przycisku
 int buttonColor = 200;
@@ -12,6 +12,7 @@ Boolean showLineChart = false;
 //Zmienne bibliotek rysujacych
 XYChart lineChart;
 XYChart lineChart2;
+XYChart lineChart4;
 XYChart scatterplot;
 BarChart barChart;
 XYChart reconstructedChart;
@@ -34,6 +35,11 @@ int SAMPLE_RATE = 10;
 int IMPULSE_AMPLITUDE = 10;
 int IMPULSE_FIRSTSAMPLE = 25;
 int IMPULSE_JUMPSAMPLE = 0;
+
+////////////////ZADANIE 4
+boolean chartMode = true;
+////////////////ZADANIE 4
+
 
 ////////////////ZADANIE 3
 //sploty

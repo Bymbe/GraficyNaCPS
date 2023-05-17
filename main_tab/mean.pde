@@ -38,11 +38,13 @@ float rmsValue(Signal S) {
 void calculateData(Signal S) {
   textAlign(LEFT, CENTER);
   textSize(16);
-  text("Średnia: " + nf(meanValue(S), 0, 3), width*0.85, height*0.04);
-  text("Średnia bezwzględna: " + nf(absMeanValue(S), 0, 3), width*0.85, height*0.08);
-  text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
-  text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
-  text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
+  if (numerZadania == 1) {
+    text("Średnia: " + nf(meanValue(S), 0, 3), width*0.85, height*0.04);
+    text("Średnia bezwzględna: " + nf(absMeanValue(S), 0, 3), width*0.85, height*0.08);
+    text("Wariancja: " + nf(varianceValue(S), 0, 3), width*0.85, height*0.12);
+    text("Odchylenie: " + nf(rmsValue(S), 0, 3), width*0.85, height*0.16);
+    text("Moc średnia: " + nf(meanPowerValue(S), 0, 3), width*0.85, height*0.20);
+  }
   if (numerZadania == 2) {
     if (isReconstructionChartVisible != false) text("Błąd śr. kw.: " + nf(mse(S, recOnlyValues), 0, 3), width*0.85, height*0.28);
     if (isReconstructionChartVisible != false) text("Stosunek syg-szum: " + nf(snr(S, recOnlyValues), 0, 3), width*0.85, height*0.32);
