@@ -50,7 +50,7 @@ class ContinuosSignal extends Signal {
   public void calculate() {
     int j = 0;
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      amp.set(j, random(-ampl, ampl));
+      amp.set(j, (float)sinc(i-5));
       time[j] = i;
       j++;
     }
@@ -76,7 +76,7 @@ class Gauss extends Signal { //szum gaussa
       float first = 1/(dev*sqrt(TWO_PI));
       float third = (-1 * pow((i - avg), 2)) / (2*pow(dev, 2));
       float second = pow(exp(1.0), third);
-      amp.set(j, (first * second) + random(-ampl, ampl));
+      amp.set(j, (float)sinc(i-4));
       time[j] = i;
       j++;
     }
@@ -171,9 +171,9 @@ class Rectangular extends Sinusoidal {
 
       //if (i>okres*wsp_wyp && i<okres) {
       if (i % (per) >= per * fillFactor) {
-        amp.set(j, 0.0);
+        amp.set(j, (float)sinc(i-5));
       } else {
-        amp.set(j, ampl);
+        amp.set(j, (float)sinc(i-5));
       }
     }
   }
@@ -199,9 +199,9 @@ class SymmetricalRectangular extends Sinusoidal {
     for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER, j++) {
       time[j] = i;
       if (i % (per) >= per * fillFactor) {
-        amp.set(j, -ampl);
+        amp.set(j, (float)sinc(i-4));
       } else {
-        amp.set(j, ampl);
+        amp.set(j, (float)sinc(i-4));
       }
     }
   }
