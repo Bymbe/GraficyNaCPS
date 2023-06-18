@@ -42,6 +42,8 @@ boolean isComplexChartVisible = true;
 int complexChartsType = 1; //1 - gora to rzeczywiste, dol to urojone
                            //2 - gora to modul liczby zespolonej, dol to argument liczby w funkcji czestotliwosci
 String whichChart4TypeIsVisible = "góra - rzeczywiste, dół - urojone";
+int transformation4Type = 1; //1 - F1, 2 - F2, 3 - T1, 4 - T2, 5 - T3
+String transformation4TypeString = "DIT FFT";
 ////////////////ZADANIE 4
 
 

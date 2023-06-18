@@ -56,29 +56,37 @@ void adjustFilter() {
   text("DOSTOSUJ FILTRACJĘ", width*0.90, height*0.67, width*0.98, height*0.80);
 }
 
-void chart4Visibility() {
-  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
+void transformationType() {
+  if (mouseX >= width*0.85 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
-      isComplexChartVisible  = !isComplexChartVisible;
+      transformation4Type++;
+      if(transformation4Type >5) {
+        transformation4Type = 1;
+      }
+      if(transformation4Type == 1) transformation4TypeString = "DIT FFT";
+      else if(transformation4Type == 2) transformation4TypeString = "DIF FFT";
+      else if(transformation4Type == 3) transformation4TypeString = "DCT II + FCT II";
+      else if(transformation4Type == 4) transformation4TypeString = "transformacje Walsha-Hadamarda";
+      else transformation4TypeString = "transformacje falkowe";
       buttonColor = 100;
     } else {
       buttonColor = 150;
     }
   } else buttonColor = 200;
   fill(buttonColor);
-  rect(width*0.90, height*0.67, width*0.98, height*0.80, 10, 10, 10, 10);
+  rect(width*0.85, height*0.67, width*0.98, height*0.80, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
   textSize(16);
-  text("Przełącz widoczność wykresów", width*0.90, height*0.67, width*0.98, height*0.80);
+  text("Przełącz transformację (obecnie " + transformation4TypeString + ")", width*0.85, height*0.67, width*0.98, height*0.80);
 }
 
 void chart4Mode() {
-  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.37 && mouseY <= height*0.60) {
+  if (mouseX >= width*0.85 && mouseX <= width*0.98  && mouseY >= height*0.37 && mouseY <= height*0.60) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
-      if(complexChartsType == 1) complexChartsType = 2;
+      if (complexChartsType == 1) complexChartsType = 2;
       else complexChartsType = 1;
       buttonColor = 100;
     } else {
@@ -86,11 +94,11 @@ void chart4Mode() {
     }
   } else buttonColor = 200;
   fill(buttonColor);
-  rect(width*0.90, height*0.37, width*0.98, height*0.60, 10, 10, 10, 10);
+  rect(width*0.85, height*0.37, width*0.98, height*0.60, 10, 10, 10, 10);
   fill(0);
   textAlign(CENTER, CENTER);
-  textSize(14);
-  text("Zmień wyświetlanie wykresów ( " + whichChart4TypeIsVisible + ")", width*0.90, height*0.37, width*0.98, height*0.60);
+  textSize(16);
+  text("Zmień wyświetlanie wykresów ( " + whichChart4TypeIsVisible + ")", width*0.85, height*0.37, width*0.98, height*0.60);
 }
 
 void chooseNumerZadania() {
@@ -257,13 +265,13 @@ void Conv_Filter_Cor_ShowButton() {
       wasMousePressedLastFrame = true;
       buttonColor = 100;
       whichIsVisible++;
-      if(whichIsVisible > 3) {
+      if (whichIsVisible > 3) {
         whichIsVisible = 0;
       }
-      if(whichIsVisible == 0) whichIsVisibleString = "nic";
-      else if(whichIsVisible == 1) whichIsVisibleString = "splot";
-      else if(whichIsVisible == 2) whichIsVisibleString = "filtrację ";
-      else if(whichIsVisible == 3) whichIsVisibleString = "korelację";
+      if (whichIsVisible == 0) whichIsVisibleString = "nic";
+      else if (whichIsVisible == 1) whichIsVisibleString = "splot";
+      else if (whichIsVisible == 2) whichIsVisibleString = "filtrację ";
+      else if (whichIsVisible == 3) whichIsVisibleString = "korelację";
     } else {
       buttonColor = 150;
     }
@@ -527,22 +535,22 @@ void ActiveDraw() {
     operationChooseButtons();
     adjustFilter();
     Conv_Filter_Cor_ShowButton();
-    if(whichIsVisible == 2) optionalFilterShow();
+    if (whichIsVisible == 2) optionalFilterShow();
     cp5.getController("convolution sample number").show();
     cp5.getController("delay corelation number").show();
     cp5.getController("corelation type").show();
     cp5.getController("parametr m").show();
     cp5.getController("parametr k").show();
-  } else  {
+  } else {
     cp5.getController("convolution sample number").hide();
     cp5.getController("delay corelation number").hide();
     cp5.getController("corelation type").hide();
     cp5.getController("parametr m").hide();
     cp5.getController("parametr k").hide();
   }
-  
+
   if (numerZadania == 4) {
-   chart4Visibility(); 
-   chart4Mode();
+    transformationType();
+    chart4Mode();
   }
 }
