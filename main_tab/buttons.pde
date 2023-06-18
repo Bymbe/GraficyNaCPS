@@ -60,8 +60,7 @@ void chartMode() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
-      if(chartMode) chartMode = false;
-      if(!chartMode) chartMode = true;
+      isComplexChartVisible  = !isComplexChartVisible;
       buttonColor = 100;
     } else {
       buttonColor = 150;

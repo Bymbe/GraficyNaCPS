@@ -37,7 +37,7 @@ int IMPULSE_FIRSTSAMPLE = 25;
 int IMPULSE_JUMPSAMPLE = 0;
 
 ////////////////ZADANIE 4
-boolean chartMode = true;
+boolean isComplexChartVisible = true;
 ////////////////ZADANIE 4
 
 

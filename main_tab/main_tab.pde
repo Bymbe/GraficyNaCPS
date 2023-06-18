@@ -37,12 +37,12 @@ void draw() { //////////////////////////////////////////////////////////////////
   fill(0);
   switch(wyborWykresu) {
   case 1:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S1.time, S1.amp.array());
       chart4(S1.time, S1.amp.array());
     } else {
       chart(S1.time, S1.amp.array());
-      chart4(S1.time, S1.amp.array());
+      //chart4(S1.time, S1.amp.array());
     }
     signalType = "Szum o rozkładzie jednostajnym";
     signalName = "szumJednostajny";
@@ -50,24 +50,24 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S1);
     break;
   case 2:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S2.time, S2.amp.array());
       chart4(S2.time, S2.amp.array());
     } else {
       chart(S2.time, S2.amp.array());
-      chart4(S2.time, S2.amp.array());
+      //chart4(S2.time, S2.amp.array());
     }
     signalType = "Szum gaussowski";
     calculateData(S2);
     showSelectedReconstruction(S2);
     break;
   case 3:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S3.time, S3.amp.array());
       chart4(S3.time, S3.amp.array());
     } else {
       chart(S3.time, S3.amp.array());
-      chart4(S3.time, S3.amp.array());
+      //chart4(S3.time, S3.amp.array());
     }
     signalType = "Sygnał sinusoidalny";
     signalName = "sygnalSin";
@@ -75,12 +75,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S3);
     break;
   case 4:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S4.time, S4.amp.array());
       chart4(S4.time, S4.amp.array());
     } else {
       chart(S4.time, S4.amp.array());
-      chart4(S4.time, S4.amp.array());
+      //chart4(S4.time, S4.amp.array());
     }
     signalType = "Sygnał sinusoidalny wyprostowany jednopołówkowo";
     signalName = "sygnalSinWyprJedn";
@@ -88,12 +88,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S4);
     break;
   case 5:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S5.time, S5.amp.array());
       chart4(S5.time, S5.amp.array());
     } else {
       chart(S5.time, S5.amp.array());
-      chart4(S5.time, S5.amp.array());
+      //chart4(S5.time, S5.amp.array());
     }
     signalType = "Sygnał sinusoidalny wyprostowany dwupołówkowo";
     signalName = "sygnalSinWyprDwu";
@@ -101,12 +101,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S5);
     break;
   case 6:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S6.time, S6.amp.array());
       chart4(S6.time, S6.amp.array());
     } else {
       chart(S6.time, S6.amp.array());
-      chart4(S6.time, S6.amp.array());
+      //chart4(S6.time, S6.amp.array());
     }
     signalType = "Sygnał prostokątny";
     signalName = "sygnalProstokatny";
@@ -114,12 +114,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S6);
     break;
   case 7:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S7.time, S7.amp.array());
       chart4(S7.time, S7.amp.array());
     } else {
       chart(S7.time, S7.amp.array());
-      chart4(S7.time, S7.amp.array());
+      //chart4(S7.time, S7.amp.array());
     }
     signalType = "Sygnał prostokątny symetryczny";
     signalName = "sygnalProstokatnySym";
@@ -127,12 +127,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S7);
     break;
   case 8:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S8.time, S8.amp.array());
       chart4(S8.time, S8.amp.array());
     } else {
       chart(S8.time, S8.amp.array());
-      chart4(S8.time, S8.amp.array());
+      //chart4(S8.time, S8.amp.array());
     }
     signalType = "Sygnał trójkątny";
     signalName = "sygnalTrojkatny";
@@ -140,12 +140,12 @@ void draw() { //////////////////////////////////////////////////////////////////
     showSelectedReconstruction(S8);
     break;
   case 9:
-    if (chartMode) {
+    if (isComplexChartVisible) {
       chart(S9.time, S9.amp.array());
       chart4(S9.time, S9.amp.array());
     } else {
       chart(S9.time, S9.amp.array());
-      chart4(S9.time, S9.amp.array());
+      //chart4(S9.time, S9.amp.array());
     }
     signalType = "Skok jednostkowy";
     signalName = "sygnalJednostkowy";
@@ -213,7 +213,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     }
     textSize(16);
     lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if (numerZadania == 4) lineChart4.draw(width*0.014, 0, width*0.83, height*0.64);
+    if (numerZadania == 4 && isComplexChartVisible == true) lineChart4.draw(width*0.014, 0, width*0.83, height*0.64);
     if (numerZadania == 2) {
       if (isReconstructionChartVisible && wyborWykresu >2) {
         if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);
