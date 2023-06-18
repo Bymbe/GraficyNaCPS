@@ -56,7 +56,7 @@ void adjustFilter() {
   text("DOSTOSUJ FILTRACJĘ", width*0.90, height*0.67, width*0.98, height*0.80);
 }
 
-void chartMode() {
+void chart4Visibility() {
   if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.67 && mouseY <= height*0.80) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
@@ -71,7 +71,26 @@ void chartMode() {
   fill(0);
   textAlign(CENTER, CENTER);
   textSize(16);
-  text("Zmień wyświetlanie wykresów", width*0.90, height*0.67, width*0.98, height*0.80);
+  text("Przełącz widoczność wykresów", width*0.90, height*0.67, width*0.98, height*0.80);
+}
+
+void chart4Mode() {
+  if (mouseX >= width*0.90 && mouseX <= width*0.98  && mouseY >= height*0.37 && mouseY <= height*0.60) {
+    if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
+      wasMousePressedLastFrame = true;
+      if(complexChartsType == 1) complexChartsType = 2;
+      else complexChartsType = 1;
+      buttonColor = 100;
+    } else {
+      buttonColor = 150;
+    }
+  } else buttonColor = 200;
+  fill(buttonColor);
+  rect(width*0.90, height*0.37, width*0.98, height*0.60, 10, 10, 10, 10);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text("Zmień wyświetlanie wykresów ( " + whichChart4TypeIsVisible + ")", width*0.90, height*0.37, width*0.98, height*0.60);
 }
 
 void chooseNumerZadania() {
@@ -523,6 +542,7 @@ void ActiveDraw() {
   }
   
   if (numerZadania == 4) {
-   chartMode(); 
+   chart4Visibility(); 
+   chart4Mode();
   }
 }

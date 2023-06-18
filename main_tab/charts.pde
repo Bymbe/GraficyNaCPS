@@ -24,13 +24,22 @@ void chart2(float[] x, float[] y) {
   lineChart2.setLineWidth(0.5);
 }
 
-void chart4(float[] x, float[] y) {
-  lineChart4.setData(x, y);
-  lineChart4.showXAxis(false);
-  lineChart4.showYAxis(false);
-  lineChart4.setPointColour(color(100, 50, 50, 180));
-  lineChart4.setPointSize(4);
-  lineChart4.setLineWidth(1);
+void chart4up(float[] x, float[] y) {
+  lineChart4up.setData(x, y);
+  lineChart4up.showXAxis(false);
+  lineChart4up.showYAxis(false);
+  lineChart4up.setPointColour(color(100, 50, 50, 180));
+  lineChart4up.setPointSize(4);
+  lineChart4up.setLineWidth(1);
+}
+
+void chart4down(float[] x, float[] y) {
+  lineChart4down.setData(x, y);
+  lineChart4down.showXAxis(false);
+  lineChart4down.showYAxis(false);
+  lineChart4down.setPointColour(color(50, 50, 250, 180));
+  lineChart4down.setPointSize(4);
+  lineChart4down.setLineWidth(1);
 }
 
 void reconstructed(float[]x, float[] y) {

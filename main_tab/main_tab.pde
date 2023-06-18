@@ -5,7 +5,8 @@ void setup() { /////////////////////////////////////////////////////////////////
   surface.setLocation(width/5, height/4);
   lineChart = new XYChart(this);
   lineChart2 = new XYChart(this);
-  lineChart4 = new XYChart(this);
+  lineChart4up = new XYChart(this);
+  lineChart4down = new XYChart(this);
   scatterplot = new XYChart(this);
   reconstructedChart = new XYChart(this);
   barChart = new BarChart(this);
@@ -39,7 +40,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 1:
     if (isComplexChartVisible) {
       chart(S1.time, S1.amp.array());
-      chart4(S1.time, S1.amp.array());
+      //chart4(S1.time, S1.amp.array());
     } else {
       chart(S1.time, S1.amp.array());
       //chart4(S1.time, S1.amp.array());
@@ -52,7 +53,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 2:
     if (isComplexChartVisible) {
       chart(S2.time, S2.amp.array());
-      chart4(S2.time, S2.amp.array());
+      //chart4(S2.time, S2.amp.array());
     } else {
       chart(S2.time, S2.amp.array());
       //chart4(S2.time, S2.amp.array());
@@ -64,7 +65,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 3:
     if (isComplexChartVisible) {
       chart(S3.time, S3.amp.array());
-      chart4(S3.time, S3.amp.array());
+      //chart4(S3.time, S3.amp.array());
     } else {
       chart(S3.time, S3.amp.array());
       //chart4(S3.time, S3.amp.array());
@@ -77,7 +78,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 4:
     if (isComplexChartVisible) {
       chart(S4.time, S4.amp.array());
-      chart4(S4.time, S4.amp.array());
+      //chart4(S4.time, S4.amp.array());
     } else {
       chart(S4.time, S4.amp.array());
       //chart4(S4.time, S4.amp.array());
@@ -90,7 +91,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 5:
     if (isComplexChartVisible) {
       chart(S5.time, S5.amp.array());
-      chart4(S5.time, S5.amp.array());
+      //chart4(S5.time, S5.amp.array());
     } else {
       chart(S5.time, S5.amp.array());
       //chart4(S5.time, S5.amp.array());
@@ -103,7 +104,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 6:
     if (isComplexChartVisible) {
       chart(S6.time, S6.amp.array());
-      chart4(S6.time, S6.amp.array());
+      //chart4(S6.time, S6.amp.array());
     } else {
       chart(S6.time, S6.amp.array());
       //chart4(S6.time, S6.amp.array());
@@ -116,7 +117,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 7:
     if (isComplexChartVisible) {
       chart(S7.time, S7.amp.array());
-      chart4(S7.time, S7.amp.array());
+      //chart4(S7.time, S7.amp.array());
     } else {
       chart(S7.time, S7.amp.array());
       //chart4(S7.time, S7.amp.array());
@@ -129,7 +130,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 8:
     if (isComplexChartVisible) {
       chart(S8.time, S8.amp.array());
-      chart4(S8.time, S8.amp.array());
+      //chart4(S8.time, S8.amp.array());
     } else {
       chart(S8.time, S8.amp.array());
       //chart4(S8.time, S8.amp.array());
@@ -142,7 +143,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   case 9:
     if (isComplexChartVisible) {
       chart(S9.time, S9.amp.array());
-      chart4(S9.time, S9.amp.array());
+      //chart4(S9.time, S9.amp.array());
     } else {
       chart(S9.time, S9.amp.array());
       //chart4(S9.time, S9.amp.array());
@@ -192,6 +193,16 @@ void draw() { //////////////////////////////////////////////////////////////////
       println("upsi pupsi " + millis());
     }
   }
+  
+  if(numerZadania == 4) {
+    try {
+      showBothCharts();
+    }
+    catch (Exception e) {
+      println("upsi pupsi 4 " + millis());
+    }
+  }
+    
 
   setReconstructionType();
   reconstructedChart.setMaxY(lineChart.getMaxY());
@@ -212,8 +223,11 @@ void draw() { //////////////////////////////////////////////////////////////////
       if (whichIsVisible == 3)text("Korelacja " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
     }
     textSize(16);
-    lineChart.draw(0, height*0.1, width*0.85, height*0.65);
-    if (numerZadania == 4 && isComplexChartVisible == true) lineChart4.draw(width*0.014, 0, width*0.83, height*0.64);
+    if(numerZadania != 4) lineChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (numerZadania == 4 && isComplexChartVisible == true) {
+      lineChart4up.draw(width*0.014, 0, width*0.83, height*0.64);
+      lineChart4down.draw(width*0.014,  height*0.1, width*0.83, height*0.64);
+    }
     if (numerZadania == 2) {
       if (isReconstructionChartVisible && wyborWykresu >2) {
         if (showLineChart == true) reconstructedChart.draw(0, height*0.1, width*0.85, height*0.65);

@@ -12,7 +12,8 @@ Boolean showLineChart = false;
 //Zmienne bibliotek rysujacych
 XYChart lineChart;
 XYChart lineChart2;
-XYChart lineChart4;
+XYChart lineChart4up;
+XYChart lineChart4down;
 XYChart scatterplot;
 BarChart barChart;
 XYChart reconstructedChart;
@@ -38,6 +39,9 @@ int IMPULSE_JUMPSAMPLE = 0;
 
 ////////////////ZADANIE 4
 boolean isComplexChartVisible = true;
+int complexChartsType = 1; //1 - gora to rzeczywiste, dol to urojone
+                           //2 - gora to modul liczby zespolonej, dol to argument liczby w funkcji czestotliwosci
+String whichChart4TypeIsVisible = "góra - rzeczywiste, dół - urojone";
 ////////////////ZADANIE 4
 
 
