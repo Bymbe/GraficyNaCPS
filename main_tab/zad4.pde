@@ -1,6 +1,8 @@
 //sygnal zespolony to rzeczywisty z czescia urojona zero
 //transformaty robimy na sygnalach zespolonych
 
+// podzial na czesc ur. i rzeczywista ma transformata fouriera. kosinusowa i hadamarda ma po prostu swoj wykres 
+
 void showBothCharts(Signal A) {
   x = A.amp.array();
   switch(complexChartsType) {

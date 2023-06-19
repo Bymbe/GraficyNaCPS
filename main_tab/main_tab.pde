@@ -193,16 +193,44 @@ void draw() { //////////////////////////////////////////////////////////////////
       println("upsi pupsi " + millis());
     }
   }
-  
-  if(numerZadania == 4) {
+
+  if (numerZadania == 4) {
     try {
-      showBothCharts(S3);
+      switch(wyborWykresu) {
+      case 1:
+        showBothCharts(S1);
+        break;
+      case 2:
+        showBothCharts(S2);
+        break;
+      case 3:
+        showBothCharts(S3);
+        break;
+      case 4:
+        showBothCharts(S4);
+        break;
+      case 5:
+        showBothCharts(S5);
+        break;
+      case 6:
+        showBothCharts(S6);
+        break;
+      case 7:
+        showBothCharts(S7);
+        break;
+      case 8:
+        showBothCharts(S8);
+        break;
+      case 9:
+        showBothCharts(S9);
+        break;
+      }
     }
     catch (Exception e) {
       println("upsi pupsi 4 " + millis());
     }
   }
-    
+
 
   setReconstructionType();
   reconstructedChart.setMaxY(lineChart.getMaxY());
@@ -223,10 +251,10 @@ void draw() { //////////////////////////////////////////////////////////////////
       if (whichIsVisible == 3)text("Korelacja " + convultionSignalType(operationSignalChoice1) + " i " + convultionSignalType(operationSignalChoice2), width/2, height*0.08);
     }
     textSize(16);
-    if(numerZadania != 4) lineChart.draw(0, height*0.1, width*0.85, height*0.65);
+    if (numerZadania != 4) lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if (numerZadania == 4 && isComplexChartVisible == true) {
       lineChart4up.draw(width*0.014, 0, width*0.83, height*0.64);
-      lineChart4down.draw(width*0.014,  height*0.1, width*0.83, height*0.64);
+      lineChart4down.draw(width*0.014, height*0.1, width*0.83, height*0.64);
     }
     if (numerZadania == 2) {
       if (isReconstructionChartVisible && wyborWykresu >2) {
