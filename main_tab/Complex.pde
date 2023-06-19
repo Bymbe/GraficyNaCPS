@@ -6,12 +6,110 @@ class Complex {
   private boolean isNaN;
   private boolean isInfinite;
 
+  private final boolean RECOMPUTE_TABLES_AT_RUNTIME = false;
+  final int LN_MANT_LEN = 1024;
+
+  private final long HEX_40000000 = 0x40000000L;
+
+  private final double[][] LN_MANT;
+
+  private final long RECIP_2PI[] = new long[] {
+    (0x28be60dbL << 32) | 0x9391054aL,
+    (0x7f09d5f4L << 32) | 0x7d4d3770L,
+    (0x36d8a566L << 32) | 0x4f10e410L,
+    (0x7f9458eaL << 32) | 0xf7aef158L,
+    (0x6dc91b8eL << 32) | 0x909374b8L,
+    (0x01924bbaL << 32) | 0x82746487L,
+    (0x3f877ac7L << 32) | 0x2c4a69cfL,
+    (0xba208d7dL << 32) | 0x4baed121L,
+    (0x3a671c09L << 32) | 0xad17df90L,
+    (0x4e64758eL << 32) | 0x60d4ce7dL,
+    (0x272117e2L << 32) | 0xef7e4a0eL,
+    (0xc7fe25ffL << 32) | 0xf7816603L,
+    (0xfbcbc462L << 32) | 0xd6829b47L,
+    (0xdb4d9fb3L << 32) | 0xc9f2c26dL,
+    (0xd3d18fd9L << 32) | 0xa797fa8bL,
+    (0x5d49eeb1L << 32) | 0xfaf97c5eL,
+    (0xcf41ce7dL << 32) | 0xe294a4baL,
+    0x9afed7ecL << 32  };
+
+  private final float LN_QUICK_COEF[][] = {
+    {1.0, 5.669184079525E-24},
+    {-0.25, -0.25},
+    {0.3333333134651184, 1.986821492305628E-8},
+    {-0.25, -6.663542893624021E-14},
+    {0.19999998807907104, 1.1921056801463227E-8},
+    {-0.1666666567325592, -7.800414592973399E-9},
+    {0.1428571343421936, 5.650007086920087E-9},
+    {-0.12502530217170715, -7.44321345601866E-11},
+    {0.11113807559013367, 9.219544613762692E-9},
+  };
+
+  private final float TWO_POWER_52 = 4503599627370496.0;
+
+  private final long PI_O_4_BITS[] = new long[] {
+    (0xc90fdaa2L << 32) | 0x2168c234L,
+    (0xc4c6628bL << 32) | 0x80dc1cd1L };
+
   public Complex(float real, float img) {
     this.real = real;
     this.img = img;
-    isNaN = Double.isNaN(real) || Double.isNaN(img);
-    isInfinite = !isNaN && (Double.isInfinite(real) || Double.isInfinite(img));
+    isNaN = Float.isNaN(real) || Float.isNaN(img);
+    isInfinite = !isNaN && (Float.isInfinite(real) || Float.isInfinite(img));
+        if (RECOMPUTE_TABLES_AT_RUNTIME) {
+      LN_MANT = new double[LN_MANT_LEN][];
+
+      // Populate lnMant table
+      for (int i = 0; i < LN_MANT.length; i++) {
+        final double d = Double.longBitsToDouble( (((long) i) << 42) | 0x3ff0000000000000L );
+        LN_MANT[i] = slowLog(d);
+      }
+    }
   }
+  
+  public static double[] slowLog(double xi) {
+        double x[] = new double[2];
+        double x2[] = new double[2];
+        double y[] = new double[2];
+        double a[] = new double[2];
+
+        split(xi, x);
+
+        /* Set X = (x-1)/(x+1) */
+        x[0] += 1.0;
+        resplit(x);
+        splitReciprocal(x, a);
+        x[0] -= 2.0;
+        resplit(x);
+        splitMult(x, a, y);
+        x[0] = y[0];
+        x[1] = y[1];
+
+        /* Square X -> X2*/
+        splitMult(x, x, x2);
+
+
+        //x[0] -= 1.0;
+        //resplit(x);
+
+        y[0] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][0];
+        y[1] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][1];
+
+        for (int i = LN_SPLIT_COEF.length-2; i >= 0; i--) {
+            splitMult(y, x2, a);
+            y[0] = a[0];
+            y[1] = a[1];
+            splitAdd(y, LN_SPLIT_COEF[i], a);
+            y[0] = a[0];
+            y[1] = a[1];
+        }
+
+        splitMult(y, x, a);
+        y[0] = a[0];
+        y[1] = a[1];
+
+        return y;
+    }
 
   public Complex multi(Complex b) {
     float real = this.real * b.real - this.img * b.img;
@@ -52,15 +150,15 @@ class Complex {
 
   public Complex exp() {
     if (isNaN) return NaN;
-    float expReal = FastMath.exp(real);
-    return CreateComplex(expReal * FastMath.cos(img), expReal * FastMath.sin(img));
+    float expReal = exp(real);
+    return createComplex(expReal * cos(img), expReal * sin(img));
   }
 
   public Complex log() {
     if (isNaN) {
       return NaN;
     }
-    return createComplex(FastMath.log(abs()), FastMath.atan2(imaginary, real));
+    return createComplex(log(abs(1)), atan2(img, real));
   }
 
   public Complex(float real) {
@@ -80,22 +178,15 @@ class Complex {
     return isNaN;
   }
 
-  protected Complex createComplex(float realPart, float imaginaryPart) {
-    return new Complex(realPart, imaginaryPart);
-  }
-}
-
-class FastMath {
-  public static float exp(float x) {
+  public float exp(float x) {
     return exp(x, 0.0, null);
   }
 
-  private static float exp(float x, float extra, float[] hiPrec) {
+  private float exp(float x, float extra, float[] hiPrec) {
     float intPartA;
     float intPartB;
     int intVal = (int) x;
     if (x < 0.0) {
-
       if (x < -746d) {
         if (hiPrec != null) {
           hiPrec[0] = 0.0;
@@ -104,77 +195,561 @@ class FastMath {
         return 0.0;
       }
       if (intVal < -709) {
-
-        final float result = exp(x+40.19140625, extra, hiPrec) / 285040095144011776.0;
+        float result = exp(x+40.19140625, extra, hiPrec) / 285040095144011776.0;
         if (hiPrec != null) {
           hiPrec[0] /= 285040095144011776.0;
           hiPrec[1] /= 285040095144011776.0;
         }
         return result;
       }
-
       if (intVal == -709) {
-        final float result = exp(x+1.494140625, extra, hiPrec) / 4.455505956692756620;
+        float result = exp(x+1.494140625, extra, hiPrec) / 4.455505956692756620;
         if (hiPrec != null) {
           hiPrec[0] /= 4.455505956692756620;
           hiPrec[1] /= 4.455505956692756620;
         }
         return result;
       }
-
       intVal--;
     } else {
       if (intVal > 709) {
         if (hiPrec != null) {
-          hiPrec[0] = Double.POSITIVE_INFINITY;
+          hiPrec[0] = Float.POSITIVE_INFINITY;
           hiPrec[1] = 0.0;
         }
-        return Double.POSITIVE_INFINITY;
+        return Float.POSITIVE_INFINITY;
       }
     }
+    return 0.0;
+  }
 
+  protected Complex createComplex(float realPart, float imaginaryPart) {
+    return new Complex(realPart, imaginaryPart);
+  }
+
+  public float cos(float x) {
+    int quadrant = 0;
+
+    /* Take absolute value of the input */
+    float xa = x;
+    if (x < 0) {
+      xa = -xa;
+    }
+
+    if (xa != xa || xa == Float.POSITIVE_INFINITY) {
+      return Float.NaN;
+    }
+
+    /* Perform any argument reduction */
+    float xb = 0;
+    if (xa > 3294198.0) {
+      // PI * (2**20)
+      // Argument too big for CodyWaite reduction.  Must use
+      // PayneHanek.
+      float reduceResults[] = new float[3];
+      reducePayneHanek(xa, reduceResults);
+      quadrant = ((int) reduceResults[0]) & 3;
+      xa = reduceResults[1];
+      xb = reduceResults[2];
+    } else if (xa > 1.5707963267948966) {
+      //CodyWaite cw = new CodyWaite(xa);
+      //quadrant = cw.getK() & 3;
+      //xa = cw.getRemA();
+      //xb = cw.getRemB();
+    }
+
+    //if (negative)
+    //  quadrant = (quadrant + 2) % 4;
+
+    switch (quadrant) {
+    case 0:
+      //return cosQ(xa, xb);
+    case 1:
+      //return -sinQ(xa, xb);
+    case 2:
+      //return -cosQ(xa, xb);
+    case 3:
+      //return sinQ(xa, xb);
+    default:
+      return Float.NaN;
+    }
+  }
+
+  private void reducePayneHanek(float x, float result[])
+  {
+    /* Convert input float to bits */
+    long inbits = Double.doubleToRawLongBits(x);
+    int exponent = (int) ((inbits >> 52) & 0x7ff) - 1023;
+
+    /* Convert to fixed point representation */
+    inbits &= 0x000fffffffffffffL;
+    inbits |= 0x0010000000000000L;
+
+    /* Normalize input to be between 0.5 and 1.0 */
+    exponent++;
+    inbits <<= 11;
+
+    /* Based on the exponent, get a shifted copy of recip2pi */
+    long shpi0;
+    long shpiA;
+    long shpiB;
+    int idx = exponent >> 6;
+    int shift = exponent - (idx << 6);
+
+    if (shift != 0) {
+      shpi0 = (idx == 0) ? 0 : (RECIP_2PI[idx-1] << shift);
+      shpi0 |= RECIP_2PI[idx] >>> (64-shift);
+      shpiA = (RECIP_2PI[idx] << shift) | (RECIP_2PI[idx+1] >>> (64-shift));
+      shpiB = (RECIP_2PI[idx+1] << shift) | (RECIP_2PI[idx+2] >>> (64-shift));
+    } else {
+      shpi0 = (idx == 0) ? 0 : RECIP_2PI[idx-1];
+      shpiA = RECIP_2PI[idx];
+      shpiB = RECIP_2PI[idx+1];
+    }
+
+    /* Multiply input by shpiA */
+    long a = inbits >>> 32;
+    long b = inbits & 0xffffffffL;
+
+    long c = shpiA >>> 32;
+    long d = shpiA & 0xffffffffL;
+
+    long ac = a * c;
+    long bd = b * d;
+    long bc = b * c;
+    long ad = a * d;
+
+    long prodB = bd + (ad << 32);
+    long prodA = ac + (ad >>> 32);
+
+    boolean bita = (bd & 0x8000000000000000L) != 0;
+    boolean bitb = (ad & 0x80000000L ) != 0;
+    boolean bitsum = (prodB & 0x8000000000000000L) != 0;
+
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prodA++;
+    }
+
+    bita = (prodB & 0x8000000000000000L) != 0;
+    bitb = (bc & 0x80000000L ) != 0;
+
+    prodB += bc << 32;
+    prodA += bc >>> 32;
+
+    bitsum = (prodB & 0x8000000000000000L) != 0;
+
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prodA++;
+    }
+
+    /* Multiply input by shpiB */
+    c = shpiB >>> 32;
+    d = shpiB & 0xffffffffL;
+    ac = a * c;
+    bc = b * c;
+    ad = a * d;
+
+    /* Collect terms */
+    ac += (bc + ad) >>> 32;
+
+    bita = (prodB & 0x8000000000000000L) != 0;
+    bitb = (ac & 0x8000000000000000L ) != 0;
+    prodB += ac;
+    bitsum = (prodB & 0x8000000000000000L) != 0;
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prodA++;
+    }
+
+    /* Multiply by shpi0 */
+    c = shpi0 >>> 32;
+    d = shpi0 & 0xffffffffL;
+
+    bd = b * d;
+    bc = b * c;
+    ad = a * d;
+
+    prodA += bd + ((bc + ad) << 32);
+
+    int intPart = (int)(prodA >>> 62);
+
+    /* Multiply by 4 */
+    prodA <<= 2;
+    prodA |= prodB >>> 62;
+    prodB <<= 2;
+
+    /* Multiply by PI/4 */
+    a = prodA >>> 32;
+    b = prodA & 0xffffffffL;
+
+    c = PI_O_4_BITS[0] >>> 32;
+    d = PI_O_4_BITS[0] & 0xffffffffL;
+
+    ac = a * c;
+    bd = b * d;
+    bc = b * c;
+    ad = a * d;
+
+    long prod2B = bd + (ad << 32);
+    long prod2A = ac + (ad >>> 32);
+
+    bita = (bd & 0x8000000000000000L) != 0;
+    bitb = (ad & 0x80000000L ) != 0;
+    bitsum = (prod2B & 0x8000000000000000L) != 0;
+
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prod2A++;
+    }
+
+    bita = (prod2B & 0x8000000000000000L) != 0;
+    bitb = (bc & 0x80000000L ) != 0;
+
+    prod2B += bc << 32;
+    prod2A += bc >>> 32;
+
+    bitsum = (prod2B & 0x8000000000000000L) != 0;
+
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prod2A++;
+    }
+
+    c = PI_O_4_BITS[1] >>> 32;
+    d = PI_O_4_BITS[1] & 0xffffffffL;
+    ac = a * c;
+    bc = b * c;
+    ad = a * d;
+
+    /* Collect terms */
+    ac += (bc + ad) >>> 32;
+
+    bita = (prod2B & 0x8000000000000000L) != 0;
+    bitb = (ac & 0x8000000000000000L ) != 0;
+    prod2B += ac;
+    bitsum = (prod2B & 0x8000000000000000L) != 0;
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prod2A++;
+    }
+
+    /* Multiply inputB by pio4bits[0] */
+    a = prodB >>> 32;
+    b = prodB & 0xffffffffL;
+    c = PI_O_4_BITS[0] >>> 32;
+    d = PI_O_4_BITS[0] & 0xffffffffL;
+    ac = a * c;
+    bc = b * c;
+    ad = a * d;
+
+    /* Collect terms */
+    ac += (bc + ad) >>> 32;
+
+    bita = (prod2B & 0x8000000000000000L) != 0;
+    bitb = (ac & 0x8000000000000000L ) != 0;
+    prod2B += ac;
+    bitsum = (prod2B & 0x8000000000000000L) != 0;
+    /* Carry */
+    if ( (bita && bitb) ||
+      ((bita || bitb) && !bitsum) ) {
+      prod2A++;
+    }
+
+    float tmpA = (prod2A >>> 12) / TWO_POWER_52;  // High order 52 bits
+    float tmpB = (((prod2A & 0xfffL) << 40) + (prod2B >>> 24)) / TWO_POWER_52 / TWO_POWER_52; // Low bits
+
+    float sumA = tmpA + tmpB;
+    float sumB = -(sumA - tmpA - tmpB);
+
+    result[0] = intPart;
+    result[1] = sumA * 2.0;
+    result[2] = sumB * 2.0;
+  }
+
+
+  public float sin(float x) {
+    boolean negative = false;
+    int quadrant = 0;
+    float xa;
+    float xb = 0.0;
+
+    /* Take absolute value of the input */
+    xa = x;
+    if (x < 0) {
+      negative = true;
+      xa = -xa;
+    }
+
+    /* Check for zero and negative zero */
+    if (xa == 0.0) {
+      long bits = Double.doubleToRawLongBits(x);
+      if (bits < 0) {
+        return -0.0;
+      }
+      return 0.0;
+    }
+
+    if (xa != xa || xa == Float.POSITIVE_INFINITY) {
+      return Float.NaN;
+    }
+
+    /* Perform any argument reduction */
+    if (xa > 3294198.0) {
+      // PI * (2**20)
+      // Argument too big for CodyWaite reduction.  Must use
+      // PayneHanek.
+      float reduceResults[] = new float[3];
+      reducePayneHanek(xa, reduceResults);
+      quadrant = ((int) reduceResults[0]) & 3;
+      xa = reduceResults[1];
+      xb = reduceResults[2];
+    } else if (xa > 1.5707963267948966) {
+      //final CodyWaite cw = new CodyWaite(xa);
+      //quadrant = cw.getK() & 3;
+      //xa = cw.getRemA();
+      //xb = cw.getRemB();
+    }
+
+    if (negative) {
+      quadrant ^= 2;  // Flip bit 1
+    }
+
+    switch (quadrant) {
+    case 0:
+      //return sinQ(xa, xb);
+    case 1:
+      //return cosQ(xa, xb);
+    case 2:
+      //return -sinQ(xa, xb);
+    case 3:
+      //return -cosQ(xa, xb);
+    default:
+      return Float.NaN;
+    }
+  }
+
+  public float log(final float x) {
+    return log(x, null);
+  }
+  private float log(final float x, final float[] hiPrec) {
+    if (x==0) { // Handle special case of +0/-0
+      return Float.NEGATIVE_INFINITY;
+    }
+    long bits = Double.doubleToRawLongBits(x);
+
+    /* Handle special cases of negative input, and NaN */
+    if (((bits & 0x8000000000000000L) != 0 || x != x) && x != 0.0) {
+      if (hiPrec != null) {
+        hiPrec[0] = Float.NaN;
+      }
+
+      return Float.NaN;
+    }
+
+    /* Handle special cases of Positive infinity. */
+    if (x == Float.POSITIVE_INFINITY) {
+      if (hiPrec != null) {
+        hiPrec[0] = Float.POSITIVE_INFINITY;
+      }
+
+      return Float.POSITIVE_INFINITY;
+    }
+
+    /* Extract the exponent */
+    int exp = (int)(bits >> 52)-1023;
+
+    if ((bits & 0x7ff0000000000000L) == 0) {
+      // Subnormal!
+      if (x == 0) {
+        if (hiPrec != null) {
+          hiPrec[0] = Float.NEGATIVE_INFINITY;
+        }
+        return Float.NEGATIVE_INFINITY;
+      }
+      bits <<= 1;
+      while ( (bits & 0x0010000000000000L) == 0) {
+        --exp;
+        bits <<= 1;
+      }
+    }
+    if ((exp == -1 || exp == 0) && x < 1.01 && x > 0.99 && hiPrec == null) {
+      float xa = x - 1.0;
+      float xb = xa - x + 1.0;
+      float tmp = xa * HEX_40000000;
+      float aa = xa + tmp - tmp;
+      float ab = xa - aa;
+      xa = aa;
+      xb = ab;
+
+      final float[] lnCoef_last = LN_QUICK_COEF[LN_QUICK_COEF.length - 1];
+      float ya = lnCoef_last[0];
+      float yb = lnCoef_last[1];
+
+      for (int i = LN_QUICK_COEF.length - 2; i >= 0; i--) {
+        /* Multiply a = y * x */
+        aa = ya * xa;
+        ab = ya * xb + yb * xa + yb * xb;
+        /* split, so now y = a */
+        tmp = aa * HEX_40000000;
+        ya = aa + tmp - tmp;
+        yb = aa - ya + ab;
+
+        /* Add  a = y + lnQuickCoef */
+        final float[] lnCoef_i = LN_QUICK_COEF[i];
+        aa = ya + lnCoef_i[0];
+        ab = yb + lnCoef_i[1];
+        /* Split y = a */
+        tmp = aa * HEX_40000000;
+        ya = aa + tmp - tmp;
+        yb = aa - ya + ab;
+      }
+
+      /* Multiply a = y * x */
+      aa = ya * xa;
+      ab = ya * xb + yb * xa + yb * xb;
+      /* split, so now y = a */
+      tmp = aa * HEX_40000000;
+      ya = aa + tmp - tmp;
+      yb = aa - ya + ab;
+
+      return ya + yb;
+    }
+
+    // lnm is a log of a number in the range of 1.0 - 2.0, so 0 <= lnm < ln(2)
+    final float[] lnm = lnMant.LN_MANT[(int)((bits & 0x000ffc0000000000L) >> 42)];
+    final float epsilon = (bits & 0x3ffffffffffL) / (TWO_POWER_52 + (bits & 0x000ffc0000000000L));
+
+    float lnza = 0.0;
+    float lnzb = 0.0;
+
+    if (hiPrec != null) {
+      /* split epsilon -> x */
+      float tmp = epsilon * HEX_40000000;
+      float aa = epsilon + tmp - tmp;
+      float ab = epsilon - aa;
+      float xa = aa;
+      float xb = ab;
+
+      /* Need a more accurate epsilon, so adjust the division. */
+      final float numer = bits & 0x3ffffffffffL;
+      final float denom = TWO_POWER_52 + (bits & 0x000ffc0000000000L);
+      aa = numer - xa*denom - xb * denom;
+      xb += aa / denom;
+
+      /* Remez polynomial evaluation */
+      final float[] lnCoef_last = LN_HI_PREC_COEF[LN_HI_PREC_COEF.length-1];
+      float ya = lnCoef_last[0];
+      float yb = lnCoef_last[1];
+
+      for (int i = LN_HI_PREC_COEF.length - 2; i >= 0; i--) {
+        /* Multiply a = y * x */
+        aa = ya * xa;
+        ab = ya * xb + yb * xa + yb * xb;
+        /* split, so now y = a */
+        tmp = aa * HEX_40000000;
+        ya = aa + tmp - tmp;
+        yb = aa - ya + ab;
+
+        /* Add  a = y + lnHiPrecCoef */
+        final float[] lnCoef_i = LN_HI_PREC_COEF[i];
+        aa = ya + lnCoef_i[0];
+        ab = yb + lnCoef_i[1];
+        /* Split y = a */
+        tmp = aa * HEX_40000000;
+        ya = aa + tmp - tmp;
+        yb = aa - ya + ab;
+      }
+
+      /* Multiply a = y * x */
+      aa = ya * xa;
+      ab = ya * xb + yb * xa + yb * xb;
+
+      lnza = aa + ab;
+      lnzb = -(lnza - aa - ab);
+    } else {
+      lnza = -0.16624882440418567;
+      lnza = lnza * epsilon + 0.19999954120254515;
+      lnza = lnza * epsilon + -0.2499999997677497;
+      lnza = lnza * epsilon + 0.3333333333332802;
+      lnza = lnza * epsilon + -0.5;
+      lnza = lnza * epsilon + 1.0;
+      lnza *= epsilon;
+    }
+
+    float a = LN_2_A*exp;
+    float b = 0.0;
+    float c = a+lnm[0];
+    float d = -(c-a-lnm[0]);
+    a = c;
+    b += d;
+
+    c = a + lnza;
+    d = -(c - a - lnza);
+    a = c;
+    b += d;
+
+    c = a + LN_2_B*exp;
+    d = -(c - a - LN_2_B*exp);
+    a = c;
+    b += d;
+
+    c = a + lnm[1];
+    d = -(c - a - lnm[1]);
+    a = c;
+    b += d;
+
+    c = a + lnzb;
+    d = -(c - a - lnzb);
+    a = c;
+    b += d;
+
+    if (hiPrec != null) {
+      hiPrec[0] = a;
+      hiPrec[1] = b;
+    }
+
+    return a + b;
+    float intPartA;
+    float intPartB;
     intPartA = ExpIntTable.EXP_INT_TABLE_A[EXP_INT_TABLE_MAX_INDEX+intVal];
     intPartB = ExpIntTable.EXP_INT_TABLE_B[EXP_INT_TABLE_MAX_INDEX+intVal];
-
     final int intFrac = (int) ((x - intVal) * 1024.0);
-    final double fracPartA = ExpFracTable.EXP_FRAC_TABLE_A[intFrac];
-    final double fracPartB = ExpFracTable.EXP_FRAC_TABLE_B[intFrac];
-
-
-    final double epsilon = x - (intVal + intFrac / 1024.0);
-
-    double z = 0.04168701738764507;
+    final float fracPartA = ExpFracTable.EXP_FRAC_TABLE_A[intFrac];
+    final float fracPartB = ExpFracTable.EXP_FRAC_TABLE_B[intFrac];
+    final float epsilon = x - (intVal + intFrac / 1024.0);
+    float z = 0.04168701738764507;
     z = z * epsilon + 0.1666666505023083;
     z = z * epsilon + 0.5000000000042687;
     z = z * epsilon + 1.0;
     z = z * epsilon + -3.940510424527919E-20;
-
-
-    double tempA = intPartA * fracPartA;
-    double tempB = intPartA * fracPartB + intPartB * fracPartA + intPartB * fracPartB;
-
-    final double tempC = tempB + tempA;
-
-    if (tempC == Double.POSITIVE_INFINITY) {
-      return Double.POSITIVE_INFINITY;
+    float tempA = intPartA * fracPartA;
+    float tempB = intPartA * fracPartB + intPartB * fracPartA + intPartB * fracPartB;
+    final float tempC = tempB + tempA;
+    if (tempC == Float.POSITIVE_INFINITY) {
+      return Float.POSITIVE_INFINITY;
     }
-
-    final double result;
+    final float result;
     if (extra != 0.0) {
       result = tempC*extra*z + tempC*extra + tempC*z + tempB + tempA;
     } else {
       result = tempC*z + tempB + tempA;
     }
-
     if (hiPrec != null) {
       hiPrec[0] = tempA;
       hiPrec[1] = tempC*extra*z + tempC*extra + tempC*z + tempB;
     }
-
     return result;
   }
 
-  public float atan2(float y, float x) {
+  public static float atan2(float y, float x) {
     if (x != x || y != y) return Float.NaN;
     if (y == 0) {
       float result = x * y;
@@ -185,31 +760,31 @@ class FastMath {
         else return copySign(PI, y);
       }
     }
-    if (y == Double.POSITIVE_INFINITY) {
-      if (x == Double.POSITIVE_INFINITY) {
+    if (y == Float.POSITIVE_INFINITY) {
+      if (x == Float.POSITIVE_INFINITY) {
         return Math.PI * F_1_4;
       }
 
-      if (x == Double.NEGATIVE_INFINITY) {
+      if (x == Float.NEGATIVE_INFINITY) {
         return Math.PI * F_3_4;
       }
 
       return Math.PI * F_1_2;
     }
 
-    if (y == Double.NEGATIVE_INFINITY) {
-      if (x == Double.POSITIVE_INFINITY) {
+    if (y == Float.NEGATIVE_INFINITY) {
+      if (x == Float.POSITIVE_INFINITY) {
         return -Math.PI * F_1_4;
       }
 
-      if (x == Double.NEGATIVE_INFINITY) {
+      if (x == Float.NEGATIVE_INFINITY) {
         return -Math.PI * F_3_4;
       }
 
       return -Math.PI * F_1_2;
     }
 
-    if (x == Double.POSITIVE_INFINITY) {
+    if (x == Float.POSITIVE_INFINITY) {
       if (y > 0 || 1 / y > 0) {
         return 0d;
       }
@@ -219,7 +794,7 @@ class FastMath {
       }
     }
 
-    if (x == Double.NEGATIVE_INFINITY)
+    if (x == Float.NEGATIVE_INFINITY)
     {
       if (y > 0.0 || 1 / y > 0.0) {
         return Math.PI;
@@ -243,21 +818,21 @@ class FastMath {
     }
 
     // Compute ratio r = y/x
-    final double r = y / x;
-    if (Double.isInfinite(r)) { // bypass calculations that can create NaN
+    final float r = y / x;
+    if (Float.isInfinite(r)) { // bypass calculations that can create NaN
       return atan(r, 0, x < 0);
     }
 
-    double ra = doubleHighPart(r);
-    double rb = r - ra;
+    float ra = floatHighPart(r);
+    float rb = r - ra;
 
     // Split x
-    final double xa = doubleHighPart(x);
-    final double xb = x - xa;
+    final float xa = floatHighPart(x);
+    final float xb = x - xa;
 
     rb += (y - ra * xa - ra * xb - rb * xa - rb * xb) / x;
 
-    final double temp = ra + rb;
+    final float temp = ra + rb;
     rb = -(temp - ra - rb);
     ra = temp;
 
@@ -266,7 +841,7 @@ class FastMath {
     }
 
     // Call atan
-    final double result = atan(ra, rb, x < 0);
+    final float result = atan(ra, rb, x < 0);
 
     return result;
   }
