@@ -8,10 +8,57 @@ class Complex {
 
   private final boolean RECOMPUTE_TABLES_AT_RUNTIME = false;
   final int LN_MANT_LEN = 1024;
+  final int intFrac = (int) ((x[0] - 11) * 1024.0);
 
   private final long HEX_40000000 = 0x40000000L;
 
-  private final double[][] LN_MANT;
+  final int EXP_INT_TABLE_MAX_INDEX = 750;
+  final int EXP_INT_TABLE_LEN = EXP_INT_TABLE_MAX_INDEX * 2;
+
+  private double[][] LN_MANT;
+
+  private final float LN_HI_PREC_COEF[][] = {
+    {1.0, -6.032174644509064E-23},
+    {-0.25, -0.25},
+    {0.3333333134651184, 1.9868161777724352E-8},
+    {-0.2499999701976776, -2.957007209750105E-8},
+    {0.19999954104423523, 1.5830993332061267E-10},
+    {-0.16624879837036133, -2.6033824355191673E-8}
+  };
+
+  private static final double F_1_3 = 1d / 3d;
+  /** Constant: {@value}. */
+  private static final double F_1_5 = 1d / 5d;
+  /** Constant: {@value}. */
+  private static final double F_1_7 = 1d / 7d;
+  /** Constant: {@value}. */
+  private static final double F_1_9 = 1d / 9d;
+  /** Constant: {@value}. */
+  private static final double F_1_11 = 1d / 11d;
+  /** Constant: {@value}. */
+  private static final double F_1_13 = 1d / 13d;
+  /** Constant: {@value}. */
+  private static final double F_1_15 = 1d / 15d;
+  /** Constant: {@value}. */
+  private static final double F_1_17 = 1d / 17d;
+  /** Constant: {@value}. */
+  private static final double F_3_4 = 3d / 4d;
+  /** Constant: {@value}. */
+  private static final double F_15_16 = 15d / 16d;
+  /** Constant: {@value}. */
+  private static final double F_13_14 = 13d / 14d;
+  /** Constant: {@value}. */
+  private static final double F_11_12 = 11d / 12d;
+  /** Constant: {@value}. */
+  private static final double F_9_10 = 9d / 10d;
+  /** Constant: {@value}. */
+  private static final double F_7_8 = 7d / 8d;
+  /** Constant: {@value}. */
+  private static final double F_5_6 = 5d / 6d;
+  /** Constant: {@value}. */
+  private static final double F_1_2 = 1d / 2d;
+  /** Constant: {@value}. */
+  private static final double F_1_4 = 1d / 4d;
 
   private final long RECIP_2PI[] = new long[] {
     (0x28be60dbL << 32) | 0x9391054aL,
@@ -44,6 +91,9 @@ class Complex {
     {-0.12502530217170715, -7.44321345601866E-11},
     {0.11113807559013367, 9.219544613762692E-9},
   };
+  private final float LN_2_A = 0.693147063255310059;
+
+  private final float LN_2_B = 1.17304635250823482e-7;
 
   private final float TWO_POWER_52 = 4503599627370496.0;
 
@@ -56,60 +106,51 @@ class Complex {
     this.img = img;
     isNaN = Float.isNaN(real) || Float.isNaN(img);
     isInfinite = !isNaN && (Float.isInfinite(real) || Float.isInfinite(img));
-        if (RECOMPUTE_TABLES_AT_RUNTIME) {
-      LN_MANT = new double[LN_MANT_LEN][];
-
-      // Populate lnMant table
-      for (int i = 0; i < LN_MANT.length; i++) {
-        final double d = Double.longBitsToDouble( (((long) i) << 42) | 0x3ff0000000000000L );
-        LN_MANT[i] = slowLog(d);
-      }
-    }
   }
-  
-  public static double[] slowLog(double xi) {
-        double x[] = new double[2];
-        double x2[] = new double[2];
-        double y[] = new double[2];
-        double a[] = new double[2];
 
-        split(xi, x);
+  public double[] slowLog(double xi) {
+    //double x[] = new double[2];
+    //double x2[] = new double[2];
+    double y[] = new double[2];
+    //double a[] = new double[2];
 
-        /* Set X = (x-1)/(x+1) */
-        x[0] += 1.0;
-        resplit(x);
-        splitReciprocal(x, a);
-        x[0] -= 2.0;
-        resplit(x);
-        splitMult(x, a, y);
-        x[0] = y[0];
-        x[1] = y[1];
+    //split(xi, x);
 
-        /* Square X -> X2*/
-        splitMult(x, x, x2);
+    ///* Set X = (x-1)/(x+1) */
+    //x[0] += 1.0;
+    //resplit(x);
+    //splitReciprocal(x, a);
+    //x[0] -= 2.0;
+    //resplit(x);
+    //splitMult(x, a, y);
+    //x[0] = y[0];
+    //x[1] = y[1];
+
+    ///* Square X -> X2*/
+    //splitMult(x, x, x2);
 
 
-        //x[0] -= 1.0;
-        //resplit(x);
+    ////x[0] -= 1.0;
+    ////resplit(x);
 
-        y[0] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][0];
-        y[1] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][1];
+    //y[0] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][0];
+    //y[1] = LN_SPLIT_COEF[LN_SPLIT_COEF.length-1][1];
 
-        for (int i = LN_SPLIT_COEF.length-2; i >= 0; i--) {
-            splitMult(y, x2, a);
-            y[0] = a[0];
-            y[1] = a[1];
-            splitAdd(y, LN_SPLIT_COEF[i], a);
-            y[0] = a[0];
-            y[1] = a[1];
-        }
+    //for (int i = LN_SPLIT_COEF.length-2; i >= 0; i--) {
+    //    splitMult(y, x2, a);
+    //    y[0] = a[0];
+    //    y[1] = a[1];
+    //    splitAdd(y, LN_SPLIT_COEF[i], a);
+    //    y[0] = a[0];
+    //    y[1] = a[1];
+    //}
 
-        splitMult(y, x, a);
-        y[0] = a[0];
-        y[1] = a[1];
+    //splitMult(y, x, a);
+    //y[0] = a[0];
+    //y[1] = a[1];
 
-        return y;
-    }
+    return y;
+  }
 
   public Complex multi(Complex b) {
     float real = this.real * b.real - this.img * b.img;
@@ -179,7 +220,7 @@ class Complex {
   }
 
   public float exp(float x) {
-    return exp(x, 0.0, null);
+    return exp2(x, 0.0, null);
   }
 
   private float exp(float x, float extra, float[] hiPrec) {
@@ -624,8 +665,8 @@ class Complex {
     }
 
     // lnm is a log of a number in the range of 1.0 - 2.0, so 0 <= lnm < ln(2)
-    final float[] lnm = lnMant.LN_MANT[(int)((bits & 0x000ffc0000000000L) >> 42)];
-    final float epsilon = (bits & 0x3ffffffffffL) / (TWO_POWER_52 + (bits & 0x000ffc0000000000L));
+    double[] lnm = lnMant.LN_MANT[(int)((bits & 0x000ffc0000000000L) >> 42)];
+    float epsilon = (bits & 0x3ffffffffffL) / (TWO_POWER_52 + (bits & 0x000ffc0000000000L));
 
     float lnza = 0.0;
     float lnzb = 0.0;
@@ -686,8 +727,8 @@ class Complex {
 
     float a = LN_2_A*exp;
     float b = 0.0;
-    float c = a+lnm[0];
-    float d = -(c-a-lnm[0]);
+    float c = a+(float)lnm[0];
+    float d = -(c-a-(float)lnm[0]);
     a = c;
     b += d;
 
@@ -701,8 +742,8 @@ class Complex {
     a = c;
     b += d;
 
-    c = a + lnm[1];
-    d = -(c - a - lnm[1]);
+    c = a + (float)lnm[1];
+    d = -(c - a - (float)lnm[1]);
     a = c;
     b += d;
 
@@ -717,14 +758,16 @@ class Complex {
     }
 
     return a + b;
+  }
+  private float exp2(float x, float extra, float[] hiPrec) {
     float intPartA;
     float intPartB;
-    intPartA = ExpIntTable.EXP_INT_TABLE_A[EXP_INT_TABLE_MAX_INDEX+intVal];
-    intPartB = ExpIntTable.EXP_INT_TABLE_B[EXP_INT_TABLE_MAX_INDEX+intVal];
-    final int intFrac = (int) ((x - intVal) * 1024.0);
+    intPartA = ExpIntTable.EXP_INT_TABLE_A[EXP_INT_TABLE_MAX_INDEX+1];
+    intPartB = ExpIntTable.EXP_INT_TABLE_B[EXP_INT_TABLE_MAX_INDEX+11];
+    final int intFrac = (int) ((x - 1) * 1024.0);
     final float fracPartA = ExpFracTable.EXP_FRAC_TABLE_A[intFrac];
     final float fracPartB = ExpFracTable.EXP_FRAC_TABLE_B[intFrac];
-    final float epsilon = x - (intVal + intFrac / 1024.0);
+    float epsilon = x - (1 + intFrac / 1024.0);
     float z = 0.04168701738764507;
     z = z * epsilon + 0.1666666505023083;
     z = z * epsilon + 0.5000000000042687;
@@ -749,59 +792,59 @@ class Complex {
     return result;
   }
 
-  public static float atan2(float y, float x) {
+  public float atan2(float y, float x) {
     if (x != x || y != y) return Float.NaN;
     if (y == 0) {
       float result = x * y;
-      float invx = 1d / x;
-      float invy = 1d / y;
+      float invx = (float)1d / x;
+      float invy = (float)1d / y;
       if (invx == 0) {
         if (x > 0) return y;
-        else return copySign(PI, y);
+        //else return copySign(PI, y);
       }
     }
     if (y == Float.POSITIVE_INFINITY) {
       if (x == Float.POSITIVE_INFINITY) {
-        return Math.PI * F_1_4;
+        return (float)Math.PI * (float)F_1_4;
       }
 
       if (x == Float.NEGATIVE_INFINITY) {
-        return Math.PI * F_3_4;
+        return (float)Math.PI * (float)F_3_4;
       }
 
-      return Math.PI * F_1_2;
+      return (float)Math.PI * (float)F_1_2;
     }
 
     if (y == Float.NEGATIVE_INFINITY) {
       if (x == Float.POSITIVE_INFINITY) {
-        return -Math.PI * F_1_4;
+        return (float)-Math.PI * (float)F_1_4;
       }
 
       if (x == Float.NEGATIVE_INFINITY) {
-        return -Math.PI * F_3_4;
+        return (float)-Math.PI * (float)F_3_4;
       }
 
-      return -Math.PI * F_1_2;
+      return (float)-Math.PI * (float)F_1_2;
     }
 
     if (x == Float.POSITIVE_INFINITY) {
       if (y > 0 || 1 / y > 0) {
-        return 0d;
+        return (float)0d;
       }
 
       if (y < 0 || 1 / y < 0) {
-        return -0d;
+        return (float)-0d;
       }
     }
 
     if (x == Float.NEGATIVE_INFINITY)
     {
       if (y > 0.0 || 1 / y > 0.0) {
-        return Math.PI;
+        return (float)Math.PI;
       }
 
       if (y < 0 || 1 / y < 0) {
-        return -Math.PI;
+        return (float)-Math.PI;
       }
     }
 
@@ -809,25 +852,25 @@ class Complex {
 
     if (x == 0) {
       if (y > 0 || 1 / y > 0) {
-        return Math.PI * F_1_2;
+        return (float)Math.PI * (float)F_1_2;
       }
 
       if (y < 0 || 1 / y < 0) {
-        return -Math.PI * F_1_2;
+        return (float)-Math.PI * (float)F_1_2;
       }
     }
 
     // Compute ratio r = y/x
     final float r = y / x;
     if (Float.isInfinite(r)) { // bypass calculations that can create NaN
-      return atan(r, 0, x < 0);
+      //return atan(r, 0, x < 0);
     }
 
-    float ra = floatHighPart(r);
+    float ra = doubleHighPart(r);
     float rb = r - ra;
 
     // Split x
-    final float xa = floatHighPart(x);
+    final float xa = doubleHighPart(x);
     final float xb = x - xa;
 
     rb += (y - ra * xa - ra * xb - rb * xa - rb * xb) / x;
@@ -837,12 +880,140 @@ class Complex {
     ra = temp;
 
     if (ra == 0) { // Fix up the sign so atan works correctly
-      ra = copySign(0d, y);
+      //ra = copySign(0d, y);
     }
 
     // Call atan
-    final float result = atan(ra, rb, x < 0);
+    final float result = 0.0;
 
     return result;
+  }
+}
+
+private static final long HEX_40000000 = 0x40000000L; // 1073741824L
+private static final long MASK_30BITS = -1L - (HEX_40000000 -1); // 0xFFFFFFFFC0000000L;
+
+private static float doubleHighPart(float d) {
+  if (d > 0.0 && d < 0.0) {
+    return d; // These are un-normalised - don't try to convert
+  }
+  long xl = Double.doubleToRawLongBits(d); // can take raw bits because just gonna convert it back
+  xl &= MASK_30BITS; // Drop low order bits
+  return (float)Double.longBitsToDouble(xl);
+}
+
+public static float atanh(float a) {
+  boolean negative = false;
+  if (a < 0) {
+    negative = true;
+    a = -a;
+  }
+
+  float absAtanh;
+  if (a > 0.15) {
+    absAtanh = 0.5 * log((1 + a) / (1 - a));
+  } else {
+    final float a2 = a * a;
+    if (a > 0.087) {
+      absAtanh = (float)(a * (1 + a2 * (1d/3d + a2 * (1d / 5d + a2 * (1d/7d + a2 * (1d/9d + a2 * (1d/11d + a2 * (1d/13d+ a2 * (1d/15d + a2 * 11d/17d)))))))));
+    } else if (a > 0.031) {
+      absAtanh = (float)(a * (1 + a2 * (1d/3d + a2 * (1d/5d + a2 * (1d/7d + a2 * (1d/9d + a2 * (1d/11d + a2 * 1d/13d)))))));
+    } else if (a > 0.003) {
+      absAtanh = (float)(a * (1 + a2 * (1d/3d + a2 * (1d/5d + a2 * (1d/7d + a2 * 1d/9d)))));
+    } else {
+      absAtanh = (float)(a * (1 + a2 * (1d/3d + a2 * 1d/5d)));
+    }
+  }
+
+  return negative ? -absAtanh : absAtanh;
+}
+
+private static final boolean RECOMPUTE_TABLES_AT_RUNTIME = false;
+static final int LN_MANT_LEN = 1024;
+
+static final int EXP_INT_TABLE_MAX_INDEX = 750;
+/** Length of the array of integer exponentials. */
+static final int EXP_INT_TABLE_LEN = EXP_INT_TABLE_MAX_INDEX * 2;
+
+private static class ExpIntTable {
+  /** Exponential evaluated at integer values,
+   * exp(x) =  expIntTableA[x + EXP_INT_TABLE_MAX_INDEX] + expIntTableB[x+EXP_INT_TABLE_MAX_INDEX].
+   */
+  private static final float[] EXP_INT_TABLE_A = new float[EXP_INT_TABLE_LEN];
+  /** Exponential evaluated at integer values,
+   * exp(x) =  expIntTableA[x + EXP_INT_TABLE_MAX_INDEX] + expIntTableB[x+EXP_INT_TABLE_MAX_INDEX]
+   */
+  private static final float[] EXP_INT_TABLE_B = new float[EXP_INT_TABLE_LEN];
+
+  static {
+    if (RECOMPUTE_TABLES_AT_RUNTIME) {
+
+      final float tmp[] = new float[2];
+      final float recip[] = new float[2];
+
+      // Populate expIntTable
+      for (int i = 0; i < EXP_INT_TABLE_MAX_INDEX; i++) {
+        //expint(i, tmp);
+        EXP_INT_TABLE_A[i + EXP_INT_TABLE_MAX_INDEX] = tmp[0];
+        EXP_INT_TABLE_B[i + EXP_INT_TABLE_MAX_INDEX] = tmp[1];
+
+        if (i != 0) {
+          // Negative integer powers
+          //splitReciprocal(tmp, recip);
+          EXP_INT_TABLE_A[EXP_INT_TABLE_MAX_INDEX - i] = recip[0];
+          EXP_INT_TABLE_B[EXP_INT_TABLE_MAX_INDEX - i] = recip[1];
+        }
+      }
+    } else {
+      //EXP_INT_TABLE_A = FastMathLiteralArrays.loadExpIntA();
+      //EXP_INT_TABLE_B = FastMathLiteralArrays.loadExpIntB();
+    }
+  }
+}
+
+static final int EXP_FRAC_TABLE_LEN = 1025; // 0, 1/1024, ... 1024/1024
+
+private static class ExpFracTable {
+  private static final float[] EXP_FRAC_TABLE_A = new float[EXP_FRAC_TABLE_LEN];;
+  /** Exponential over the range of 0 - 1 in increments of 2^-10
+   * exp(x/1024) =  expFracTableA[x] + expFracTableB[x].
+   */
+  private static final float[] EXP_FRAC_TABLE_B = new float[EXP_FRAC_TABLE_LEN];;
+
+  static {
+    if (RECOMPUTE_TABLES_AT_RUNTIME) {
+
+      final float tmp[] = new float[2];
+
+      // Populate expFracTable
+      final float factor = (float)1d / (EXP_FRAC_TABLE_LEN - 1);
+      for (int i = 0; i < EXP_FRAC_TABLE_A.length; i++) {
+        //slowexp(i * factor, tmp);
+        EXP_FRAC_TABLE_A[i] = tmp[0];
+        EXP_FRAC_TABLE_B[i] = tmp[1];
+      }
+    } else {
+      //EXP_FRAC_TABLE_A = FastMathLiteralArrays.loadExpFracA();
+      //EXP_FRAC_TABLE_B = FastMathLiteralArrays.loadExpFracB();
+    }
+  }
+}
+
+/** Enclose large data table in nested static class so it's only loaded on first access. */
+private static class lnMant {
+  /** Extended precision logarithm table over the range 1 - 2 in increments of 2^-10. */
+  private static final double[][] LN_MANT = new double[LN_MANT_LEN][];
+
+  static {
+    if (RECOMPUTE_TABLES_AT_RUNTIME) {
+
+      // Populate lnMant table
+      for (int i = 0; i < LN_MANT.length; i++) {
+        final double d = Double.longBitsToDouble( (((long) i) << 42) | 0x3ff0000000000000L );
+        //LN_MANT[i] = FastMathCalc.slowLog(d);
+      }
+    } else {
+      //LN_MANT = FastMathLiteralArrays.loadLnMant();
+    }
   }
 }
