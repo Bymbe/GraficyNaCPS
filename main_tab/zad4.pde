@@ -5,12 +5,13 @@
 
 void showBothCharts(Signal A) {
   x = A.amp.array();
-  Complex[] y = DFT(x);
+  Complex[] temp;
+  //Complex[] y = DFT(temp);
   float[] Cx = new float[SAMPLE_NUMBER];
   float[] Cy = new float[SAMPLE_NUMBER];
   for (int i = 0; i < SAMPLE_NUMBER; i++) {
-    Cx[i] = (float)y[i].re();
-    Cy[i] = (float)y[i].im();
+    //Cx[i] = (float)y[i].re();
+    //Cy[i] = (float)y[i].im();
   }
   switch(complexChartsType) {
   case 1:
@@ -26,14 +27,14 @@ void showBothCharts(Signal A) {
   }
 }
 
-Complex[] DFT(float[] x) {
+Complex[] DFT(Complex[] x) {
   int N = x.length;
   float Warg = 2.0 * PI / N;
   Complex W = new Complex(cos(Warg), sin(Warg));
   Complex[] X = new Complex[N];
   for (int i = 0; i < N; i++) {
     Complex sum = new Complex(0.0);
-    //for (int j = 0; i < N; j++) sum = sum.add((double)x[j].multiply(W.pow(-i*j)));
+    for (int j = 0; i < N; j++) sum = sum.add(x[j].mul(W.pow(-i*j)));
     X[i] = sum.div(N);
   }
   return X; 
