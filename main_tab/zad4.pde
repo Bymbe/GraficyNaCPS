@@ -33,7 +33,7 @@ Complex[] DFT(float[] x) {
   Complex[] X = new Complex[N];
   for (int i = 0; i < N; i++) {
     Complex sum = new Complex(0.0);
-    //for (int j = 0; i < N; j++) sum = sum.add(x[j].multiply(W.pow(-i*j)));
+    for (int j = 0; i < N; j++) sum = sum.add(x[j].multiply(W.pow(-i*j)));
     X[i] = sum.divides(N);
   }
   return X;
