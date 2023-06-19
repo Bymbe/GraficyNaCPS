@@ -1,8 +1,8 @@
 class Complex {
   float real;  // the real part
   float img;   // the imaginary part
-  Complex NaN = new Complex(Float.NaN, Float.NaN);
-  Complex INF = new Complex(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY);
+  //Complex NaN = new Complex(Float.NaN, Float.NaN);
+  //Complex INF = new Complex(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY);
   private boolean isNaN;
   private boolean isInfinite;
 
@@ -169,18 +169,18 @@ class Complex {
   }
 
   public Complex multiply(Complex factor) {
-    if (isNaN || factor.isNaN) {
-      return NaN;
-    }
-    if (Float.isInfinite(real) || Float.isInfinite(img) || Float.isInfinite(factor.real) || Float.isInfinite(factor.img))
-      return INF;
+    //if (isNaN || factor.isNaN) {
+      //return NaN;
+    //}
+   // if (Float.isInfinite(real) || Float.isInfinite(img) || Float.isInfinite(factor.real) || Float.isInfinite(factor.img))
+     // return INF;
     return createComplex(real * factor.real - img * factor.img,
       real * factor.img + img * factor.real);
   }
 
   public Complex multiply(float factor) {
-    if (isNaN || Float.isNaN(factor)) return NaN;
-    if (Float.isInfinite(real) || Float.isInfinite(img) || Float.isInfinite(factor)) return INF;
+    //if (isNaN || Float.isNaN(factor)) return NaN;
+    //if (Float.isInfinite(real) || Float.isInfinite(img) || Float.isInfinite(factor)) return INF;
     return createComplex( real * factor, img * factor);
   }
 
@@ -190,15 +190,15 @@ class Complex {
   }
 
   public Complex exp() {
-    if (isNaN) return NaN;
+    //if (isNaN) return NaN;
     float expReal = exp(real);
     return createComplex(expReal * cos(img), expReal * sin(img));
   }
 
   public Complex log() {
-    if (isNaN) {
-      return NaN;
-    }
+    //if (isNaN) {
+    //  return NaN;
+    //}
     return createComplex(log(abs(1)), atan2(img, real));
   }
 
