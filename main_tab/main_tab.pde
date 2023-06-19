@@ -196,7 +196,7 @@ void draw() { //////////////////////////////////////////////////////////////////
   
   if(numerZadania == 4) {
     try {
-      showBothCharts();
+      showBothCharts(S3);
     }
     catch (Exception e) {
       println("upsi pupsi 4 " + millis());
