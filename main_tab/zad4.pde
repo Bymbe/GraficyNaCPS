@@ -5,6 +5,7 @@
 
 void showBothCharts(Signal A) {
   x = A.amp.array();
+  //Complex[] y = new Complex[x.length]();
   Complex[] temp;
   //Complex[] y = DFT(temp);
   float[] Cx = new float[SAMPLE_NUMBER];
@@ -22,12 +23,15 @@ void showBothCharts(Signal A) {
   case 2:
     whichChart4TypeIsVisible = "góra - moduł, dół - argument";
     chart4up(A.time, A.amp.array()); //modul liczby zespolonej z=sqrt(rzeczywista^2 + urojona^2)
-    chart4down(A.time, DCT(x)); //czesc urojona
+    //chart4down(A.time, DWHT(x)); //czesc urojona
+    //chart4down(A.time, DCT(x));
+    //chart4down(A.time, DFT(x));
     break;
   }
 }
 
-Complex[] DFT(Complex[] x) {
+float[] DFT(float[] x) {
+  
   int N = x.length;
   float Warg = 2.0 * PI / N;
   Complex W = new Complex(cos(Warg), sin(Warg));
@@ -37,7 +41,12 @@ Complex[] DFT(Complex[] x) {
     for (int j = 0; i < N; j++) sum = sum.add(x[j].mul(W.pow(-i*j)));
     X[i] = sum.div(N);
   }
-  return X; 
+  
+  float[] wynikRe = new float[x.length];
+  for(int i=0; i<x.length; i++) {
+    wynikRe[i] = (float)X[i].re();
+  }
+  return wynikRe;
 }
 
 float[] DCT(float[] x) {
