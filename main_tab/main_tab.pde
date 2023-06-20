@@ -34,7 +34,7 @@ void setup() { /////////////////////////////////////////////////////////////////
 }
 
 void draw() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////DRAW
-  surface.setTitle(nf(frameRate, 0, 1) + " FPS");
+  surface.setTitle(nf(frameRate, 0, 1) + " FPS, f: " + 1/USER_PERIOD + ", czas wykonywania transformacji: " + transformationTime + "ms");
   background(255);
   fill(0);
   switch(wyborWykresu) {
@@ -229,6 +229,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     }
     catch (Exception e) {
       println("upsi pupsi 4 " + millis());
+      e.printStackTrace(System.out);
     }
   }
 
@@ -254,8 +255,8 @@ void draw() { //////////////////////////////////////////////////////////////////
     textSize(16);
     if (numerZadania != 4) lineChart.draw(0, height*0.1, width*0.85, height*0.65);
     if (numerZadania == 4 && isComplexChartVisible == true) {
-      lineChart4up.draw(width*0.014, 0, width*0.83, height*0.64);
-      lineChart4down.draw(width*0.014, height*0.1, width*0.83, height*0.64);
+      lineChart4up.draw(width*0.014, 0, width*0.83, height*0.4);
+      lineChart4down.draw(width*0.014, height*0.4, width*0.83, height*0.4);
     }
     if (numerZadania == 2) {
       if (isReconstructionChartVisible && wyborWykresu >2) {

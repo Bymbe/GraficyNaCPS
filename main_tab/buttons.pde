@@ -61,14 +61,21 @@ void transformationType() {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
       transformation4Type++;
-      if(transformation4Type >5) {
+      //if(transformation4Type >5) {
+      //  transformation4Type = 1;
+      //}
+      //if(transformation4Type == 1) transformation4TypeString = "DIT FFT";
+      //else if(transformation4Type == 2) transformation4TypeString = "DIF FFT";
+      //else if(transformation4Type == 3) transformation4TypeString = "DCT II + FCT II";
+      //else if(transformation4Type == 4) transformation4TypeString = "transformacje Walsha-Hadamarda";
+      //else transformation4TypeString = "transformacje falkowe";
+      if(transformation4Type >3) {
         transformation4Type = 1;
       }
-      if(transformation4Type == 1) transformation4TypeString = "DIT FFT";
-      else if(transformation4Type == 2) transformation4TypeString = "DIF FFT";
-      else if(transformation4Type == 3) transformation4TypeString = "DCT II + FCT II";
-      else if(transformation4Type == 4) transformation4TypeString = "transformacje Walsha-Hadamarda";
-      else transformation4TypeString = "transformacje falkowe";
+      if(transformation4Type == 1) transformation4TypeString = "DIF FFT";
+      else if(transformation4Type == 2) transformation4TypeString = "DCT";
+      else transformation4TypeString = "transformacje Walsha-Hadamarda";
+      
       buttonColor = 100;
     } else {
       buttonColor = 150;
@@ -86,8 +93,13 @@ void chart4Mode() {
   if (mouseX >= width*0.85 && mouseX <= width*0.98  && mouseY >= height*0.37 && mouseY <= height*0.60) {
     if (mousePressed && wasMousePressedLastFrame == false) { //KLIKNIECIE PRZYCISKU ZAPISZ
       wasMousePressedLastFrame = true;
-      if (complexChartsType == 1) complexChartsType = 2;
-      else complexChartsType = 1;
+      if (complexChartsType == 1) {
+        complexChartsType = 2;
+        whichChart4TypeIsVisible = "góra - moduł liczby zespolonej, dół - argument liczby w funkcji częstotliwości";
+      }
+      else { complexChartsType = 1;
+      whichChart4TypeIsVisible = "góra - rzeczywiste, dół - urojone";
+      }
       buttonColor = 100;
     } else {
       buttonColor = 150;
@@ -336,10 +348,10 @@ void periodButton() {
   String slid2 = "period";
   cp5.addSlider(slid2)
     .setBroadcast(false)
-    .setPosition(width*0.11, height*0.92)
+    .setPosition(width*0.21, height*0.92)
     .setValue(USER_PERIOD)
-    .setRange(0.1, 10)
-    .setSize(int(width*0.09), int(height*0.05))
+    .setRange(0.01, 5)
+    .setSize(int(width*0.40), int(height*0.05))
     .setSliderMode(Slider.FLEXIBLE)
     .setBroadcast(true)
     .setColorCaptionLabel(#000000)
@@ -351,7 +363,7 @@ void fillFactorButton() {
   String slid3 = "fill factor";
   cp5.addSlider(slid3)
     .setBroadcast(false)
-    .setPosition(width*0.21, height*0.92)
+    .setPosition(width*0.11, height*0.92)
     .setValue(FILL_FACTOR)
     .setRange(0.0, 1.0)
     .setSize(int(width*0.09), int(height*0.05))

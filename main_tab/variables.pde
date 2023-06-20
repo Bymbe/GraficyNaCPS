@@ -21,7 +21,7 @@ ControlP5 cp5, cp6;
 
 //Zmienne dla uzytkownika
 float USER_AMPLITUDE = 10; //amplituda
-float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
+float USER_PERIOD = 0.5; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia
@@ -30,7 +30,7 @@ float IMPULSE_PROBABILITY = 0.25;
 float QUANTIZATION_JUMP_SIZE = 2; //skok pionowy
 float[] startEndAmp = {SIGNAL_START, SIGNAL_END, USER_AMPLITUDE}; //poczatek i koniec sygnalu oraz amplituda
 int IMPULSE_NOISETIME = 50;
-int SAMPLE_NUMBER = 500; //liczba probek
+int SAMPLE_NUMBER = 512; //liczba probek
 int RECONSTRUCTED_SAMPLE_NUMBER = 50;
 int SAMPLE_RATE = 10;
 int IMPULSE_AMPLITUDE = 10;
@@ -42,9 +42,16 @@ boolean isComplexChartVisible = true;
 int complexChartsType = 1; //1 - gora to rzeczywiste, dol to urojone
                            //2 - gora to modul liczby zespolonej, dol to argument liczby w funkcji czestotliwosci
 String whichChart4TypeIsVisible = "góra - rzeczywiste, dół - urojone";
-int transformation4Type = 1; //1 - F1, 2 - F2, 3 - T1, 4 - T2, 5 - T3
-String transformation4TypeString = "DIT FFT";
+int transformation4Type = 1; //1 - DIF FFT,2 - DCT, 3 - ten gosc z dluga nazwa
+String transformation4TypeString = "DIF FFT";
 float[] x;
+float[] x0;
+float[] signalRE;
+float[] signalIM;
+float[] signalMOD;
+float[] signalARG;
+int transformationTimeStart = 0;
+int transformationTime = 0;
 
 ////////////////ZADANIE 3
 //sploty

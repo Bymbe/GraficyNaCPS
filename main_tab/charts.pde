@@ -31,6 +31,8 @@ void chart4up(float[] x, float[] y) {
   lineChart4up.setPointColour(color(100, 50, 50, 180));
   lineChart4up.setPointSize(4);
   lineChart4up.setLineWidth(1);
+  lineChart4up.showXAxis(true);
+  lineChart4up.showYAxis(true);
 }
 
 void chart4down(float[] x, float[] y) {
@@ -40,6 +42,8 @@ void chart4down(float[] x, float[] y) {
   lineChart4down.setPointColour(color(50, 50, 250, 180));
   lineChart4down.setPointSize(4);
   lineChart4down.setLineWidth(1);
+  lineChart4down.showXAxis(true);
+  lineChart4down.showYAxis(true);
 }
 
 void reconstructed(float[]x, float[] y) {
