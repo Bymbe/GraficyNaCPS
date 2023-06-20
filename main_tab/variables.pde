@@ -21,7 +21,7 @@ ControlP5 cp5, cp6;
 
 //Zmienne dla uzytkownika
 float USER_AMPLITUDE = 10; //amplituda
-float USER_PERIOD = 0.5; //okres podstawowy dla sygnalow z okresem
+float USER_PERIOD = 2; //okres podstawowy dla sygnalow z okresem
 float SIGNAL_START = 0.0; //poczatek sygnalu w sekundach
 float SIGNAL_END = 10.0; //koniec sygnalu w sekundach
 float FILL_FACTOR = 0.5; //wspolczynnik wypelnienia

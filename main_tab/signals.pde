@@ -112,7 +112,16 @@ class Sinusoidal extends Signal {
       if(j<SAMPLE_NUMBER) {
       //okres podstawowy (T) –dla sygnału okresowego jest to minimalna wartość, dla której spełniona jest zależność: x(t)=x(t+kT)
       time[j] = i;
-      amp.set(j, ampl * sin((TWO_PI / (per)) * ((per + i) - signalS)));
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      amp.set(j, ampl * sin((TWO_PI / (per)) * ((per + i) - signalS))); //<--- oryginalny
+      //amp.set(j, 0.01*sin(PI*i)*cos(PI*i*i));
+      //amp.set(j, 5*sin(TWO_PI*i/2)+sin(TWO_PI*i*0.25));
+      //amp.set(j, 2*sin(i*per)+sin(10*i*per));
+      //println(per);
+      //amp.set(j, cos(i*i)-3*sin(PI*i/2));
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       j++;
       }
     }
@@ -134,15 +143,23 @@ class RectifiedOneSinusoidal extends Sinusoidal {
   }
   public void calculate() {
     int j = 0;
-    for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
-      if(j<SAMPLE_NUMBER) {
+    //for (float i = signalS; i <= signalE; i += (signalE - signalS) / SAMPLE_NUMBER) {
+    //  if(j<SAMPLE_NUMBER) {
+    //  time[j] = i;
+    //  amp.set(j, 0.5 * ampl * sin((TWO_PI / (per)) * ((per + i) - signalS)));// + abs(sin(TWO_PI / (term)) * (period - signalS)));
+    //  if (amp.get(j) < 0) {
+    //    amp.set(j, 0.0);
+    //  }
+    //  j++;
+    //  }
+    //}
+    float i= signalS;
+    while (j<SAMPLE_NUMBER) {
+      if(i == 0) amp.set(j, 1);
+      else amp.set(j, sin(i)*sin(i*i));
       time[j] = i;
-      amp.set(j, 0.5 * ampl * sin((TWO_PI / (per)) * ((per + i) - signalS)));// + abs(sin(TWO_PI / (term)) * (period - signalS)));
-      if (amp.get(j) < 0) {
-        amp.set(j, 0.0);
-      }
       j++;
-      }
+      i+=(signalE-signalS)/SAMPLE_NUMBER;
     }
   }
 }

@@ -40,7 +40,7 @@ void showBothCharts(Signal A) {
       signalMOD[i] = sqrt(signalRE[i]*signalRE[i] + signalIM[i]*signalIM[i]);
       signalARG[i] = atan2(signalIM[i], signalRE[i]);
     }
-    //signalRE[0] = 0;
+    signalRE[0] = 0;
 
     if (complexChartsType == 1) {
       chart4up(A.time, signalRE);

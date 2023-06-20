@@ -245,7 +245,7 @@ void draw() { //////////////////////////////////////////////////////////////////
     isItSignalOrImpulse = true;
     textAlign(CENTER, CENTER);
     textSize(20);
-    text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.05);
+    text("Obecny sygnał (" + wyborWykresu + "): " + signalType, width/2, height*0.85);
     if (numerZadania == 2)text("Obecna rekonstrukcja (" + reconstructionChoice + "): " + reconstructionType, width/2, height*0.08);
     if (numerZadania == 3) {
       if (whichIsVisible == 2 && isOptionalFilterVisible == true) lineChart2.draw(0, height*0.1, width*0.85, height*0.65);
