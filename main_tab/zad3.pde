@@ -167,8 +167,8 @@ void corelation(float[] sygnalA, float[] sygnalC) {
       operationSignalAmp[i] = 0;
       for (int j = 0; j < dlugoscA; j++) {
         if (i - j >= 0 && i - j < dlugoscB) {
-          if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber];
-          else operationSignalAmp[i] += sygnalA[j] * sygnalB[i - j + delayCorelationNumber - dlugoscB];
+          if (i - j + delayCorelationNumber < dlugoscB) operationSignalAmp[i] += sygnalA[j] * sygnalC[i - j + delayCorelationNumber];
+          else operationSignalAmp[i] += sygnalA[j] * sygnalC[i - j - dlugoscB + delayCorelationNumber];
         }
       }
     }
@@ -186,7 +186,7 @@ void corelation(float[] sygnalA, float[] sygnalC) {
 
   operationSignalTime = new float[dlugoscWyniku];
   for (int i = 0; i<dlugoscWyniku; i++) {
-    operationSignalTime[i] = map(i, 0, dlugoscWyniku, 0, SIGNAL_END);
+    operationSignalTime[i] = map(i, dlugoscWyniku / 2, 0, 0, SIGNAL_END);
   }
 }
 

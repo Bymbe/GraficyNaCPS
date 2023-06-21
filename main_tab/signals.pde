@@ -171,9 +171,9 @@ class Rectangular extends Sinusoidal {
 
       //if (i>okres*wsp_wyp && i<okres) {
       if (i % (per) >= per * fillFactor) {
-        amp.set(j, (float)sinc(i-5));
+        amp.set(j, (float)sinc(i-6));
       } else {
-        amp.set(j, (float)sinc(i-5));
+        amp.set(j, (float)sinc(i-6));
       }
     }
   }

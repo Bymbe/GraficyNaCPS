@@ -1,5 +1,5 @@
 //wybor zadania
-int numerZadania = 4; //1-4
+int numerZadania = 3; //1-4
 
 //kolor przycisku
 int buttonColor = 200;
@@ -61,9 +61,8 @@ int whichIsVisible = 0; //0-nic, 1-splot, 2-filtracja, 3-korelacja
 String whichIsVisibleString = "nic";
 ////////////////ZADANIE 3
 
-
-int operationSignalChoice1 = 3;
-int operationSignalChoice2 = 5;
+int operationSignalChoice1 = 7;
+int operationSignalChoice2 = 6;
 float[] operationSignalAmp;
 float[] operationSignalTime;
 float[] tempOperationSignal1;
